@@ -1,0 +1,20 @@
+//Variables
+
+
+
+
+html,
+body {
+  color: #2e2e2e;
+  overflow: auto;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  input{
+    -webkit-appearance: none;
+  }
+}
