@@ -6,11 +6,22 @@
 @import "./utils/mixins";
 @import "./utils/_settings";
 // Layouts
-
+@import "./layout/main-header.scss";
 
 // Components
+@import "./components/layout/nav-header.scss";
+@import "./components/pages/card-home.scss";
+@import "./Pages/error/notfound";
+
 
 // Pages
+@import "./pages/code.scss";
+@import "./pages/home.scss";
+@import "./pages/auth.scss";
+@import "./pages/profil.scss";
+@import "./pages/project.scss";
+
+
 
 
 
