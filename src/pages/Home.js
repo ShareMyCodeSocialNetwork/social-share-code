@@ -1,32 +1,11 @@
 import CodeMirror from "@uiw/react-codemirror"
 import "codemirror/theme/dracula.css"
-import {useEffect, useState} from "react"
-import axios from "axios";
+import React, {useEffect, useState} from "react"
 import CardHome from "../components/pages/CardHome";
-
-/*
-* const [codeTest, setCodeTest] =  useState(``)
-    const getCodeTest = (codetitle) => {
-        const article = { code: codetitle };
-        axios.post('http://localhost:3001/excution/python', article)
-            .then(response => console.log(response.data.response));
-    }
-* <div>
-                <CodeMirror
-                    options={{theme : "material-darker", mode: "python"}}
-                    value=""
-                    height="400px"
-                    onChange={(editor, viewUpdate) => {
-                        console.log('value:', editor.getValue());
-                        setCodeTest(editor.getValue())
-                    }}/>
-            </div>
-
-            <button style={{backgroundColor: "#FFFBED"}} onClick={() => getCodeTest(codeTest)}> excute </button>
-
-* */
+import {Link} from "react-router-dom";
 
 const Home = () => {
+    const [isConnected,setIsConnected] = useState(true)
     const [codeTest, setCodeTest] =  useState(`\n def words_count(phrase):\t\t \t\t   \t\t\t \t  \t   
     prec = ' '\t\t \t\t   \t\t\t \t  \t   
     phrase_min = phrase.lower()\t\t \t\t   \t\t\t \t  \t   
@@ -42,7 +21,18 @@ const Home = () => {
                 <div className="left-part-home">
                     <div className="first-title-home">The best place to build, test, and discover Back-end code.</div>
                     <div className="subtitle-home">CodeBack is a social development environment for Back-end developers. </div>
-                    <div className="button-home">Sign UP for free</div>
+                    {
+                        isConnected === false &&
+                        <Link to="/register" style={{textDecoration:'none'}}>
+                            <div className="button-home">Sign UP for free</div>
+                        </Link>
+                    }
+                    {
+                        isConnected === true &&
+                        <Link to="/register" style={{textDecoration:'none'}}>
+                            <div className="button-home">Start Coding</div>
+                        </Link>
+                    }
                 </div>
                 <div className="right-part-home">
                     <div className="right-part-background"/>
