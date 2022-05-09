@@ -5,12 +5,21 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
+import {useForm} from "react-hook-form";
 
 const MainHeader = () => {
-    const [isConnected,setIsConnected] = useState(false)
+
+    //TODO : faire les modals et les liens
+
+    const [isConnected,setIsConnected] = useState(true)
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+    const { register, handleSubmit,watch , getValues} = useForm();
+    const history = useHistory();
+    const onSubmit = (data) => {
+        console.log(data);
+    }
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -25,30 +34,36 @@ const MainHeader = () => {
             </Link>
             <div className="right-part">
                 <div className="search-container">
-                    <form action="" className="search-form">
-                        <input type="text" className="search-input" placeholder="Search..."/>
+                    <form onSubmit={handleSubmit(onSubmit)} action="" className="search-form">
+                        <input type="text" {...register("search")} className="search-input" placeholder="Search..."/>
                     </form>
                     <img className="search-img" src="/assets/logo/search.svg" alt="Search"/>
                 </div>
                 {
                     isConnected === false &&
                     <div className="auth-container">
-                        <Link  to="/register" style={{textDecoration:'none'}}>
+                        <Link  to="/login" style={{textDecoration:'none'}}>
                             <div className="auth green">
                                 <div className="auth-title">Sign In</div>
                             </div>
                         </Link>
-                        <Link to="/login" style={{textDecoration:'none'}}>
+                        <Link to="/register" style={{textDecoration:'none'}}>
                             <div className="auth grey">
                                 <div className="auth-title">Sign Up</div>
                             </div>
                         </Link>
+
 
                     </div>
                 }
                 {
                     isConnected === true &&
                     <div className="auth-container">
+                        <Link to="/code/new" style={{textDecoration:'none'}}>
+                            <div className="connected margin-right">
+                                <img className="connected-img" src="/assets/logo/add.svg" alt="add"/>
+                            </div>
+                        </Link>
                         <div className="connected margin-right">
                             <img className="connected-img" src="/assets/logo/pin.svg" alt="pin"/>
                         </div>
@@ -89,11 +104,19 @@ const MainHeader = () => {
                                  Your Work
                             </MenuItem>
                             <MenuItem>
-                                 Profile
+                                <div>
+                                    <Link to="/profil"  style={{textDecoration:'none', color:'#fff'}}>
+                                        Profile
+                                    </Link>
+                                </div>
                             </MenuItem>
                             <Divider sx={{bgcolor:'#C4C4C4'}}/>
                             <MenuItem>
-                                 New Pen
+                                <div>
+                                    <Link to="/code/new" style={{textDecoration:'none', color:'#fff'}}>
+                                        New Pen
+                                    </Link>
+                                </div>
                             </MenuItem>
                             <MenuItem>
                                  New Project
