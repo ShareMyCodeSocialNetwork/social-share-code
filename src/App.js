@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import Project from "./pages/Project";
 import NotFound from "./components/error/NotFound";
 import Code from "./pages/Code";
+import Profil from "./pages/Profil";
 
 
 const App =  () => {
@@ -14,6 +15,7 @@ const App =  () => {
       <Router>
         <MainHeader/>
           <Switch>
+              <Route path="/profil" exact component={Profil} />
               <Route path="/login" exact component={Login} />
               <Route path="/register" exact component={Register} />
               <Route path="/project" exact component={Project} />
