@@ -1,0 +1,7 @@
+
+9javascript:S3863"'react' import is duplicated.(À¥ı¸
+Ejavascript:S1128")Remove this unused import of 'useEffect'.(À¥ı¸
+bjavascript:S1481":Remove the declaration of the unused 'getValues' variable.(ƒ¼ğÕûÿÿÿÿ8Ğ¹óÒˆ0
+_javascript:S1854"7Remove this useless assignment to variable "getValues".(ƒ¼ğÕûÿÿÿÿ8Ğ¹óÒˆ0
+ajavascript:S1481"@Remove the declaration of the unused 'setResponseCode' variable.(îêˆòúÿÿÿÿ
+^javascript:S1854"=Remove this useless assignment to variable "setResponseCode".(îêˆòúÿÿÿÿ
