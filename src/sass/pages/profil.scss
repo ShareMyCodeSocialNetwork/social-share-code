@@ -1,3 +1,41 @@
 .view--profile{
-  //TODO : faire l'implementations
+  display: flex;
+  flex-direction: column;
+  .header-profile{
+    position: relative;
+    .overlay-profile{
+      width: 100%;
+      height: 300px;
+    }
+    .profile-data{
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      left: 50%;
+      bottom:0;
+      .title-name{
+        font-size: 36px;
+        line-height: 43px;
+        margin-bottom: 20px;
+        font-weight:600;
+      }
+      .image-profile{
+        background-color: #1E1F25;
+        padding: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0px 4px 4px rgba(0,0,0,0.25);
+        border-radius: 5px;
+        img{
+          width: 73px;
+          height: 73px;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+  .body-profile{
+
+  }
 }
