@@ -29,7 +29,7 @@ const Home = () => {
                     }
                     {
                         isConnected === true &&
-                        <Link to="/register" style={{textDecoration:'none'}}>
+                        <Link to="/code/new" style={{textDecoration:'none'}}>
                             <div className="button-home">Start Coding</div>
                         </Link>
                     }

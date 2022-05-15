@@ -19,20 +19,14 @@ P
  src/components/error/NotFound.js,6/1/616f36efc17ca98f8dd1a85989ceb0d1786f5626
 X
 (src/sass/components/pages/card-home.scss,b/5/b598b8a96893a6071dce9d0026ca66686ff94c73
-H
-src/sass/pages/home.scss,8/0/8073511c35d5ad5e4260404e95c8e1689e759f30
 M
 src/sass/utils/_settings.scss,e/d/ede314402a11606ed02f8d9f915d97148b3e6b44
 V
 &src/components/pages/CardSearchCode.js,7/3/7358b16b25b3bed451b416e6a72c464ce8e4417a
-H
-src/sass/pages/code.scss,c/c/cc4e6c7e4bccddef2f3383e5b3651df3f51a5436
 ]
 -src/sass/components/pages/cardsearchcode.scss,3/9/394dbba44f7ea44b3d6bb04da45cfc8efe085042
 D
 src/pages/Project.js,c/4/c414b9c6a8b35d3687649f04e03a82e323aaefec
-A
-src/pages/Code.js,0/a/0a07a77dc29df517cc8b79c5e6bc8c612df0336f
 K
 src/sass/pages/project.scss,6/f/6f63b46266c2764ca52575b8ffaa16c698bd8e78
 H

@@ -49,10 +49,14 @@ const Code = () => {
                             <img className="img-option" src="/assets/logo/save.svg" alt="save"/>
                             <div className="title-option">Save</div>
                         </button>
-                        <div className="option-button">
-                            <img className="img-option" src="/assets/logo/setting.svg" alt="settings"/>
-                            <div className="title-option">Settings</div>
-                        </div>
+                        {
+                            /*
+                            *   <div className="option-button">
+                                    <img className="img-option" src="/assets/logo/setting.svg" alt="settings"/>
+                                    <div className="title-option">Settings</div>
+                                </div>
+                            */
+                        }
                     </div>
                 </div>
                 <div className="body-code">
