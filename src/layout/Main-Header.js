@@ -8,6 +8,8 @@ import Logout from '@mui/icons-material/Logout';
 import {Link, useHistory} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {Box, Modal} from "@mui/material";
+import AuthService from "../components/Auth/AuthService";
+import {isEmpty} from "../components/utils/Utils";
 
 const MainHeader = () => {
 
@@ -26,7 +28,7 @@ const MainHeader = () => {
         p: 4,
     };
 
-    const [isConnected,setIsConnected] = useState(true)
+    const [isConnected,setIsConnected] = useState(AuthService.getCurrentUser())
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const [openModalProject, setOpenModalProject] = useState(false);
@@ -39,6 +41,9 @@ const MainHeader = () => {
     const history = useHistory();
     const onSubmit = (data) => {
         console.log(data);
+        history.push({
+            pathname:""
+        })
     }
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -115,13 +120,13 @@ const MainHeader = () => {
                 </Link>
                 <div className="right-part">
                     <div className="search-container">
-                        <form onSubmit={handleSubmit(onSubmit)} action="" className="search-form">
+                        <form  action="" className="search-form">
                             <input type="text" {...register("search")} className="search-input" placeholder="Search..."/>
                         </form>
-                        <img className="search-img" src="/assets/logo/search.svg" alt="Search"/>
+                        <img onClick={handleSubmit(onSubmit)} className="search-img" src="/assets/logo/search.svg" alt="Search"/>
                     </div>
                     {
-                        isConnected === false &&
+                        isEmpty(isConnected) &&
                         <div className="auth-container">
                             <Link  to="/login" style={{textDecoration:'none'}}>
                                 <div className="auth green">
@@ -138,7 +143,7 @@ const MainHeader = () => {
                         </div>
                     }
                     {
-                        isConnected === true &&
+                        !isEmpty(isConnected) &&
                         <div className="auth-container">
                             <Link to="/code/new" style={{textDecoration:'none'}}>
                                 <div className="connected margin-right">
@@ -220,7 +225,11 @@ const MainHeader = () => {
                                     <ListItemIcon>
                                         <Logout fontSize="small" sx={{color:'#C4C4C4'}}/>
                                     </ListItemIcon>
-                                    Logout
+                                    <div>
+                                        <Link to="/logout" style={{textDecoration:'none', color:'#fff'}}>
+                                            logout
+                                        </Link>
+                                    </div>
                                 </MenuItem>
                             </Menu>
                         </div>

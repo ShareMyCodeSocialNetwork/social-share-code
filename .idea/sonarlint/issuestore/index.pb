@@ -1,10 +1,6 @@
 
-B
-src/pages/Login.js,c/8/c896236ba4a30f2d4d14daebfc43b8b237ff6821
 E
 src/pages/Register.js,6/b/6b70fd87d4ba5ad5f02598f6e9ca4a2c38eb0fb1
-P
- src/sass/layout/main-header.scss,6/0/60c1361b552acdc778c0aff8957a73d7bb2f83e5
 J
 src/sass/utils/_reset.scss,a/6/a6a67ee8c4c7751e697180cc01cd251d18e568d3
 H
@@ -27,8 +23,6 @@ V
 -src/sass/components/pages/cardsearchcode.scss,3/9/394dbba44f7ea44b3d6bb04da45cfc8efe085042
 D
 src/pages/Project.js,c/4/c414b9c6a8b35d3687649f04e03a82e323aaefec
-K
-src/sass/pages/project.scss,6/f/6f63b46266c2764ca52575b8ffaa16c698bd8e78
 H
 src/sass/pages/auth.scss,7/a/7acd5e313c40e8c05b40a776303083e8a708cec1
 A
@@ -37,3 +31,42 @@ A
 ,src/sass/components/layout/modal-header.scss,e/b/eb729cee071e17a6f80b3ce88d7686a8aff42b13
 A
 src/sass/App.scss,6/0/604945b3cff347060e33059d1c80d0011222fcb6
+J
+src/sass/pages/profil.scss,a/a/aa726e28dd04802f4506d317130cd95cf14ac592
+L
+src/actions/tools..action.js,1/3/13eb4295d34696af6e5bcb7ecbcd565dbb3e07da
+M
+src/components/utils/Utils.js,f/d/fd51530007cbef2549c5f682e162879a0c68e8b9
+H
+src/sass/pages/code.scss,c/c/cc4e6c7e4bccddef2f3383e5b3651df3f51a5436
+H
+src/sass/pages/home.scss,8/0/8073511c35d5ad5e4260404e95c8e1689e759f30
+K
+src/sass/pages/project.scss,6/f/6f63b46266c2764ca52575b8ffaa16c698bd8e78
+C
+src/pages/Profil.js,5/c/5cb845e6aec83e0b9b88880fde98bc3aa7d6b614
+P
+ src/sass/layout/main-header.scss,6/0/60c1361b552acdc778c0aff8957a73d7bb2f83e5
+A
+src/pages/Code.js,0/a/0a07a77dc29df517cc8b79c5e6bc8c612df0336f
+I
+src/layout/Main-Header.js,d/4/d473a1deb4da26b628866f1a48f02881b682263c
+R
+"src/components/Auth/AuthService.js,1/5/1589c7bf4e0ef868c6f51967a162313596955639
+S
+#src/components/Auth/PrivateRoute.js,b/d/bda6a22fb8629e457b315043dd812ab629406335
+N
+src/actions/API/auth.action.js,2/f/2f9642f8e956782d48b18733c2905e06a0adb98b
+B
+src/pages/Login.js,c/8/c896236ba4a30f2d4d14daebfc43b8b237ff6821
+<
+package.json,7/0/7030d0b2f71b999ff89a343de08c414af32fc93a
+<
+src/index.js,f/9/f900edc44cb929c2267a16100a32851f6d5b477d
+E
+src/reducers/index.js,f/a/fab243bdaf4b374258978630635708f4d73997cb
+A
+src/pages/Home.js,f/8/f88e17193d91c101c7e0bd70b2fc4123066b1147
+:
+
+src/App.js,1/e/1e43fa63aecd2127be034b3fb9d4caa172275714

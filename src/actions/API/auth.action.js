@@ -1,6 +1,6 @@
 import axios from "axios";
 import qs from 'querystring'
-export const API_URL = "http://localhost:8080/api"
+export const API_URL = "http://localhost:8080"
 export const LOGIN_USER = "LOGIN_USER";
 export const REGISTER_USER = "REGISTER_USER";
 
