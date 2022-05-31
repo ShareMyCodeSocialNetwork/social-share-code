@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
-import {Link, useHistory} from "react-router-dom";
+import {Link, useHistory, useLocation} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {Box, Modal} from "@mui/material";
 import AuthService from "../components/Auth/AuthService";
@@ -28,7 +28,10 @@ const MainHeader = () => {
         p: 4,
     };
 
-    const [isConnected,setIsConnected] = useState(AuthService.getCurrentUser())
+
+
+
+    const [isConnected, setIsConnected] = useState(AuthService.getCurrentUser())
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const [openModalProject, setOpenModalProject] = useState(false);
@@ -39,11 +42,30 @@ const MainHeader = () => {
     const handleCloseModalCollection = () => setOpenModalCollection(false);
     const { register, handleSubmit,watch , getValues} = useForm();
     const history = useHistory();
+    console.log(AuthService.getCurrentUser())
+
+    const _handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            console.log('do validate');
+        }
+    }
+    const location = useLocation()
+
+    useEffect(() => {
+        setIsConnected(AuthService.getCurrentUser())
+    }, [location.key])
+
     const onSubmit = (data) => {
         console.log(data);
-        history.push({
-            pathname:""
-        })
+        if(data.search === ""){
+            history.push({
+                pathname:`/project-all/all`
+            })
+        }else{
+            history.push({
+                pathname:`/project-all/${data.search}`
+            })
+        }
     }
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -123,7 +145,7 @@ const MainHeader = () => {
                         <form  action="" className="search-form">
                             <input type="text" {...register("search")} className="search-input" placeholder="Search..."/>
                         </form>
-                        <img onClick={handleSubmit(onSubmit)} className="search-img" src="/assets/logo/search.svg" alt="Search"/>
+                        <img onClick={handleSubmit(onSubmit)}  className="search-img" src="/assets/logo/search.svg" alt="Search"/>
                     </div>
                     {
                         isEmpty(isConnected) &&
