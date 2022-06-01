@@ -3,6 +3,7 @@ import qs from 'querystring'
 export const API_URL = "http://localhost:8080"
 export const LOGIN_USER = "LOGIN_USER";
 export const REGISTER_USER = "REGISTER_USER";
+export const REFRESH_TOKEN = "REFRESH_TOKEN";
 
 
 
@@ -27,7 +28,7 @@ export const login = (data) => {
 }
 
 
-export const register = (data) => {
+export const register_user = (data) => {
     return (dispatch) => {
         return axios
             .post(API_URL + "/user/create", data)
@@ -38,7 +39,16 @@ export const register = (data) => {
     };
 }
 
-
+export const refresh_token = () => {
+    return (dispatch) => {
+        return axios
+            .get(API_URL + "/token/refresh")
+            .then((res) => {
+                dispatch({ type: REFRESH_TOKEN, payload: res.statusText });
+            })
+            .catch((err) => console.log(err));
+    };
+}
 
 
 

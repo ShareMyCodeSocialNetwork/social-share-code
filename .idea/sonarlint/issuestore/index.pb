@@ -1,6 +1,4 @@
 
-E
-src/pages/Register.js,6/b/6b70fd87d4ba5ad5f02598f6e9ca4a2c38eb0fb1
 J
 src/sass/utils/_reset.scss,a/6/a6a67ee8c4c7751e697180cc01cd251d18e568d3
 H
@@ -37,8 +35,6 @@ H
 src/sass/pages/home.scss,8/0/8073511c35d5ad5e4260404e95c8e1689e759f30
 K
 src/sass/pages/project.scss,6/f/6f63b46266c2764ca52575b8ffaa16c698bd8e78
-C
-src/pages/Profil.js,5/c/5cb845e6aec83e0b9b88880fde98bc3aa7d6b614
 P
  src/sass/layout/main-header.scss,6/0/60c1361b552acdc778c0aff8957a73d7bb2f83e5
 S
