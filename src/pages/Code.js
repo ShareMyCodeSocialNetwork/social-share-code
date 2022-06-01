@@ -51,7 +51,7 @@ const Code = () => {
                         </button>
                         {
                             /*
-                            *   <div className="option-button">
+                            *   <div className="y">
                                     <img className="img-option" src="/assets/logo/setting.svg" alt="settings"/>
                                     <div className="title-option">Settings</div>
                                 </div>

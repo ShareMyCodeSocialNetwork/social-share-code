@@ -5,6 +5,7 @@ class  AuthService {
 
     logout = () => {
         localStorage.removeItem("user");
+        localStorage.removeItem("refresh_user");
     }
 
     getCurrentUser = () => {

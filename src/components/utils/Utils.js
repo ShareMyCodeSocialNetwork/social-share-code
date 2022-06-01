@@ -19,3 +19,20 @@ export const wait = (duration = 1000 ) => {
     })
 }
 
+export const filter_array = (filter = [], array = []) => {
+
+    if(filter === "all"){
+        return array;
+    }
+
+    let filter_array = array.filter(function(data) {
+        if(data.language === filter){
+            return data.language === filter
+        }else if(data.editorName === filter){
+            return data.editorName === filter
+        }
+    });
+
+    return filter_array;
+}
+

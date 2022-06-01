@@ -3,9 +3,11 @@ import "codemirror/theme/dracula.css"
 import React, {useEffect, useState} from "react"
 import CardHome from "../components/pages/CardHome";
 import {Link} from "react-router-dom";
+import AuthService from "../components/Auth/AuthService";
+import {isEmpty} from "../components/utils/Utils";
 
 const Home = () => {
-    const [isConnected,setIsConnected] = useState(true)
+    const [isConnected,setIsConnected] = useState(AuthService.getCurrentUser())
     const [codeTest, setCodeTest] =  useState(`\n def words_count(phrase):\t\t \t\t   \t\t\t \t  \t   
     prec = ' '\t\t \t\t   \t\t\t \t  \t   
     phrase_min = phrase.lower()\t\t \t\t   \t\t\t \t  \t   
@@ -22,13 +24,13 @@ const Home = () => {
                     <div className="first-title-home">The best place to build, test, and discover Back-end code.</div>
                     <div className="subtitle-home">CodeBack is a social development environment for Back-end developers. </div>
                     {
-                        isConnected === false &&
+                        isEmpty(isConnected)  &&
                         <Link to="/register" style={{textDecoration:'none'}}>
                             <div className="button-home">Sign UP for free</div>
                         </Link>
                     }
                     {
-                        isConnected === true &&
+                        !isEmpty(isConnected) &&
                         <Link to="/code/new" style={{textDecoration:'none'}}>
                             <div className="button-home">Start Coding</div>
                         </Link>

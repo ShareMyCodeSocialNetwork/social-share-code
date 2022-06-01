@@ -1,32 +1,31 @@
 import { combineReducers } from "redux";
-import demandReducer from "./API/demand.reducer";
-import folder_exportReducer from "./API/folder_export.reducer";
 import authReducer from "./API/auth.reducer";
-import documentsReducer from "./API/documents.reducer";
-import notificationReducer from "./API/notification.reducer";
+import codeReducer from "./API/code.reducer";
+import commentReducer from "./API/comment.reducer";
+import execodeReducer from "./API/execode.reducer";
+import followerReducer from "./API/follower.reducer";
+import groupReducer from "./API/group.reducer";
+import likeReducer from "./API/like.reducer";
+import languageReducer from "./API/language.reducer";
+import postReducer from "./API/post.reducer";
 import projectReducer from "./API/project.reducer";
-import radarReducer from "./API/radar.reducer";
-import roleReducer from "./API/role.reducer";
-import role_teamReducer from "./API/role_team.reducer";
-import taskReducer from "./API/task.reducer";
-import teamReducer from "./API/team.reducer";
-import type_radarReducer from "./API/type_radar.reducer";
-import questionReducer from "./API/Question/question.reducer";
-import responseReducer from "./API/Question/response.reducer";
+import snippetsReducer from "./API/snippets.reducer";
+import userReducer from "./API/user.reducer";
+import userRoleGroupReducer from "./API/userRoleGroup.reducer";
+
 
 export default combineReducers({
-    demandReducer,
-    folder_exportReducer,
     authReducer,
-    documentsReducer,
-    notificationReducer,
+    codeReducer,
+    commentReducer,
+    execodeReducer,
+    followerReducer,
+    groupReducer,
+    languageReducer,
+    likeReducer,
+    postReducer,
     projectReducer,
-    radarReducer,
-    roleReducer,
-    role_teamReducer,
-    taskReducer,
-    teamReducer,
-    type_radarReducer,
-    questionReducer,
-    responseReducer
+    snippetsReducer,
+    userReducer,
+    userRoleGroupReducer
 });
