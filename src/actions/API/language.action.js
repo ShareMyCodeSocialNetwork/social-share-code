@@ -54,7 +54,7 @@ export const addLanguage = (data) => {
 export const updateLanguage = (languageId,data) => {
     return (dispatch) => {
         return axios
-            .post(`${API_URL}/language/update/${languageId}`, data, { headers:  AuthService.authHeader() })
+            .put(`${API_URL}/language/update/${languageId}`, data, { headers:  AuthService.authHeader() })
             .then(() => {
                 dispatch({ type: UPDATE_LANGUAGE, payload: data });
             })
