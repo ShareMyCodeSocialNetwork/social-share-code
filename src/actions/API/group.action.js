@@ -6,8 +6,10 @@ import AuthService from "../../components/Auth/AuthService";
 export const API_URL = "https://localhost:8080"
 export const GET_GROUP = "GET_GROUP";
 export const GET_GROUP_BY_ID = "GET_GROUP_BY_ID";
+export const GET_GROUP_BY_NAME = "GET_GROUP_BY_NAME";
 export const ADD_GROUP = "ADD_GROUP";
 export const UPDATE_GROUP = "UPDATE_GROUP";
+export const UPDATE_GROUP_NAME = "UPDATE_GROUP_NAME";
 export const DELETE_GROUP = "DELETE_GROUP";
 
 export const getGroups = () => {
@@ -33,11 +35,6 @@ export const getOneGroupById = (groupId) => {
     };
 };
 
-
-
-//TODO :  avoir tout les GROUPs d'une personne
-
-
 export const addGroup = (data) => {
     return (dispatch) => {
         return axios
@@ -54,7 +51,7 @@ export const addGroup = (data) => {
 export const updateGroup = (groupId,data) => {
     return (dispatch) => {
         return axios
-            .post(`${API_URL}/group/update/${groupId}`, data, { headers:  AuthService.authHeader() })
+            .put(`${API_URL}/group/update/${groupId}`, data, { headers:  AuthService.authHeader() })
             .then(() => {
                 dispatch({ type: UPDATE_GROUP, payload: data });
             })
@@ -62,6 +59,27 @@ export const updateGroup = (groupId,data) => {
     };
 };
 
+export const changeGroupName = (groupId,data) => {
+    return (dispatch) => {
+        return axios
+            .put(`${API_URL}/group/update/name/${groupId}`, data, { headers:  AuthService.authHeader() })
+            .then(() => {
+                dispatch({ type: UPDATE_GROUP_NAME, payload: data });
+            })
+            .catch((err) => console.log(err));
+    };
+};
+
+export const getGroupsByName = (name) => {
+    return (dispatch) => {
+        return axios
+            .get(`${API_URL}/group/name/${name}`,{ headers:  AuthService.authHeader() })
+            .then((res) => {
+                dispatch({ type: GET_GROUP_BY_NAME, payload: res.data });
+            })
+            .catch((err) => console.log(err));
+    };
+};
 
 
 export const deleteGroup = (groupId) => {
