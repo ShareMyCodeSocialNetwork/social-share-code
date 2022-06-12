@@ -52,7 +52,7 @@ export const addCode = (data) => {
 export const updateCode = (codeId,data) => {
     return (dispatch) => {
         return axios
-            .post(`${API_URL}/code/update/${codeId}`, data, { headers:  AuthService.authHeader() })
+            .put(`${API_URL}/code/update/${codeId}`, data, { headers:  AuthService.authHeader() })
             .then(() => {
                 dispatch({ type: UPDATE_CODE, payload: data });
             })
