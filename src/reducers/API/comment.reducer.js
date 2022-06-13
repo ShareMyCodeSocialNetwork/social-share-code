@@ -3,7 +3,9 @@ import {
     GET_COMMENT_BY_ID,
     ADD_COMMENT,
     UPDATE_COMMENT,
-    DELETE_COMMENT
+    DELETE_COMMENT,
+    GET_COMMENTS_BY_POST,
+    GET_COMMENTS_BY_USER
 } from "../../actions/API/comment.action";
 
 const initialState = {};
@@ -27,6 +29,10 @@ export default function commentReducer(state = initialState, action) {
             });
         case DELETE_COMMENT:
             return state.filter((COMMENT) => COMMENT.id !== action.payload.commentId);
+        case GET_COMMENTS_BY_USER :
+            return action.payload;
+        case GET_COMMENTS_BY_POST :
+            return action.payload;
         default:
             return state;
     }
