@@ -1,10 +1,10 @@
 import axios from "axios";
 import AuthService from "../../components/Auth/AuthService";
-import {GET_GROUP_BY_NAME} from "./group.action";
 
 export const API_URL = "https://localhost:8080";
 export const GET_ROLE = "GET_ROLE";
 export const GET_ROLE_BY_ID = "GET_ROLE_BY_ID";
+export const GET_ROLE_BY_NAME = "GET_ROLE_BY_NAME";
 export const ADD_ROLE = "ADD_ROLE";
 export const UPDATE_ROLE_NAME = "UPDATE_ROLE_NAME";
 export const DELETE_ROLE = "DELETE_ROLE";
@@ -57,12 +57,12 @@ export const changeRoleName = (roleId,data) => {
 };
 
 
-export const getGroupsByName = (name) => {
+export const getRoleByName = (name) => {
     return (dispatch) => {
         return axios
             .get(`${API_URL}/role/${name}`,{ headers:  AuthService.authHeader() })
             .then((res) => {
-                dispatch({ type: GET_GROUP_BY_NAME, payload: res.data });
+                dispatch({ type: GET_ROLE_BY_NAME, payload: res.data });
             })
             .catch((err) => console.log(err));
     };
