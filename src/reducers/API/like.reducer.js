@@ -3,7 +3,8 @@ import {
     GET_LIKE_BY_ID,
     ADD_LIKE,
     DELETE_LIKE,
-    GET_POST_LIKE
+    GET_POST_LIKE,
+    GET_LIKE_BY_USER
 } from "../../actions/API/like.action";
 
 const initialState = {};
@@ -15,6 +16,8 @@ export default function likeReducer(state = initialState, action) {
         case GET_POST_LIKE:
             return action.payload;
         case GET_LIKE_BY_ID:
+            return action.payload;
+        case GET_LIKE_BY_USER:
             return action.payload;
         case ADD_LIKE:
             return [action.payload, ...state];
