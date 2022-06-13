@@ -35,7 +35,7 @@ export const getOneSnippetById = (snippetId) => {
     };
 };
 
-
+//todo pas dans l api
 export const getOneSnippetByUserId = (userId) => {
     return (dispatch) => {
         return axios
@@ -52,7 +52,7 @@ export const getOneSnippetByUserId = (userId) => {
 export const updateSnippet = (snippetId,data) => {
     return (dispatch) => {
         return axios
-            .post(`${API_URL}/snippet/update/${snippetId}`, data, { headers:  AuthService.authHeader() })
+            .put(`${API_URL}/snippet/update/${snippetId}`, data, { headers:  AuthService.authHeader() })
             .then(() => {
                 dispatch({ type: UPDATE_SNIPPET, payload: data });
             })
