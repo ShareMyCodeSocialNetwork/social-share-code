@@ -1,8 +1,8 @@
 import {
     GET_USER_ROLE_GROUP,
     GET_USER_ROLE_GROUP_BY_ID,
-    GET_USER_ROLE_GROUP_BY_NAME,
     GET_USER_ROLE_GROUP_BY_GROUP,
+    GET_USER_ROLE_GROUP_BY_USER,
     ADD_USER_ROLE_GROUP,
     DELETE_USER_ROLE_GROUP
 } from "../../actions/API/userRoleGroup.action";
@@ -15,7 +15,7 @@ export default function userRoleGroupReducer(state = initialState, action) {
             return action.payload;
         case GET_USER_ROLE_GROUP_BY_ID:
             return action.payload;
-        case GET_USER_ROLE_GROUP_BY_NAME:
+        case GET_USER_ROLE_GROUP_BY_USER:
             return action.payload;
         case GET_USER_ROLE_GROUP_BY_GROUP:
             return action.payload;
