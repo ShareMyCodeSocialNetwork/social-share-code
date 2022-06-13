@@ -9,7 +9,6 @@ export const GET_FOLLOWER_BY_ID = "GET_FOLLOWER_BY_ID";
 export const GET_FOLLOWED = "GET_FOLLOWED";
 export const GET_FOLLOWER = "GET_FOLLOWER";
 export const ADD_FOLLOWER = "ADD_FOLLOWER";
-export const UPDATE_FOLLOWER = "UPDATE_FOLLOWER";
 export const DELETE_FOLLOWER = "DELETE_FOLLOWER";
 
 export const getAll = () => {
