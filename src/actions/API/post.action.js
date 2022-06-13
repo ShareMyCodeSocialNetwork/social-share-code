@@ -1,6 +1,5 @@
 import axios from "axios";
 import AuthService from "../../components/Auth/AuthService";
-import {UPDATE_CODE} from "./code.action";
 
 
 
@@ -36,7 +35,7 @@ export const getOnePostById = (postId) => {
 };
 
 
-export const getOnePostByUserId = (userId) => {
+export const getPostByUserId = (userId) => {
     return (dispatch) => {
         return axios
             .get(`${API_URL}/post/${userId}`,{ headers:  AuthService.authHeader() })
@@ -52,7 +51,7 @@ export const getOnePostByUserId = (userId) => {
 export const updatePost = (postId,data) => {
     return (dispatch) => {
         return axios
-            .post(`${API_URL}/post/update/${postId}`, data, { headers:  AuthService.authHeader() })
+            .patch(`${API_URL}/post/update/${postId}`, data, { headers:  AuthService.authHeader() })
             .then(() => {
                 dispatch({ type: UPDATE_POST, payload: data });
             })
@@ -80,7 +79,7 @@ export const deletePost = (postId) => {
     return (dispatch) => {
         return axios({
             method: "delete",
-            url: `${API_URL}/post/delete/${postId}`,
+            url: `${API_URL}/post/${postId}`,
             headers:  AuthService.authHeader()
 
         })
