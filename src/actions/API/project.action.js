@@ -38,7 +38,7 @@ export const getOneProjectsById = (projectId) => {
     };
 };
 
-export const getOneProjectsByName = (projectName) => {
+export const getProjectsByName = (projectName) => {
     return (dispatch) => {
         return axios
             .get(`${API_URL}/project/name/${projectName}`,{ headers:  AuthService.authHeader() })
@@ -85,7 +85,7 @@ export const addProject = (data) => {
 export const updateGroupForProject = (projectId,data) => {
     return (dispatch) => {
         return axios
-            .post(`${API_URL}/group/${projectId}`, data, { headers:  AuthService.authHeader() })
+            .patch(`${API_URL}/group/${projectId}`, data, { headers:  AuthService.authHeader() })
             .then(() => {
                 dispatch({ type: UPDATE_GROUP_PROJECT, payload: data });
             })
@@ -96,7 +96,7 @@ export const updateGroupForProject = (projectId,data) => {
 export const updateOwnerForProject = (projectId,data) => {
     return (dispatch) => {
         return axios
-            .post(`${API_URL}/owner/${projectId}`, data, { headers:  AuthService.authHeader() })
+            .patch(`${API_URL}/owner/${projectId}`, data, { headers:  AuthService.authHeader() })
             .then(() => {
                 dispatch({ type: UPDATE_OWNER_PROJECT, payload: data });
             })
@@ -106,10 +106,10 @@ export const updateOwnerForProject = (projectId,data) => {
 
 
 
-export const updateProject = (projectId,data) => {
+export const changeProjectName = (projectId,data) => {
     return (dispatch) => {
         return axios
-            .post(`${API_URL}/project/update/${projectId}`, data, { headers:  AuthService.authHeader() })
+            .patch(`${API_URL}/project/${projectId}/name`, data, { headers:  AuthService.authHeader() })
             .then(() => {
                 dispatch({ type: UPDATE_PROJECT, payload: data });
             })
