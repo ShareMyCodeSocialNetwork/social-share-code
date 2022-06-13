@@ -46,10 +46,6 @@ export const getLikeByUser = (userId) => {
 };
 
 
-
-//TODO :  avoir tout les LIKEs d'une personne
-
-
 export const addLike = (data) => {
     return (dispatch) => {
         return axios
