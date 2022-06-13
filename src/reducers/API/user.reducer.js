@@ -3,6 +3,7 @@ import {
     GET_USER_BY_ID,
     GET_USER_BY_USER_ID,
     GET_USER_BY_PSEUDO,
+    GET_USER_BY_EMAIL,
     UPDATE_USER_EMAIL,
     UPDATE_USER_PSEUDO,
     UPDATE_USER_PASSWORD,
@@ -24,6 +25,8 @@ export default function userReducer(state = initialState, action) {
         case GET_USER_BY_USER_ID:
             return action.payload;
         case GET_USER_BY_PSEUDO:
+            return action.payload;
+        case GET_USER_BY_EMAIL:
             return action.payload;
         case ADD_USER:
             return [action.payload, ...state];
