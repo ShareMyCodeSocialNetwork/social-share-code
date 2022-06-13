@@ -36,6 +36,7 @@ export const getOneLanguageById = (languageId) => {
 
 
 //TODO :  avoir tout les LANGUAGEs d'une personne
+//  faire un get all code et filtrer en unique sur les languages
 
 
 export const addLanguage = (data) => {
