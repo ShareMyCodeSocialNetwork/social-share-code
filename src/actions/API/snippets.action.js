@@ -35,11 +35,11 @@ export const getOneSnippetById = (snippetId) => {
     };
 };
 
-//todo pas dans l api
+
 export const getOneSnippetByUserId = (userId) => {
     return (dispatch) => {
         return axios
-            .get(`${API_URL}/snippet/${userId}`,{ headers:  AuthService.authHeader() })
+            .get(`${API_URL}/snippet/user/${userId}`,{ headers:  AuthService.authHeader() })
             .then((res) => {
                 dispatch({ type: GET_SNIPPET_BY_USER_ID, payload: res.data });
             })
