@@ -6,7 +6,7 @@ import AuthService from "../../components/Auth/AuthService";
 export const API_URL = "https://localhost:8080"
 export const GET_USER_ROLE_GROUP = "GET_USER_ROLE_GROUP";
 export const GET_USER_ROLE_GROUP_BY_ID = "GET_USER_ROLE_GROUP_BY_ID";
-export const GET_USER_ROLE_GROUP_BY_NAME = "GET_USER_ROLE_GROUP_BY_USER";
+export const GET_USER_ROLE_GROUP_BY_USER = "GET_USER_ROLE_GROUP_BY_USER";
 export const GET_USER_ROLE_GROUP_BY_GROUP = "GET_USER_ROLE_GROUP_BY_GROUP";
 export const ADD_USER_ROLE_GROUP = "ADD_USER_ROLE_GROUP";
 export const DELETE_USER_ROLE_GROUP = "DELETE_USER_ROLE_GROUP";
@@ -34,24 +34,24 @@ export const getOneUserRoleGroupsById = (UserRoleGroupId) => {
     };
 };
 
-export const getOneUserRoleGroupsByGroup= (UserRoleGroupId) => {
+export const getUserRoleGroupsByGroup= (groupId) => {
     return (dispatch) => {
         return axios
-            .get(`${API_URL}/USER_ROLE_GROUP/user/${UserRoleGroupId}`,{ headers:  AuthService.authHeader() })
+            .get(`${API_URL}/user_role_group/group/${groupId}`,{ headers:  AuthService.authHeader() })
             .then((res) => {
-                dispatch({ type: GET_USER_ROLE_GROUP_BY_NAME, payload: res.data });
+                dispatch({ type: GET_USER_ROLE_GROUP_BY_GROUP, payload: res.data });
             })
             .catch((err) => console.log(err));
     };
 };
 
 
-export const getUserRoleGroupByUser = (groupId) => {
+export const getUserRoleGroupByUser = (userId) => {
     return (dispatch) => {
         return axios
-            .get(`${API_URL}/user_role_group/group/${groupId}`,{ headers:  AuthService.authHeader() })
+            .get(`${API_URL}/user_role_group/group/${userId}`,{ headers:  AuthService.authHeader() })
             .then((res) => {
-                dispatch({ type: GET_USER_ROLE_GROUP_BY_GROUP, payload: res.data });
+                dispatch({ type: GET_USER_ROLE_GROUP_BY_USER, payload: res.data });
             })
             .catch((err) => console.log(err));
     };
