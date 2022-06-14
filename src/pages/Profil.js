@@ -1,18 +1,57 @@
 import React, {useState} from 'react';
 import {useForm} from "react-hook-form";
+import AuthService from "../components/Auth/AuthService";
+import {Redirect, useHistory} from "react-router-dom";
+import { updateUserEmail, updateUserFirstName, updateUserLastName, updateUserPassword, updateUserPseudo } from "../actions/API/user.action";
+import {useDispatch} from "react-redux";
+import {isEmpty, wait} from "../components/utils/Utils";
 
 const Profil = () => {
-
+    const history = useHistory();
+    const dispatch = useDispatch();
+    /*if(AuthService.getCurrentUser() === null){
+        history.push("/login");
+    }*/
+    let user = AuthService.getUserInfo();
+    console.log(user);
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const [firstName,setFirstName] = useState("David")
-    const [lastName,setLastName] = useState("Arnaud")
-    const [pseudo,setPseudo] = useState("DH7789-dev")
-    const [mdp,setMdp] = useState("dada222329@")
+    const [firstName,setFirstName] = useState(AuthService.getCurrentUser() == null ? "firstname" : AuthService.getCurrentUser().firstname)
+    const [lastName,setLastName] = useState(AuthService.getCurrentUser() == null ? "lastname" : AuthService.getCurrentUser().lastName)
+    const [pseudo,setPseudo] = useState(AuthService.getCurrentUser() == null ? "pseudo" : AuthService.getCurrentUser().pseudo)
+    const [mdp,setMdp] = useState(AuthService.getCurrentUser() == null ? "password" : AuthService.getCurrentUser().password)
     const [tel,setTel] = useState("0622901123")
-    const [mail,setMail] = useState("David@gmail.com")
+    const [mail,setMail] = useState(AuthService.getCurrentUser() == null ? "email" : AuthService.getCurrentUser().email)
 
-    const onSubmit = data => console.log(data);
+    const onSubmit = data => {
+        console.log(data);
+
+        if(data.firstName !== AuthService.getCurrentUser().firstName){
+            dispatch(updateUserFirstName(/*userId a mettre*//*AuthService.getCurrentUser().id,*/ data));
+        }
+
+        if(data.lastName !== AuthService.getCurrentUser().lastName){
+            dispatch(updateUserLastName(/*userId a mettre*//*AuthService.getCurrentUser().id,*/ data));
+        }
+
+        if(data.email !== AuthService.getCurrentUser().email){
+            dispatch(updateUserEmail(/*userId a mettre*//*AuthService.getCurrentUser().id,*/ data));
+        }
+
+        if(data.pseudo !== AuthService.getCurrentUser().pseudo){
+            dispatch(updateUserPseudo(/*userId a mettre*//*AuthService.getCurrentUser().id,*/ data));
+        }
+
+        if(data.password !== AuthService.getCurrentUser().password){
+            dispatch(updateUserPassword(/*userId a mettre*//*AuthService.getCurrentUser().id,*/ data));
+        }
+
+        wait(2000).then( r => {
+            history.push({
+                pathname:"/profil"
+            })
+        })
+    }
 
 
 

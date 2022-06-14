@@ -1,4 +1,8 @@
 import React from 'react';
+import jwt from 'jwt-decode';
+import {getUserByEmail} from "../../actions/API/user.action";
+import {useDispatch} from "react-redux";
+import {wait} from "../utils/Utils";
 
 
 class  AuthService {
@@ -22,6 +26,19 @@ class  AuthService {
         } else {
             return {};
         }
+    }
+
+    getCurrentUserEmail = () => {
+        return jwt(JSON.parse(localStorage.getItem('user')))["sub"];
+    }
+
+    getUserInfo = () => {
+        const dispatch = useDispatch();
+        return dispatch(
+            getUserByEmail(
+                this.getCurrentUserEmail()
+            )
+        );
     }
 
 };
