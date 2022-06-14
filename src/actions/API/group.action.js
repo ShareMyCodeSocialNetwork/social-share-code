@@ -3,7 +3,7 @@ import AuthService from "../../components/Auth/AuthService";
 
 
 
-export const API_URL = "https://localhost:8080"
+export const API_URL = "http://localhost:8080"
 export const GET_GROUP = "GET_GROUP";
 export const GET_GROUP_BY_ID = "GET_GROUP_BY_ID";
 export const GET_GROUP_BY_NAME = "GET_GROUP_BY_NAME";

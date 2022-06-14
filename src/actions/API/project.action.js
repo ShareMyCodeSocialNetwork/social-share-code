@@ -3,7 +3,7 @@ import AuthService from "../../components/Auth/AuthService";
 
 
 
-export const API_URL = "https://localhost:8080"
+export const API_URL = "http://localhost:8080"
 export const GET_PROJECT = "GET_PROJECT";
 export const GET_PROJECT_BY_ID = "GET_PROJECT_BY_ID";
 export const GET_PROJECT_BY_NAME = "GET_PROJECT_BY_NAME";

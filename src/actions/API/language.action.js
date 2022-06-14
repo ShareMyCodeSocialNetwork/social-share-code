@@ -3,7 +3,7 @@ import AuthService from "../../components/Auth/AuthService";
 
 
 
-export const API_URL = "https://localhost:8080"
+export const API_URL = "http://localhost:8080"
 export const GET_LANGUAGE = "GET_LANGUAGE";
 export const GET_LANGUAGE_BY_ID = "GET_LANGUAGE_BY_ID";
 export const ADD_LANGUAGE = "ADD_LANGUAGE";

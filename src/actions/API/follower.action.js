@@ -3,7 +3,7 @@ import AuthService from "../../components/Auth/AuthService";
 
 
 
-export const API_URL = "https://localhost:8080"
+export const API_URL = "http://localhost:8080"
 export const GET_ALL = "GET_ALL";
 export const GET_FOLLOWER_BY_ID = "GET_FOLLOWER_BY_ID";
 export const GET_FOLLOWED = "GET_FOLLOWED";

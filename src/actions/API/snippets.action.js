@@ -4,7 +4,7 @@ import AuthService from "../../components/Auth/AuthService";
 
 
 
-export const API_URL = "https://localhost:8080"
+export const API_URL = "http://localhost:8080"
 export const GET_SNIPPET = "GET_SNIPPET";
 export const GET_SNIPPET_BY_ID = "GET_SNIPPET_BY_ID";
 export const GET_SNIPPET_BY_USER_ID = "GET_SNIPPET_BY_USER_ID";
