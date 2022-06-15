@@ -99,7 +99,7 @@ const Profil = () => {
 
 
     const onSubmit = data => {
-        console.log(data["firstname"]);
+        console.log(data);
 
         if (data["firstname"] !== dataUser["firstname"]) {
             dispatch(updateUserFirstName(dataUser["id"], data));
@@ -156,12 +156,12 @@ const Profil = () => {
                     <div className="container-profile">
                         <div className="social-profile-input">
                             <div className="title-input">Nom</div>
-                            <input type="text"  {...register("lastName")} className="input-profile"
+                            <input type="text"  {...register("lastname")} className="input-profile"
                                    defaultValue={lastName}/>
                         </div>
                         <div className="social-profile-input">
                             <div className="title-input">Prenom</div>
-                            <input type="text"  {...register("firstName")} className="input-profile"
+                            <input type="text"  {...register("firstname")} className="input-profile"
                                    defaultValue={firstName}/>
                         </div>
                     </div>
