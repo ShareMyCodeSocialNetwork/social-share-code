@@ -1,7 +1,9 @@
 import axios from "axios";
-import qs from 'querystring'
+import qs from 'querystring';
+import AuthService from "../../components/Auth/AuthService";
 export const API_URL = "http://localhost:8080"
 export const LOGIN_USER = "LOGIN_USER";
+export const CURRENT_USER_INFO = "CURRENT_USER_INFO";
 export const REGISTER_USER = "REGISTER_USER";
 export const REFRESH_TOKEN = "REFRESH_TOKEN";
 
@@ -17,10 +19,22 @@ export const login = (data) => {
             url: API_URL + '/login',
         };
         axios(options).then(response => {
-            if (response.data.access_token) {
-                dispatch({ type: LOGIN_USER, payload: response.data.access_token });
-                localStorage.setItem("user", JSON.stringify(response.data.access_token));
-                localStorage.setItem("refresh_user", JSON.stringify(response.data.refresh_token));
+            if (response.data["access_token"]) {
+                dispatch({ type: LOGIN_USER, payload: response.data["access_token"] });
+                localStorage.setItem("user", JSON.stringify(response.data["access_token"]));
+                localStorage.setItem("refresh_user", JSON.stringify(response.data["refresh_token"]));
+
+                const init = {
+                    method: 'GET',
+                    headers: { 'Authorization': 'Bearer ' + response.data["access_token"] },
+                    url: API_URL + '/user/email/' + AuthService.getCurrentUserEmail(),
+                };
+                axios(init)
+                    .then((response)=>{
+                        dispatch({ type: CURRENT_USER_INFO, payload: response.data });
+                        localStorage.setItem("user_id", response.data["id"]);
+                })
+
             }
             return response.data;
         });
