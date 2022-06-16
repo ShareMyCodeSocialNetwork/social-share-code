@@ -33,18 +33,22 @@ const Profil = () => {
     const loadUserData = async () => {
         let userData = await user;
         setDataUser(userData);
+        setPseudo(userData['pseudo'])
+        setFirstname(userData["firstname"]);
+        setLastname(userData["lastname"]);
+        setPassword(userData["password"]);
+        setMail(userData["email"]);
     }
-    loadUserData()
-        .then(()=>
-            console.log(dataUser)
-        );
+    loadUserData().then(
 
+    )
+    console.log(dataUser)
 
-/*
+    /*
     useEffect(() => {
         dispatch(getFollowed(dataUser["id"]));
     }, [dataUser, dispatch]);
-    const followed = useSelector((state) => state.userReducer);
+    const followed = useSelector((state) => state.followerReducer);
 
     const [dataFollowed, setDataFollowed] = useState();
 
@@ -57,7 +61,7 @@ const Profil = () => {
     useEffect(() => {
         dispatch(getFollowers(dataUser["id"]));
     }, [dataUser, dispatch]);
-    const followers = useSelector((state) => state.userReducer);
+    const followers = useSelector((state) => state.followerReducer);
 
     const [dataFollowers, setDataFollowers] = useState();
 
@@ -65,17 +69,17 @@ const Profil = () => {
         let followersData = await followers;
         setDataFollowers(followersData);
     }
-    loadFollowersData().then(()=>console.log(dataFollowers));*/
-
+    loadFollowersData().then(()=>console.log(dataFollowers));
+*/
 
 
 
     const {register, handleSubmit, watch, formState: {errors}} = useForm();
-    const [firstname, setFirstName] = useState(dataUser === undefined ?
+    const [firstname, setFirstname] = useState(dataUser === undefined ?
             "firstname" :
             dataUser["firstname"]
     );
-    const [lastname, setLastName] = useState(dataUser === undefined ?
+    const [lastname, setLastname] = useState(dataUser === undefined ?
             "lastname" :
             dataUser["lastname"]
     );
@@ -83,7 +87,7 @@ const Profil = () => {
             "pseudo" :
             dataUser["pseudo"]
     );
-    const [mdp, setMdp] = useState(dataUser === undefined ?
+    const [password, setPassword] = useState(dataUser === undefined ?
             "password" :
             dataUser["password"]
     );
@@ -94,7 +98,6 @@ const Profil = () => {
             "email" :
             AuthService.getCurrentUserEmail
     );
-
 
     const onSubmit = data => {
         console.log(data);
@@ -125,9 +128,8 @@ const Profil = () => {
                 pathname: "/profil"
             })
         })
+
     }
-
-
 
     return (
         <div className="view--profile">
@@ -156,33 +158,33 @@ const Profil = () => {
                         <div className="social-profile-input">
                             <div className="title-input">Nom</div>
                             <input type="text"  {...register("lastname")} className="input-profile"
-                                   defaultValue={lastname}/>
+                                   value={lastname}/>
                         </div>
                         <div className="social-profile-input">
                             <div className="title-input">Prenom</div>
                             <input type="text"  {...register("firstname")} className="input-profile"
-                                   defaultValue={firstname}/>
+                                   value={firstname}/>
                         </div>
                     </div>
                     <div className="container-profile">
                         <div className="social-profile-input">
                             <div className="title-input">Pseudo</div>
                             <input type="text"  {...register("pseudo")} className="input-profile"
-                                   defaultValue={pseudo}/>
+                                   value={pseudo}/>
                         </div>
                         <div className="social-profile-input">
-                            <div className="title-input">MDP</div>
-                            <input type="password"  {...register("mdp")} className="input-profile" defaultValue={mdp}/>
+                            <div className="title-input">Mot de passe</div>
+                            <input type="password"  {...register("password")} className="input-profile" value={password}/>
                         </div>
                     </div>
                     <div className="container-profile">
                         <div className="social-profile-input">
                             <div className="title-input">Tel</div>
-                            <input type="tel"  {...register("tel")} className="input-profile" defaultValue={tel}/>
+                            <input type="tel"  {...register("tel")} className="input-profile" value={tel}/>
                         </div>
                         <div className="social-profile-input">
                             <div className="title-input">Email</div>
-                            <input type="text"  {...register("email")} className="input-profile" defaultValue={email}/>
+                            <input type="text"  {...register("email")} className="input-profile" value={email}/>
                         </div>
                     </div>
                     <button className="button-profile">enregistrer</button>
