@@ -3,6 +3,7 @@ import {useForm} from "react-hook-form";
 import AuthService from "../components/Auth/AuthService";
 import {useHistory} from "react-router-dom";
 import {
+    getOneUserById,
     getUserByEmail,
     updateUserEmail,
     updateUserFirstName,
@@ -12,7 +13,7 @@ import {
 } from "../actions/API/user.action";
 import {useDispatch, useSelector} from "react-redux";
 import {wait} from "../components/utils/Utils";
-//import {getFollowed, getFollowers} from "../actions/API/follower.action";
+import {getFollowed, getFollowers} from "../actions/API/follower.action";
 
 const Profil = () => {
     const dispatch = useDispatch();
@@ -22,105 +23,79 @@ const Profil = () => {
         history.push("/login");
     }
 
+    const user_id = localStorage.getItem("user_id");
     useEffect(() => {
-        dispatch(getUserByEmail(AuthService.getCurrentUserEmail()));
-    }, [dispatch]);
-
+        dispatch(getOneUserById(user_id));
+    }, [dispatch, user_id]);
     const user = useSelector(state => state.userReducer);
+    const [dataUser,setDataUser] = useState();
 
-    const [dataUser, setDataUser] = useState();
+    useEffect(() => {
+        dispatch(getFollowed(user_id));
+    }, [dispatch, user_id]);
+    const followed = useSelector((state) => state.followerReducer);
+    const [dataFollowed, setDataFollowed] = useState();
 
-    const loadUserData = async () => {
+    useEffect(() => {
+        dispatch(getFollowers(user_id));
+    }, [dispatch, user_id]);
+    const followers = useSelector((state) => state.followerReducer);
+    const [dataFollowers, setDataFollowers] = useState();
+
+    const loadData = async () => {
         let userData = await user;
         setDataUser(userData);
-        setPseudo(userData['pseudo'])
+        let followedData = await followed;
+        setDataFollowed(followedData);
+        let followersData = await followers;
+        setDataFollowers(followersData);
+
+        setPseudo(userData['pseudo']);
         setFirstname(userData["firstname"]);
         setLastname(userData["lastname"]);
         setPassword(userData["password"]);
         setMail(userData["email"]);
+        console.log(dataUser);
+        setFollowersInput(dataFollowers["length"]);
+        console.log(dataFollowers);
+        setFollowedInput(dataFollowed["length"]);
+        console.log(dataFollowed);
     }
-    loadUserData().then(
-
-    )
-    console.log(dataUser)
-
-    /*
-    useEffect(() => {
-        dispatch(getFollowed(dataUser["id"]));
-    }, [dataUser, dispatch]);
-    const followed = useSelector((state) => state.followerReducer);
-
-    const [dataFollowed, setDataFollowed] = useState();
-
-    const loadFollowedData = async () => {
-        let followedData = await followed;
-        setDataFollowed(followedData);
-    }
-    loadFollowedData().then(()=>console.log(dataFollowed));
-
-    useEffect(() => {
-        dispatch(getFollowers(dataUser["id"]));
-    }, [dataUser, dispatch]);
-    const followers = useSelector((state) => state.followerReducer);
-
-    const [dataFollowers, setDataFollowers] = useState();
-
-    const loadFollowersData = async () => {
-        let followersData = await followers;
-        setDataFollowers(followersData);
-    }
-    loadFollowersData().then(()=>console.log(dataFollowers));
-*/
-
-
+    loadData().then()
 
     const {register, handleSubmit, watch, formState: {errors}} = useForm();
-    const [firstname, setFirstname] = useState(dataUser === undefined ?
-            "firstname" :
-            dataUser["firstname"]
-    );
-    const [lastname, setLastname] = useState(dataUser === undefined ?
-            "lastname" :
-            dataUser["lastname"]
-    );
-    const [pseudo, setPseudo] = useState(dataUser === undefined ?
-            "pseudo" :
-            dataUser["pseudo"]
-    );
-    const [password, setPassword] = useState(dataUser === undefined ?
-            "password" :
-            dataUser["password"]
-    );
-    const [tel, setTel] = useState(
-        "0622901123"
-    );
-    const [email, setMail] = useState(AuthService.getCurrentUser() == null ?
-            "email" :
-            AuthService.getCurrentUserEmail
-    );
+    const [firstname, setFirstname] = useState("Loading...");
+    const [lastname, setLastname] = useState("Loading...");
+    const [pseudo, setPseudo] = useState("Loading...");
+    const [password, setPassword] = useState("Loading...");
+    const [tel, setTel] = useState("Loading...");
+    const [email, setMail] = useState("Loading...");
+    const [followersInput, setFollowersInput] = useState(0);
+    const [followedInput, setFollowedInput] = useState(0);
+
 
     const onSubmit = data => {
         console.log(data);
         console.log("data before this line");
 
-        if (data["firstname"] !== dataUser["firstname"]) {
-            dispatch(updateUserFirstName(dataUser["id"], data));
+        if (data["firstname"] !== user_id["firstname"]) {
+            dispatch(updateUserFirstName(user_id["id"], data));
         }
 
-        if (data["lastname"] !== dataUser["lastname"]) {
-            dispatch(updateUserLastName(dataUser["id"], data));
+        if (data["lastname"] !== user_id["lastname"]) {
+            dispatch(updateUserLastName(user_id["id"], data));
         }
 
         if (data.email !== AuthService.getCurrentUser().email) {
-            dispatch(updateUserEmail(dataUser["id"], data));
+            dispatch(updateUserEmail(user_id["id"], data));
         }
 
-        if (data["pseudo"] !==  dataUser["pseudo"]) {
-            dispatch(updateUserPseudo(dataUser["id"], data));
+        if (data["pseudo"] !==  user_id["pseudo"]) {
+            dispatch(updateUserPseudo(user_id["id"], data));
         }
 
-        if (data["password"] !== dataUser["password"]) {
-            dispatch(updateUserPassword(dataUser["id"], data));
+        if (data["password"] !== user_id["password"]) {
+            dispatch(updateUserPassword(user_id["id"], data));
         }
 
         wait(2000).then(r => {
@@ -145,11 +120,11 @@ const Profil = () => {
             <div className="body-profile">
                 <div className="social-profile">
                     <div className="social-follow margin">
-                        <div className="number-social-follow">0</div>
+                        <div className="number-social-follow">{followersInput}</div>
                         <div className="title-social-follow">followers</div>
                     </div>
                     <div className="social-follow">
-                        <div className="number-social-follow">0</div>
+                        <div className="number-social-follow">{followedInput}</div>
                         <div className="title-social-follow">following</div>
                     </div>
                 </div>
