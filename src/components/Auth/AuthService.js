@@ -7,6 +7,7 @@ class  AuthService {
     logout = () => {
         localStorage.removeItem("user");
         localStorage.removeItem("refresh_user");
+        localStorage.removeItem("user_id");
     }
 
     getCurrentUser = () => {
@@ -26,8 +27,14 @@ class  AuthService {
     }
 
     isExpiredToken = () => {
-        let expToken = new Date(jwt(JSON.parse(localStorage.getItem('user')))["exp"]);
-        let now = Date.now();
+        const decoded = jwt(JSON.parse(localStorage.getItem('user')));
+        //console.log(decoded);
+        let expToken = new Date(decoded["exp"]);
+        let now = new Date();
+        /*console.log("now.valueOf() " + now.valueOf())
+        console.log("now " + now)
+        console.log("expToken.valueOf() "+expToken.valueOf())
+        cosole.log("expToken " + expToken)*/
         return expToken.valueOf() > now.valueOf();
     }
 
