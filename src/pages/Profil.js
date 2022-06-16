@@ -18,10 +18,9 @@ const Profil = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    if (AuthService.getCurrentUser() === null) {
+    if (AuthService.getCurrentUser() === null || AuthService.isExpiredToken()) {
         history.push("/login");
     }
-
 
     useEffect(() => {
         dispatch(getUserByEmail(AuthService.getCurrentUserEmail()));
@@ -99,7 +98,7 @@ const Profil = () => {
 
     const onSubmit = data => {
         console.log(data);
-        console.log("ddddddddddddddddddddddddddddd");
+        console.log("data before this line");
 
         if (data["firstname"] !== dataUser["firstname"]) {
             dispatch(updateUserFirstName(dataUser["id"], data));
