@@ -27,7 +27,7 @@ const Profil = () => {
         dispatch(getUserByEmail(AuthService.getCurrentUserEmail()));
     }, [dispatch]);
 
-    const user = useSelector((state) => state.userReducer);
+    const user = useSelector(state => state.userReducer);
 
     const [dataUser, setDataUser] = useState();
 
@@ -35,7 +35,10 @@ const Profil = () => {
         let userData = await user;
         setDataUser(userData);
     }
-    loadUserData().then(()=>console.log(dataUser));
+    loadUserData()
+        .then(()=>
+            console.log(dataUser)
+        );
 
 
 /*
@@ -69,30 +72,26 @@ const Profil = () => {
 
 
     const {register, handleSubmit, watch, formState: {errors}} = useForm();
-    const [firstName, setFirstName] = useState(
-            dataUser === undefined ?
+    const [firstname, setFirstName] = useState(dataUser === undefined ?
             "firstname" :
             dataUser["firstname"]
-)
-    ;
-    const [lastName, setLastName] = useState(
-        dataUser === undefined ?
+    );
+    const [lastname, setLastName] = useState(dataUser === undefined ?
             "lastname" :
             dataUser["lastname"]
     );
-    const [pseudo, setPseudo] = useState(
-        dataUser === undefined ?
+    const [pseudo, setPseudo] = useState(dataUser === undefined ?
             "pseudo" :
             dataUser["pseudo"]
     );
-    const [mdp, setMdp] = useState(
-        dataUser === undefined ?
+    const [mdp, setMdp] = useState(dataUser === undefined ?
             "password" :
             dataUser["password"]
     );
-    const [tel, setTel] = useState("0622901123");
-    const [mail, setMail] = useState(
-        AuthService.getCurrentUser() == null ?
+    const [tel, setTel] = useState(
+        "0622901123"
+    );
+    const [email, setMail] = useState(AuthService.getCurrentUser() == null ?
             "email" :
             AuthService.getCurrentUserEmail
     );
@@ -100,6 +99,7 @@ const Profil = () => {
 
     const onSubmit = data => {
         console.log(data);
+        console.log("ddddddddddddddddddddddddddddd");
 
         if (data["firstname"] !== dataUser["firstname"]) {
             dispatch(updateUserFirstName(dataUser["id"], data));
@@ -157,12 +157,12 @@ const Profil = () => {
                         <div className="social-profile-input">
                             <div className="title-input">Nom</div>
                             <input type="text"  {...register("lastname")} className="input-profile"
-                                   defaultValue={lastName}/>
+                                   defaultValue={lastname}/>
                         </div>
                         <div className="social-profile-input">
                             <div className="title-input">Prenom</div>
                             <input type="text"  {...register("firstname")} className="input-profile"
-                                   defaultValue={firstName}/>
+                                   defaultValue={firstname}/>
                         </div>
                     </div>
                     <div className="container-profile">
@@ -183,7 +183,7 @@ const Profil = () => {
                         </div>
                         <div className="social-profile-input">
                             <div className="title-input">Email</div>
-                            <input type="text"  {...register("mail")} className="input-profile" defaultValue={mail}/>
+                            <input type="text"  {...register("email")} className="input-profile" defaultValue={email}/>
                         </div>
                     </div>
                     <button className="button-profile">enregistrer</button>
