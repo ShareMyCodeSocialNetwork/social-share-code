@@ -16,7 +16,6 @@ export const getCodes = () => {
             .get(`${API_URL}/code`, { headers: AuthService.authHeader() })
             .then((res) => {
                 dispatch({ type: GET_CODE, payload: res.data });
-
             })
             .catch((err) => console.log(err));
     };
@@ -32,8 +31,6 @@ export const getOneCodeById = (codeId) => {
             .catch((err) => console.log(err));
     };
 };
-
-
 
 
 export const addCode = (data) => {

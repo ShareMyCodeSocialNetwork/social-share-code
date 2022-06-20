@@ -1,7 +1,6 @@
 import React from 'react';
 import jwt from 'jwt-decode';
 
-
 class  AuthService {
 
     logout = () => {

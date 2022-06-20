@@ -48,6 +48,9 @@ export const register_user = (data) => {
             .post(API_URL + "/user/create", data)
             .then((res) => {
                 dispatch({ type: REGISTER_USER, payload: res.statusText });
+                if(res.status === 201) {
+                    window.location.replace('/login');
+                }
             })
             .catch((err) => console.log(err));
     };

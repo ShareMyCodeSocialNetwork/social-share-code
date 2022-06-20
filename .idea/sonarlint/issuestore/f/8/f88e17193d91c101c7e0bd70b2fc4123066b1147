@@ -1,0 +1,9 @@
+
+Jjavascript:S1128")Remove this unused import of 'useEffect'.(Õ¢ñûùÿÿÿÿ
+[javascript:S1481
+"?Remove the declaration of the unused 'setIsConnected' variable.(°ÛÛŠ
+Xjavascript:S1854
+"<Remove this useless assignment to variable "setIsConnected".(°ÛÛŠ
+]javascript:S1481"<Remove the declaration of the unused 'setCodeTest' variable.(€ ””úÿÿÿÿ
+Zjavascript:S1854"9Remove this useless assignment to variable "setCodeTest".(€ ””úÿÿÿÿ
+“javascript:S1172."kRemove the unused function parameter "viewUpdate" or rename it to "_viewUpdate" to make intention explicit.(„ÅÞçÿÿÿÿÿ8í•Â ‘0
