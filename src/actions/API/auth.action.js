@@ -22,6 +22,7 @@ export const login = (data) => {
             if (response.data["access_token"]) {
                 dispatch({ type: LOGIN_USER, payload: response.data["access_token"] });
                 localStorage.setItem("user", JSON.stringify(response.data["access_token"]));
+                localStorage.setItem("access_expire",JSON.stringify(response.data["access_expire"]))
                 localStorage.setItem("refresh_user", JSON.stringify(response.data["refresh_token"]));
 
                 const init = {
