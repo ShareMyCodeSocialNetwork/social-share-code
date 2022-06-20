@@ -4,7 +4,6 @@ import AuthService from "../components/Auth/AuthService";
 import {useHistory} from "react-router-dom";
 import {
     getOneUserById,
-    getUserByEmail,
     updateUserEmail,
     updateUserFirstName,
     updateUserLastName,
@@ -79,26 +78,26 @@ const Profil = () => {
         console.log("data before this line");
 
         if (data["firstname"] !== user_id["firstname"]) {
-            dispatch(updateUserFirstName(user_id["id"], data));
+            dispatch(updateUserFirstName(user_id, data));
         }
 
         if (data["lastname"] !== user_id["lastname"]) {
-            dispatch(updateUserLastName(user_id["id"], data));
+            dispatch(updateUserLastName(user_id, data));
         }
 
         if (data.email !== AuthService.getCurrentUser().email) {
-            dispatch(updateUserEmail(user_id["id"], data));
+            dispatch(updateUserEmail(user_id, data));
         }
 
         if (data["pseudo"] !==  user_id["pseudo"]) {
-            dispatch(updateUserPseudo(user_id["id"], data));
+            dispatch(updateUserPseudo(user_id, data));
         }
 
         if (data["password"] !== user_id["password"]) {
-            dispatch(updateUserPassword(user_id["id"], data));
+            dispatch(updateUserPassword(user_id, data));
         }
 
-        wait(2000).then(r => {
+        wait(2000).then(() => {
             history.push({
                 pathname: "/profil"
             })
