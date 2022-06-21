@@ -11,7 +11,7 @@ import {
     updateUserPseudo
 } from "../actions/API/user.action";
 import {useDispatch, useSelector} from "react-redux";
-import {wait} from "../components/utils/Utils";
+import {isEmpty, wait} from "../components/utils/Utils";
 import {getFollowed, getFollowers} from "../actions/API/follower.action";
 
 const Profil = () => {
@@ -40,6 +40,15 @@ const Profil = () => {
     }, [dispatch, user_id]);
     const followers = useSelector((state) => state.followerReducer);
     const [dataFollowers, setDataFollowers] = useState();
+    const {register, handleSubmit, watch, formState: {errors}} = useForm({ shouldUseNativeValidation: true });
+    const [firstname, setFirstname] = useState("Loading...");
+    const [lastname, setLastname] = useState("Loading...");
+    const [pseudo, setPseudo] = useState("Loading...");
+    const [password, setPassword] = useState("Loading...");
+    const [tel, setTel] = useState("Loading...");
+    const [email, setMail] = useState("Loading...");
+    const [followersInput, setFollowersInput] = useState(0);
+    const [followedInput, setFollowedInput] = useState(0);
 
     const loadData = async () => {
         let userData = await user;
@@ -55,22 +64,17 @@ const Profil = () => {
         setPassword(userData["password"]);
         setMail(userData["email"]);
         console.log(dataUser);
-        setFollowersInput(dataFollowers["length"]);
+        if(!isEmpty(dataFollowers["length"])){
+            setFollowersInput(dataFollowers["length"]);
+        }
         console.log(dataFollowers);
-        setFollowedInput(dataFollowed["length"]);
+        if(!isEmpty(dataFollowed["length"])){
+            setFollowedInput(dataFollowed["length"]);
+        }
         console.log(dataFollowed);
     }
-    loadData().then()
 
-    const {register, handleSubmit, watch, formState: {errors}} = useForm();
-    const [firstname, setFirstname] = useState("Loading...");
-    const [lastname, setLastname] = useState("Loading...");
-    const [pseudo, setPseudo] = useState("Loading...");
-    const [password, setPassword] = useState("Loading...");
-    const [tel, setTel] = useState("Loading...");
-    const [email, setMail] = useState("Loading...");
-    const [followersInput, setFollowersInput] = useState(0);
-    const [followedInput, setFollowedInput] = useState(0);
+    loadData().then()
 
 
     const onSubmit = data => {
@@ -131,34 +135,34 @@ const Profil = () => {
                     <div className="container-profile">
                         <div className="social-profile-input">
                             <div className="title-input">Nom</div>
-                            <input type="text"  {...register("lastname")} className="input-profile"
+                            <input type="text"  {...register("lastname",{ required: "Please enter your last name valid." })} className="input-profile"
                                    value={lastname}/>
                         </div>
                         <div className="social-profile-input">
                             <div className="title-input">Prenom</div>
-                            <input type="text"  {...register("firstname")} className="input-profile"
+                            <input type="text"  {...register("firstname", { required: "Please enter your first name valid." })} className="input-profile"
                                    value={firstname}/>
                         </div>
                     </div>
                     <div className="container-profile">
                         <div className="social-profile-input">
                             <div className="title-input">Pseudo</div>
-                            <input type="text"  {...register("pseudo")} className="input-profile"
+                            <input type="text"  {...register("pseudo", { required: "Please enter your pseudo valid." })} className="input-profile"
                                    value={pseudo}/>
                         </div>
                         <div className="social-profile-input">
                             <div className="title-input">Mot de passe</div>
-                            <input type="password"  {...register("password")} className="input-profile" value={password}/>
+                            <input type="password"  {...register("password", { required: "Please enter your password valid." })} className="input-profile" value={password}/>
                         </div>
                     </div>
                     <div className="container-profile">
                         <div className="social-profile-input">
                             <div className="title-input">Tel</div>
-                            <input type="tel"  {...register("tel")} className="input-profile" value={tel}/>
+                            <input type="tel"  {...register("tel", { required: "Please enter your password valid." })} className="input-profile" value={tel}/>
                         </div>
                         <div className="social-profile-input">
                             <div className="title-input">Email</div>
-                            <input type="text"  {...register("email")} className="input-profile" value={email}/>
+                            <input type="text"  {...register("email", { required: "Please enter your password valid." })} className="input-profile" value={email}/>
                         </div>
                     </div>
                     <button className="button-profile">enregistrer</button>
