@@ -10,6 +10,10 @@ class  AuthService {
         localStorage.removeItem("access_expire");
     }
 
+    getUserId = () => {
+        return localStorage.getItem('user_id')
+    }
+
     getCurrentUser = () => {
           return JSON.parse(localStorage.getItem('user'));
     }
