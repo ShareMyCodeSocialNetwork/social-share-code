@@ -1,0 +1,97 @@
+.main-header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  .logo{
+    font-size: 36px;
+    line-height: 43px;
+    margin-right: 30px;
+    width: 15%;
+    cursor: pointer;
+  }
+  .right-part{
+    width: 85%;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    .search-container{
+      display: flex;
+      align-items: center;
+      .search-form{
+        width: 100%;
+        position: relative;
+        .search-input{
+          background: #1E1F25;
+          color: #fff;
+          width: 900px;
+          padding: 20px;
+          font-size: 18px;
+          line-height: 22px;
+          height: 45px;
+          border: 1px solid transparent;
+          border-radius: 5px;
+          &:focus{
+            outline:  1px solid #C4C4C4;
+          }
+        }
+      }
+      .search-img{
+        width: 29px;
+        height: 28px;
+        color: rgba(255, 255, 255, 0.5);
+        position: relative;
+        cursor: pointer;
+        right: 50px;
+      }
+    }
+    .auth-container{
+      display: flex;
+      .auth{
+        padding: 14px 17px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s;
+        &:hover{
+          transform: scale(1.1);
+        }
+        &.green{
+          background: #248C45;
+          margin-right: 24px;
+          color:#131417;
+        }
+        &.grey{
+          background: #5A5F72;
+          color: #fff;
+        }
+      }
+      .connected{
+        padding: 9px 12px;
+        background: #1E1F25;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius:5px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        &:hover{
+          transform: scale(1.1);
+        }
+        &.margin-right{
+          margin-right: 24px;
+        }
+        .connected-img{
+          width: 29px;
+          height: 29px;
+        }
+      }
+    }
+  }
+}
