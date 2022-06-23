@@ -21,7 +21,7 @@ const Code = () => {
     const [codeTest, setCodeTest] =  useState(``)
     const [nameCode,setCodeName] = useState("Unititled")
     const { register, handleSubmit,watch } = useForm({mode: 'onChange'});
-    const [responseCode, setResponseCode] = useState(["response1","response1","response1","response1"])
+    const [responseCode, setResponseCode] = useState([""])
     const [language,setLanguage] = useState({id:1,name:"python"})
     const languagelist = [{id:1,name:"python"},{id:2,name:"js"},{id:3,name:"java"},{id:4,name:"ruby"}]
     const excutePython = useSelector((state) => state.execodeReducer)
@@ -34,17 +34,16 @@ const Code = () => {
         const article = { code: codetitle };
         if(language.name === "python"){
             dispatch(execute_code_python(article))
-            //responseCode.push(excutePython)
             loadDataPythons()
         }else if(language.name === "js"){
             dispatch(execute_code_js(article))
-            responseCode.push(excuteJava)
+            loadDataJs()
         }else if (language.name === "java"){
             dispatch(execute_code_java(article))
-            responseCode.push(excuteJs)
+            loadDataJava()
         }else if(language.name === "ruby"){
             dispatch(execute_code_ruby(article))
-            responseCode.push(excuteRuby)
+            loadDataRuby()
         }else{
             console.error("language is not recognized")
         }
@@ -56,6 +55,24 @@ const Code = () => {
 
     const loadDataPythons = async () => {
         const data = await excutePython;
+        console.log(data)
+        responseCode.push(data.response)
+    }
+
+    const loadDataJs = async () => {
+        const data = await excuteJs;
+        console.log(data)
+        responseCode.push(data.response)
+    }
+
+    const loadDataJava = async () => {
+        const data = await excuteJava;
+        console.log(data)
+        responseCode.push(data.response)
+    }
+
+    const loadDataRuby = async () => {
+        const data = await excuteRuby;
         console.log(data)
         responseCode.push(data.response)
     }
