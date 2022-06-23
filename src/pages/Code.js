@@ -13,6 +13,7 @@ import {
 import execodeReducer from "../reducers/API/execode.reducer";
 import {addCode} from "../actions/API/code.action";
 import AuthService from "../components/Auth/AuthService";
+import {addSnippet} from "../actions/API/snippets.action";
 
 
 const Code = () => {
@@ -102,6 +103,10 @@ const Code = () => {
     }
 
 
+    const addSnippetToCompte = () => {
+        //TODO call add snipets
+        dispatch(addSnippet())
+    }
 
     const handleChangeNameCode = () => {
         let nameCodeChange = watch("nameCode");
@@ -119,10 +124,15 @@ const Code = () => {
                         <img src="/assets/logo/pen.svg" alt="lamp" className="logo-header extp"/>
                     </div>
                     <div className="right-part-header">
+                        <div className="option-button" onClick={()=> addSnippetToCompte}>
+                            <img className="img-option" src="/assets/logo/save.svg" alt="save"/>
+                            <div className="title-option">Add to snippets</div>
+                        </div>
                         <button className="option-button">
                             <img className="img-option" src="/assets/logo/save.svg" alt="save"/>
                             <div className="title-option">Save</div>
                         </button>
+
                         {
                             /*
                             *   <div className="y">
