@@ -49,8 +49,8 @@ const Code = () => {
         }
     }
     const onSubmit = (data) => {
-        console.log(data);
-        dispatch(addCode(reconstructJsonSendApi(data)))
+        console.log(reconstructJsonSendApi(data));
+        //dispatch(addCode(reconstructJsonSendApi(data)))
     }
 
     const loadDataPythons = async () => {
