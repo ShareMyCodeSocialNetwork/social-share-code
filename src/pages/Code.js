@@ -34,7 +34,8 @@ const Code = () => {
         const article = { code: codetitle };
         if(language.name === "python"){
             dispatch(execute_code_python(article))
-            responseCode.push(excutePython)
+            //responseCode.push(excutePython)
+            loadDataPythons()
         }else if(language.name === "js"){
             dispatch(execute_code_js(article))
             responseCode.push(excuteJava)
@@ -51,6 +52,12 @@ const Code = () => {
     const onSubmit = (data) => {
         console.log(data);
         dispatch(addCode(reconstructJsonSendApi(data)))
+    }
+
+    const loadDataPythons = async () => {
+        const data = await excutePython;
+        console.log(data)
+        responseCode.push(data.response)
     }
 
     const reconstructJsonSendApi = (data) => {
@@ -139,7 +146,7 @@ const Code = () => {
                         </div>
                         <div className="codemirror">
                             <CodeMirror
-                                options={{theme : "dracula", mode: language }}
+                                options={{theme : "dracula", mode: language.name }}
                                 value=""
                                 height="100%"
                                 onChange={(editor, viewUpdate) => {
