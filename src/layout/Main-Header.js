@@ -10,6 +10,9 @@ import {useForm} from "react-hook-form";
 import {Box, Modal} from "@mui/material";
 import AuthService from "../components/Auth/AuthService";
 import {isEmpty} from "../components/utils/Utils";
+import {useDispatch} from "react-redux";
+import {addProject} from "../actions/API/project.action";
+import {addGroup} from "../actions/API/group.action";
 
 const MainHeader = () => {
 
@@ -40,9 +43,11 @@ const MainHeader = () => {
     const handleOpenModalCollection = () => setOpenModalCollection(true);
     const handleCloseModalProject = () => setOpenModalProject(false);
     const handleCloseModalCollection = () => setOpenModalCollection(false);
-    const { register, handleSubmit,watch , getValues} = useForm();
+    const search = useForm();
+    const project = useForm();
+    const group = useForm();
     const history = useHistory();
-    console.log(AuthService.getCurrentUser())
+    const dispatch = useDispatch();
 
     const _handleKeyDown = (e) => {
         if (e.key === 'Enter') {
@@ -55,7 +60,8 @@ const MainHeader = () => {
         setIsConnected(AuthService.getCurrentUser())
     }, [location.key])
 
-    const onSubmit = (data) => {
+
+    const onSubmitSearch = (data) => {
         console.log(data);
         if(data.search === ""){
             history.push({
@@ -66,6 +72,17 @@ const MainHeader = () => {
                 pathname:`/project-all/${data.search}`
             })
         }
+    }
+
+    const onSubmitProject = (data) => {
+        console.log(data);
+        //data.push("user_id":localStorage.getItem("user_id"));
+        dispatch(addProject(data));
+    }
+
+    const onSubmitGroup = (data) => {
+        console.log(data);
+        //dispatch(addGroup(data));
     }
 
 
@@ -94,16 +111,16 @@ const MainHeader = () => {
                             <img onClick={()=> handleCloseModalCollection()} className="close-modal" src="/assets/logo/close.svg" alt="close modal"/>
                         </div>
                         <div className="hr"/>
-                        <form className="form-container-modal">
+                        <form className="form-container-modal" name="groupForm" onSubmit={group.handleSubmit(onSubmitGroup)}>
                             <div className="container-form-modal">
                                 <div className="title-input-modal">Name</div>
-                                <input type="text" className="input-modal"/>
+                                <input {...group.register("name")} type="text" className="input-modal"/>
                             </div>
                             <div className="container-form-modal">
                                 <div className="title-input-modal">Description</div>
-                                <textarea type="text" className="input-modal textura"/>
+                                <textarea {...group.register("description")} type="text" className="input-modal textura"/>
                             </div>
-                            <div className="button-save">Save</div>
+                            <button type="submit" className="button-save">Save</button>
                         </form>
                     </div>
                 </Box>
@@ -124,14 +141,14 @@ const MainHeader = () => {
                             <img src="/assets/logo/close.svg" onClick={()=> handleCloseModalProject()}   className="close-modal" alt="close modal"/>
                         </div>
                         <div className="hr"/>
-                        <form className="form-container-modal" name="projectForm" onSubmit={handleSubmit(onSubmit)}>
+                        <form className="form-container-modal" name="projectForm" onSubmit={project.handleSubmit(onSubmitProject)}>
                             <div className="container-form-modal">
                                 <div className="title-input-modal" >Name</div>
-                                <input {...register("name")} type="text" name="name" className="input-modal"/>
+                                <input {...project.register("name")} type="text" name="name" className="input-modal"/>
                             </div>
                             <div className="container-form-modal">
                                 <div className="title-input-modal">Description</div>
-                                <textarea {...register("description")} type="" name="description" className="input-modal textura"/>
+                                <textarea {...project.register("description")} type="" name="description" className="input-modal textura"/>
                             </div>
                             <button type="submit" className="button-save">Save</button>
                         </form>
@@ -145,9 +162,9 @@ const MainHeader = () => {
                 <div className="right-part">
                     <div className="search-container">
                         <form  action="" className="search-form">
-                            <input type="text" {...register("search")} className="search-input" placeholder="Search..."/>
+                            <input type="text" {...search.register("search")} className="search-input" placeholder="Search..."/>
                         </form>
-                        <img onClick={handleSubmit(onSubmit)}  className="search-img" src="/assets/logo/search.svg" alt="Search"/>
+                        <img onClick={search.handleSubmit(onSubmitSearch)}  className="search-img" src="/assets/logo/search.svg" alt="Search"/>
                     </div>
                     {
                         isEmpty(isConnected) &&
