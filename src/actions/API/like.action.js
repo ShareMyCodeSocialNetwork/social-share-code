@@ -1,9 +1,8 @@
 import axios from "axios";
 import AuthService from "../../components/Auth/AuthService";
+import {API_URL} from "../global";
 
 
-
-export const API_URL = "http://localhost:8080"
 export const GET_LIKES = "GET_LIKES";
 export const GET_LIKE_BY_ID = "GET_LIKE_BY_ID";
 export const GET_LIKE_BY_USER = "GET_LIKE_BY_USER";

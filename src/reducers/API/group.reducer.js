@@ -5,7 +5,8 @@ import {
     UPDATE_GROUP,
     DELETE_GROUP,
     GET_GROUP_BY_NAME,
-    UPDATE_GROUP_NAME
+    UPDATE_GROUP_NAME,
+    UPDATE_GROUP_DESCRIPTION
 } from "../../actions/API/group.action";
 
 const initialState = {};
@@ -30,6 +31,15 @@ export default function groupReducer(state = initialState, action) {
                 } else return team;
             });
         case UPDATE_GROUP_NAME:
+            return state.map((team) => {
+                if (team.id === action.payload.id) {
+                    return {
+                        ...team,
+                        content: action.payload.content,
+                    };
+                } else return team;
+            });
+        case UPDATE_GROUP_DESCRIPTION:
             return state.map((team) => {
                 if (team.id === action.payload.id) {
                     return {

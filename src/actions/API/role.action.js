@@ -1,7 +1,7 @@
 import axios from "axios";
 import AuthService from "../../components/Auth/AuthService";
+import {API_URL} from "../global";
 
-export const API_URL = "http://localhost:8080";
 export const GET_ROLE = "GET_ROLE";
 export const GET_ROLE_BY_ID = "GET_ROLE_BY_ID";
 export const GET_ROLE_BY_NAME = "GET_ROLE_BY_NAME";

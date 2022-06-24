@@ -1,9 +1,8 @@
 import axios from "axios";
 import AuthService from "../../components/Auth/AuthService";
+import {API_URL} from "../global";
 
 
-
-export const API_URL = "http://localhost:8080"
 export const GET_PROJECT = "GET_PROJECT";
 export const GET_PROJECT_BY_ID = "GET_PROJECT_BY_ID";
 export const GET_PROJECT_BY_NAME = "GET_PROJECT_BY_NAME";
@@ -13,6 +12,8 @@ export const ADD_PROJECT = "ADD_PROJECT";
 export const UPDATE_PROJECT = "UPDATE_PROJECT";
 export const UPDATE_OWNER_PROJECT = "UPDATE_OWNER_PROJECT";
 export const UPDATE_GROUP_PROJECT = "UPDATE_GROUP_PROJECT";
+export const UPDATE_PROJECT_NAME = "UPDATE_PROJECT_NAME";
+export const UPDATE_PROJECT_DESCRIPTION = "UPDATE_PROJECT_DESCRIPTION";
 export const DELETE_PROJECT = "DELETE_PROJECT";
 
 export const getProjects = () => {
@@ -111,7 +112,18 @@ export const changeProjectName = (projectId,data) => {
         return axios
             .patch(`${API_URL}/project/${projectId}/name`, data, { headers:  AuthService.authHeader() })
             .then(() => {
-                dispatch({ type: UPDATE_PROJECT, payload: data });
+                dispatch({ type: UPDATE_PROJECT_NAME, payload: data });
+            })
+            .catch((err) => console.log(err));
+    };
+};
+
+export const changeProjectDescription = (projectId,data) => {
+    return (dispatch) => {
+        return axios
+            .patch(`${API_URL}/project/${projectId}/description`, data, { headers:  AuthService.authHeader() })
+            .then(() => {
+                dispatch({ type: UPDATE_PROJECT_DESCRIPTION, payload: data });
             })
             .catch((err) => console.log(err));
     };

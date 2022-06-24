@@ -1,9 +1,8 @@
 import axios from "axios";
 import AuthService from "../../components/Auth/AuthService";
+import {API_URL} from "../global";
 
 
-
-export const API_URL = "http://localhost:8080"
 export const GET_CODE = "GET_CODE";
 export const GET_CODE_BY_ID = "GET_CODE_BY_ID";
 export const ADD_CODE = "ADD_CODE";
