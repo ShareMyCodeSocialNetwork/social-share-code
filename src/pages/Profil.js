@@ -19,7 +19,11 @@ const Profil = () => {
     const history = useHistory();
 
     if (AuthService.getCurrentUser() === null || AuthService.isExpiredToken()) {
-        history.push("/login");
+        //todo fix date, show AuthService.isExpiredToken todo
+        //if(AuthService.getCurrentUser() !== null && AuthService.isExpiredToken()){
+          //  AuthService.logout();
+        //}
+        //history.push("/login");
     }
 
     const user_id = localStorage.getItem("user_id");
@@ -64,11 +68,11 @@ const Profil = () => {
         setPassword(userData["password"]);
         setMail(userData["email"]);
         console.log(dataUser);
-        if(!isEmpty(dataFollowers["length"])){
+        if(!isEmpty(dataFollowers)){
             setFollowersInput(dataFollowers["length"]);
         }
         console.log(dataFollowers);
-        if(!isEmpty(dataFollowed["length"])){
+        if(!isEmpty(dataFollowed)){
             setFollowedInput(dataFollowed["length"]);
         }
         console.log(dataFollowed);

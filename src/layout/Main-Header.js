@@ -67,6 +67,8 @@ const MainHeader = () => {
             })
         }
     }
+
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -122,16 +124,16 @@ const MainHeader = () => {
                             <img src="/assets/logo/close.svg" onClick={()=> handleCloseModalProject()}   className="close-modal" alt="close modal"/>
                         </div>
                         <div className="hr"/>
-                        <form className="form-container-modal">
+                        <form className="form-container-modal" name="projectForm" onSubmit={handleSubmit(onSubmit)}>
                             <div className="container-form-modal">
-                                <div className="title-input-modal">Name</div>
-                                <input type="text" className="input-modal"/>
+                                <div className="title-input-modal" >Name</div>
+                                <input {...register("name")} type="text" name="name" className="input-modal"/>
                             </div>
                             <div className="container-form-modal">
                                 <div className="title-input-modal">Description</div>
-                                <textarea type="text" className="input-modal textura"/>
+                                <textarea {...register("description")} type="" name="description" className="input-modal textura"/>
                             </div>
-                            <div className="button-save">Save</div>
+                            <button type="submit" className="button-save">Save</button>
                         </form>
                     </div>
                 </Box>
