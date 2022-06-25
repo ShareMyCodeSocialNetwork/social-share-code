@@ -37,16 +37,29 @@ export const getOneGroupById = (groupId) => {
     };
 };
 
+
 export const addGroup = (data) => {
     return (dispatch) => {
-        return axios
-            .post(`${API_URL}/group/create`, data, { headers:  AuthService.authHeader() })
-            .then(() => {
-                dispatch({ type: ADD_GROUP, payload: data });
-            })
-            .catch((err) => console.log(err));
-    };
-};
+        const init = {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${AuthService.getCurrentUser()}`
+            },
+            data: JSON.stringify(data),
+            url: API_URL + '/group/create',
+        }
+        axios(init).then(response =>{
+            //dispatch({ type: ADD_GROUP, payload: response.data });
+            //todo : probleme avec le reducer : TypeError: state is not iterable
+            alert("Collection created successfully");
+            return response.data;
+        }).catch(e => {
+            alert("missing information");
+            console.log(e);
+        });
+    }
+}
 
 
 
