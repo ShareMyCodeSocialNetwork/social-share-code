@@ -11,7 +11,7 @@ import {Box, Modal} from "@mui/material";
 import AuthService from "../components/Auth/AuthService";
 import {isEmpty} from "../components/utils/Utils";
 import {useDispatch} from "react-redux";
-import {addProject} from "../actions/API/project.action";
+import {createProject} from "../actions/API/project.action";
 import {addGroup} from "../actions/API/group.action";
 
 const MainHeader = () => {
@@ -75,9 +75,8 @@ const MainHeader = () => {
     }
 
     const onSubmitProject = (data) => {
-        console.log(data);
-        //data.push("user_id":localStorage.getItem("user_id"));
-        dispatch(addProject(data));
+        data["user_id"] = localStorage.getItem("user_id");
+        dispatch(createProject(data));
     }
 
     const onSubmitGroup = (data) => {
@@ -150,6 +149,7 @@ const MainHeader = () => {
                                 <div className="title-input-modal">Description</div>
                                 <textarea {...project.register("description")} type="" name="description" className="input-modal textura"/>
                             </div>
+                            <input {...project.register("user_id")} type="hidden" name="user_id" />
                             <button type="submit" className="button-save">Save</button>
                         </form>
                     </div>

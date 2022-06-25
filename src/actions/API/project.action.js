@@ -1,6 +1,8 @@
 import axios from "axios";
 import AuthService from "../../components/Auth/AuthService";
 import {API_URL} from "../global";
+import qs from "querystring";
+import {LOGIN_USER} from "./auth.action";
 
 
 export const GET_PROJECT = "GET_PROJECT";
@@ -72,16 +74,26 @@ export const getProjectByGroup = (groupId) => {
     };
 };
 
-export const addProject = (data) => {
+export const createProject = (data) => {
     return (dispatch) => {
-        return axios
-            .post(`${API_URL}/project/create`, data, { headers:  AuthService.authHeader() })
-            .then(() => {
-                dispatch({ type: ADD_PROJECT, payload: data });
-            })
-            .catch((err) => console.log(err));
-    };
-};
+        const init = {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${AuthService.getCurrentUser()}`
+            },
+            data: JSON.stringify(data),
+            url: API_URL + '/project/create',
+        }
+        axios(init).then(response =>{
+            dispatch({ type: ADD_PROJECT, payload: response.data });
+            console.log("ok");
+            return response.data;
+        }).catch(e => {
+            alert("missing information");
+        });
+    }
+}
 
 export const updateGroupForProject = (projectId,data) => {
     return (dispatch) => {
