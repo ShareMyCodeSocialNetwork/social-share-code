@@ -1,9 +1,6 @@
 import axios from "axios";
 import AuthService from "../../components/Auth/AuthService";
 import {API_URL} from "../global";
-import qs from "querystring";
-import {LOGIN_USER} from "./auth.action";
-
 
 export const GET_PROJECT = "GET_PROJECT";
 export const GET_PROJECT_BY_ID = "GET_PROJECT_BY_ID";
@@ -86,11 +83,13 @@ export const createProject = (data) => {
             url: API_URL + '/project/create',
         }
         axios(init).then(response =>{
-            dispatch({ type: ADD_PROJECT, payload: response.data });
-            console.log("ok");
+            //dispatch({ type: ADD_PROJECT, payload: response.data });
+            //todo : probleme avec le reducer : TypeError: state is not iterable
+            alert("Project created successfully");
             return response.data;
         }).catch(e => {
             alert("missing information");
+            console.log(e);
         });
     }
 }
