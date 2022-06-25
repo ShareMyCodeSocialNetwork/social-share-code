@@ -77,12 +77,14 @@ const MainHeader = () => {
     const onSubmitProject = (data) => {
         data["user_id"] = localStorage.getItem("user_id");
         dispatch(createProject(data));
+        handleCloseModalProject();
     }
 
     const onSubmitGroup = (data) => {
         data["user_id"] = localStorage.getItem("user_id");
         console.log(data);
         dispatch(addGroup(data));
+        handleCloseModalCollection();
     }
 
 
