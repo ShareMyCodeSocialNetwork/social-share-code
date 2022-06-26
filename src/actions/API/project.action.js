@@ -52,7 +52,7 @@ export const getProjectsByName = (projectName) => {
 export const getProjectByOwner = (userId) => {
     return (dispatch) => {
         return axios
-            .get(`${API_URL}/user/${userId}`,{ headers:  AuthService.authHeader() })
+            .get(`${API_URL}/project/user/${userId}`,{ headers:  AuthService.authHeader() })
             .then((res) => {
                 dispatch({ type: GET_PROJECT_BY_OWNER, payload: res.data });
             })

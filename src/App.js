@@ -10,6 +10,7 @@ import Code from "./pages/Code";
 import Profil from "./pages/Profil";
 import PrivateRoute from "./components/Auth/PrivateRoute";
 import AuthService from "./components/Auth/AuthService";
+import MyProjects from "./pages/MyProjects";
 
 
 const App =  () => {
@@ -29,12 +30,13 @@ const App =  () => {
       <Router>
         <MainHeader/>
           <Switch>
-              <Route path="/profil" component={Profil} />
+              <Route path="/profil" exact component={Profil} />
               <Route path="/login" exact component={Login} />
               <Route path="/register" exact component={Register} />
               <Route path="/project-all/:filters" exact component={Project} />
+              <Route path="/myProjects" exact component={MyProjects} />
               <Route path="/code/:id" exact component={Code} />
-              <Route path="/logout"   component={logOut} />
+              <Route path="/logout" exact component={logOut} />
               <Route path="/" exact component={Home} />
               <Route to="/404" component={NotFound} />
               <Redirect to="/404" />
