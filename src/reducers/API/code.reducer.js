@@ -3,7 +3,8 @@ import {
     GET_CODE_BY_ID,
     ADD_CODE,
     UPDATE_CODE,
-    DELETE_CODE
+    DELETE_CODE,
+    GET_CODE_BY_PROJECT
 } from "../../actions/API/code.action";
 
 const initialState = {};
@@ -13,6 +14,8 @@ export default function codeReducer(state = initialState, action) {
         case GET_CODE:
             return action.payload;
         case GET_CODE_BY_ID:
+            return action.payload;
+        case GET_CODE_BY_PROJECT:
             return action.payload;
         case ADD_CODE:
             return [action.payload, ...state];
