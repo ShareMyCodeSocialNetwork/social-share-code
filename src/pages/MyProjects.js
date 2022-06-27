@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {useHistory} from "react-router-dom";
-import {getOneUserById} from "../actions/API/user.action";
-import {getProjectByOwner, getProjectByOwnerV2} from "../actions/API/project.action";
+import {getProjectByOwner} from "../actions/API/project.action";
 
 const MyProjects = () => {
     const dispatch = useDispatch();
-    const history = useHistory();
+    const [myProjects, setMyProjects] = useState([]);
     const user_id = localStorage.getItem("user_id");
 
     useEffect(() => {
@@ -25,32 +23,28 @@ const MyProjects = () => {
     }
     loadProjectData().then();
 
-
-
-    const [myProjects, setMyProjects] = useState([
-        {
-            'name':'Loading...',
-            'description': 'Loading...'
-        },
-    ]);
     return (
         <ol>
-            {myProjects !== undefined ?
-                myProjects?.map((project) => (
-                    <li key={project}>{
-                        project["name"]
+            <li>
+                work in progress, show data make me crazy 🤯
+            </li>
+            number of project :{myProjects.length}
+            {/*
+                myProjects?.map((item) => (
+                    <div key={item}>{
+                        item["name"]
                     }{
-                        project["description"]
+                        item["description"]
                     },
-                    </li>
+                        <br/>
+                        <a href={"/project/" + item["id"]}> Show it </a>
+
+                    </div>
+
                     ))
-                :
-                <li>no projects found</li>
-            }
+            */}
             </ol>
         );
-
-
 
 }
 export default MyProjects;
