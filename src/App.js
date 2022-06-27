@@ -11,6 +11,7 @@ import Profil from "./pages/Profil";
 import PrivateRoute from "./components/Auth/PrivateRoute";
 import AuthService from "./components/Auth/AuthService";
 import MyProjects from "./pages/MyProjects";
+import ProjectContent from "./pages/ProjectContent";
 
 
 const App =  () => {
@@ -35,6 +36,7 @@ const App =  () => {
               <Route path="/register" exact component={Register} />
               <Route path="/project-all/:filters" exact component={Project} />
               <Route path="/myProjects" exact component={MyProjects} />
+              <Route path="/project/:id" exact component={ProjectContent} />
               <Route path="/code/:id" exact component={Code} />
               <Route path="/logout" exact component={logOut} />
               <Route path="/" exact component={Home} />
