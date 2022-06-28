@@ -29,19 +29,19 @@ const Profil = () => {
     const user_id = localStorage.getItem("user_id");
     useEffect(() => {
         dispatch(getOneUserById(user_id));
-    }, [dispatch, user_id]);
+    }, []);
     const user = useSelector(state => state.userReducer);
     const [dataUser,setDataUser] = useState();
 
     useEffect(() => {
         dispatch(getFollowed(user_id));
-    }, [dispatch, user_id]);
+    }, []);
     const followed = useSelector((state) => state.followerReducer);
     const [dataFollowed, setDataFollowed] = useState();
 
     useEffect(() => {
         dispatch(getFollowers(user_id));
-    }, [dispatch, user_id]);
+    }, []);
     const followers = useSelector((state) => state.followerReducer);
     const [dataFollowers, setDataFollowers] = useState();
     const {register, handleSubmit, watch, formState: {errors}} = useForm({ shouldUseNativeValidation: true });
@@ -62,11 +62,11 @@ const Profil = () => {
         let followersData = await followers;
         setDataFollowers(followersData);
 
-        setPseudo(userData['pseudo']);
-        setFirstname(userData["firstname"]);
-        setLastname(userData["lastname"]);
-        setPassword(userData["password"]);
-        setMail(userData["email"]);
+        setPseudo(userData.pseudo);
+        setFirstname(userData.firstname);
+        setLastname(userData.lastname);
+        setPassword(userData.password);
+        setMail(userData.email);
         console.log(dataUser);
         if(!isEmpty(dataFollowers)){
             setFollowersInput(dataFollowers["length"]);
@@ -140,7 +140,7 @@ const Profil = () => {
                         <div className="social-profile-input">
                             <div className="title-input">Nom</div>
                             <input type="text"  {...register("lastname",{ required: "Please enter your last name valid." })} className="input-profile"
-                                   value={lastname}/>
+                                   defaultValue={lastname}/>
                         </div>
                         <div className="social-profile-input">
                             <div className="title-input">Prenom</div>
