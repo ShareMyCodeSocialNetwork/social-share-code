@@ -3,6 +3,8 @@ import {useHistory, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getOneProjectsById} from "../actions/API/project.action";
 import {getCodeByProject} from "../actions/API/code.action";
+import {isEmpty} from "../components/utils/Utils";
+import CodeView from "../components/pages/CodeView";
 
 const Project = () => {
     const history = useHistory();
@@ -24,36 +26,42 @@ const Project = () => {
         let projectsData = await projects;
         setDataProject(projectsData);
         if(dataProject === undefined || dataProject === null){
-            alert("project not found");
-            history.push( "/");
+            //alert("project not found");
+            //history.push( "/");
+            //window.location.reload();
         }
         console.log(dataProject);
+        console.log("dataProject");
         let codesData = await codes;
         setDataCode(codesData);
+        console.log("dataCode");
         console.log(dataCode);
     }
     loadProjectData().then();
 
     return (
         <div>
-            project name : {dataProject["name"]}
+            project name : {!isEmpty(dataProject) && dataProject.name}
             <br/>
-            project description : {dataProject["description"]}
             <br/>
-            project group : {dataProject["group"]}
+            project description : {!isEmpty(dataProject) && dataProject.description}
             <br/>
-            codes : work in progress, need to show
-            {/*<ol>
+            <br/>
+            project group : {!isEmpty(dataProject) && !isEmpty(dataProject.group) && dataProject.group.name}
+            <br/>
+            <br/>
+            codes in project :
+
+            {<ol>
                 {
-                    dataCode.map(item => (
-                       <li key={item}>
-                           {
-                               item
-                           }
-                       </li>
+                    !isEmpty(dataCode) &&
+                    dataCode.map((item, index) => (
+                       <div className="post-code" key={index}>
+                           <CodeView language={item.language.name} code={item.nameCode} userPseudo={item.user.pseudo} ></CodeView>
+                       </div>
                     ))
                 }
-            </ol>*/}
+            </ol>}
 
         </div>
     );
