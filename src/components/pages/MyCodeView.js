@@ -1,9 +1,21 @@
 import React, {useState} from 'react';
 import CodeMirror from "@uiw/react-codemirror";
+import {useForm} from "react-hook-form";
+import {useDispatch} from "react-redux";
+import {deleteCode} from "../../actions/API/code.action";
 
-const CodeView = ({language= "Python",code= "", userPseudo="" }) => {
+const MyCodeView = ({language= "Python",code= "", userPseudo="" , codeId = ""}, userId = "") => {
+
+    const dispatch = useDispatch();
 
     const [codeTest, setCodeTest] =  useState(`${code}`)
+
+    const remove = useForm();
+
+    const submitRemove = () => {
+        dispatch(deleteCode(codeId));
+        window.location.reload();
+    }
 
 
     return (
@@ -36,13 +48,20 @@ const CodeView = ({language= "Python",code= "", userPseudo="" }) => {
                 </div>
             </div>
             <div className="social-code-search">
+                <a href={"/profile/" + userId}>
                 <div className="profile-editor">
                     <img className="profile-img" src="/assets/logo/profil.svg" alt="profile" />
                     <div className="title-name-editor">{userPseudo}</div>
+                </div>
+                    </a>
+                <div>
+                    <form>
+                        <button onClick={remove.handleSubmit(submitRemove)} className="button-profile" type="submit">Remove</button>
+                    </form>
                 </div>
             </div>
         </div>
     );
 };
 
-export default CodeView;
+export default MyCodeView;
