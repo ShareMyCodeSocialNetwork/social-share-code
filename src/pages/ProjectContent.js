@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getOneProjectsById} from "../actions/API/project.action";
 import {getCodeByProject} from "../actions/API/code.action";
 import {isEmpty} from "../components/utils/Utils";
-import CodeView from "../components/pages/CodeView";
+import MyCodeView from "../components/pages/MyCodeView";
 
 const Project = () => {
     const history = useHistory();
@@ -40,29 +40,37 @@ const Project = () => {
     loadProjectData().then();
 
     return (
-        <div>
-            project name : {!isEmpty(dataProject) && dataProject.name}
-            <br/>
-            <br/>
-            project description : {!isEmpty(dataProject) && dataProject.description}
-            <br/>
-            <br/>
-            project group : {!isEmpty(dataProject) && !isEmpty(dataProject.group) && dataProject.group.name}
-            <br/>
-            <br/>
-            codes in project :
 
-            {<ol>
+        <div>
+            {
+                isEmpty(dataProject) && "project not found"
+            }
+            {!isEmpty(dataProject) && "project name : " + dataProject.name}
+            <br/>
+            <br/>
+            {!isEmpty(dataProject) && "project description : " + dataProject.description}
+            <br/>
+            <br/>
+            {!isEmpty(dataProject) && !isEmpty(dataProject.group) && "project group : " + dataProject.group.name}
+            {!isEmpty(dataProject) && isEmpty(dataProject.group) && "No group for this project"}
+            <br/>
+            <br/>
+
+
+            <div className="view--project">
+                <div className="container-project">
                 {
                     !isEmpty(dataCode) &&
                     dataCode.map((item, index) => (
                        <div className="post-code" key={index}>
-                           <CodeView language={item.language.name} code={item.nameCode} userPseudo={item.user.pseudo} ></CodeView>
+                           <MyCodeView language={item.language.name} code={item.nameCode} userPseudo={item.user.pseudo} codeId={item.id} userId={item.user.id}></MyCodeView>
                        </div>
                     ))
                 }
-            </ol>}
+                {isEmpty(dataCode) && "No codes for this project"}
 
+        </div>
+        </div>
         </div>
     );
 
