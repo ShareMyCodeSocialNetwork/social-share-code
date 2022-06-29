@@ -24,19 +24,20 @@ const MyProjects = () => {
     loadProjectData().then();
 
     return (
-        <ol>
-            number of project : {dataProjects.length}
-
+        <div className="view--project">
+            <div className="container-project">
             {
                 !isEmpty(dataProjects)&&
                 dataProjects.map(
                     (item, index) => (
-                        <div key={index + 1}>
-                            <ProjectView userPseudo={item.user.pseudo} name={item.name} description={item.description} projectId={item.id}></ProjectView>
+                        <div className="post-code" key={index}>
+                            <ProjectView userPseudo={item.user.pseudo} name={item.name} description={item.description} projectId={item.id} userId={item.user.id}></ProjectView>
                         </div>
                     ))
             }
-            </ol>
+                {isEmpty(dataProjects) && "No project found ! Create on on top right !"}
+            </div>
+            </div>
         );
 
 }
