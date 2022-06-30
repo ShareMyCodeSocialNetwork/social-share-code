@@ -45,6 +45,10 @@ const Code = () => {
                         <img src="/assets/logo/pen.svg" alt="lamp" className="logo-header extp"/>
                     </div>
                     <div className="right-part-header">
+                        <div className="option-button" onClick={()=> addSnippetToCompte}>
+                            <img className="img-option" src="/assets/logo/pin.svg" alt="save"/>
+                            <div className="title-option">Add to snippets</div>
+                        </div>
                         <button className="option-button">
                             <img className="img-option" src="/assets/logo/save.svg" alt="save"/>
                             <div className="title-option">Save</div>
