@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useForm} from "react-hook-form";
 import AuthService from "../components/Auth/AuthService";
-import {useHistory} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {
     getOneUserById,
     updateUserEmail,
@@ -15,6 +15,8 @@ import {isEmpty, wait} from "../components/utils/Utils";
 import {getFollowed, getFollowers} from "../actions/API/follower.action";
 
 const Profil = () => {
+    const {id} = useParams();
+
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -28,19 +30,19 @@ const Profil = () => {
 
     const user_id = localStorage.getItem("user_id");
     useEffect(() => {
-        dispatch(getOneUserById(user_id));
+        dispatch(getOneUserById(id));
     }, []);
     const user = useSelector(state => state.userReducer);
     const [dataUser,setDataUser] = useState();
 
     useEffect(() => {
-        dispatch(getFollowed(user_id));
+        dispatch(getFollowed(id));
     }, []);
     const followed = useSelector((state) => state.followerReducer);
     const [dataFollowed, setDataFollowed] = useState();
 
     useEffect(() => {
-        dispatch(getFollowers(user_id));
+        dispatch(getFollowers(id));
     }, []);
     const followers = useSelector((state) => state.followerReducer);
     const [dataFollowers, setDataFollowers] = useState();
@@ -112,7 +114,7 @@ const Profil = () => {
         })
 
     }
-
+if (user_id === id){
     return (
         <div className="view--profile">
             <div className="header-profile">
@@ -140,7 +142,7 @@ const Profil = () => {
                         <div className="social-profile-input">
                             <div className="title-input">Nom</div>
                             <input type="text"  {...register("lastname",{ required: "Please enter your last name valid." })} className="input-profile"
-                                   defaultValue={lastname}/>
+                                   value={lastname}/>
                         </div>
                         <div className="social-profile-input">
                             <div className="title-input">Prenom</div>
@@ -174,6 +176,12 @@ const Profil = () => {
             </div>
         </div>
     );
+}else{
+    return (
+        <div>arrarar chai t es pas sur ton profile a toi</div>
+    )
+}
+
 };
 
 export default Profil;

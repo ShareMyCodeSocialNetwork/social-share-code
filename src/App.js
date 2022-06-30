@@ -31,7 +31,7 @@ const App =  () => {
       <Router>
         <MainHeader/>
           <Switch>
-              <Route path="/profil" exact component={Profil} />
+              <Route path="/profil/:id" exact component={Profil} />
               <Route path="/login" exact component={Login} />
               <Route path="/register" exact component={Register} />
               <Route path="/project-all/:filters" exact component={Project} />
