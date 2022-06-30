@@ -178,7 +178,59 @@ if (user_id === id){
     );
 }else{
     return (
-        <div>arrarar chai t es pas sur ton profile a toi</div>
+        <div className="view--profile">
+            <div className="header-profile">
+                <img className="overlay-profile" src="" alt=""/>
+                <div className="profile-data">
+                    <div className="title-name">{pseudo}</div>
+                    <div className="image-profile">
+                        <img src="/assets/logo/profil_header.png" alt="profile"/>
+                    </div>
+                </div>
+            </div>
+            <div className="body-profile">
+                <div className="social-profile">
+                    <div className="social-follow margin">
+                        <div className="number-social-follow">{followersInput}</div>
+                        <div className="title-social-follow">followers</div>
+                    </div>
+                    <div className="social-follow">
+                        <div className="number-social-follow">{followedInput}</div>
+                        <div className="title-social-follow">following</div>
+                    </div>
+                </div>
+                <form onSubmit={handleSubmit(onSubmit)} className="form-profile">
+                    <div className="container-profile">
+                        <div className="social-profile-input">
+                            <div className="title-input">Nom</div>
+                            <input type="text" readOnly {...register("lastname",{ required: "Please enter your last name valid." })} className="input-profile"
+                                   value={lastname}/>
+                        </div>
+                        <div className="social-profile-input">
+                            <div className="title-input">Prenom</div>
+                            <input type="text" readOnly {...register("firstname", { required: "Please enter your first name valid." })} className="input-profile"
+                                   value={firstname}/>
+                        </div>
+                    </div>
+                    <div className="container-profile">
+                    </div>
+                    <div className="container-profile">
+                        <div className="social-profile-input">
+                            <div className="title-input">Tel</div>
+                            <input type="tel"readOnly  {...register("tel", { required: "Please enter your password valid." })} className="input-profile" value={tel}/>
+                        </div>
+                        <div className="social-profile-input">
+                            <div className="title-input">Email</div>
+                            <input type="text" readOnly {...register("email", { required: "Please enter your password valid." })} className="input-profile" value={email}/>
+                        </div>
+                    </div>
+                </form>
+
+                <form>
+                    <button type={"submit"}> follow this beautiful guys</button>
+                </form>
+            </div>
+        </div>
     )
 }
 
