@@ -1,9 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import CodeMirror from "@uiw/react-codemirror"
 import "codemirror/theme/dracula.css"
-import axios from "axios";
 import {useForm} from "react-hook-form";
-import {getValue} from "@testing-library/user-event/dist/utils";
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {
@@ -12,8 +10,6 @@ import {
     execute_code_python,
     execute_code_ruby
 } from "../actions/API/execode.action";
-import execodeReducer from "../reducers/API/execode.reducer";
-import {addCode} from "../actions/API/code.action";
 import AuthService from "../components/Auth/AuthService";
 import {addSnippet} from "../actions/API/snippets.action";
 

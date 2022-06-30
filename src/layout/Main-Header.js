@@ -9,14 +9,9 @@ import {Link, useHistory, useLocation} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import AuthService from "../components/Auth/AuthService";
 import {isEmpty} from "../components/utils/Utils";
-import {useDispatch, useSelector} from "react-redux";
-import {getProjectByOwner} from "../actions/API/project.action";
 import NewCollection from "./Modals/NewCollection";
 import NewProject from "./Modals/NewProject";
 import NewPen from "./Modals/NewPen";
-import {useDispatch} from "react-redux";
-import {createProject} from "../actions/API/project.action";
-import {addGroup} from "../actions/API/group.action";
 import SnippetsCard from "../components/pages/SnippetsCard";
 
 const MainHeader = () => {
