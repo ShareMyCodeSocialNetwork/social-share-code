@@ -5,10 +5,12 @@ import {useEffect, useState} from "react"
 import axios from "axios";
 import {useForm} from "react-hook-form";
 import {getValue} from "@testing-library/user-event/dist/utils";
+import {useParams} from "react-router-dom";
 
 
 const Code = () => {
 
+    const { id } = useParams();
     const [codeTest, setCodeTest] =  useState(``)
     const [nameCode,setCodeName] = useState("Unititled")
     const [langage,setLangage] = useState("python")
