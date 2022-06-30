@@ -14,6 +14,10 @@ import {getProjectByOwner} from "../actions/API/project.action";
 import NewCollection from "./Modals/NewCollection";
 import NewProject from "./Modals/NewProject";
 import NewPen from "./Modals/NewPen";
+import {useDispatch} from "react-redux";
+import {createProject} from "../actions/API/project.action";
+import {addGroup} from "../actions/API/group.action";
+import SnippetsCard from "../components/pages/SnippetsCard";
 
 const MainHeader = () => {
 
@@ -35,7 +39,9 @@ const MainHeader = () => {
 
     const [isConnected, setIsConnected] = useState(AuthService.getCurrentUser())
     const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorElSnippets, setAnchorElSnippets] = useState(null);
     const open = Boolean(anchorEl);
+    const openSnippets = Boolean(anchorElSnippets);
     const [openModalProject, setOpenModalProject] = useState(false);
     const [openModalPen, setOpenModalPen] = useState(false);
     const handleOpenModalProject = () => setOpenModalProject(true);
@@ -80,8 +86,19 @@ const MainHeader = () => {
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
+    const handleClickSnippets = (event) => {
+        setAnchorElSnippets(event.currentTarget);
+    };
     const handleClose = () => {
         setAnchorEl(null);
+    };
+
+    const handleAddSnippet = () => {
+        console.log('addSnippet')
+    }
+
+    const handleCloseSnippets = () => {
+        setAnchorElSnippets(null);
     };
 
     return (
@@ -126,9 +143,43 @@ const MainHeader = () => {
                                     <img className="connected-img" src="/assets/logo/add.svg" alt="add"/>
                                 </div>
                             </Link>
-                            <div className="connected margin-right">
+                            <div id="basic-button"
+                                 aria-controls={openSnippets ? 'account-menu' : undefined}
+                                 aria-haspopup="true"
+                                 aria-expanded={openSnippets ? 'true' : undefined}
+                                 onClick={handleClickSnippets} className="connected margin-right">
                                 <img className="connected-img" src="/assets/logo/pin.svg" alt="pin"/>
                             </div>
+                            <Menu
+                                anchorEl={anchorElSnippets}
+                                id="account-menu"
+                                open={openSnippets}
+                                onClose={handleCloseSnippets}
+                                onClick={handleCloseSnippets}
+                                PaperProps={{
+                                    elevation: 0,
+                                    sx: {
+                                        overflow: 'visible',
+                                        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                                        mt: 1.5,
+                                        bgcolor: '#131417',
+                                        color: '#fff',
+                                        '& .MuiAvatar-root': {
+                                            width: 32,
+                                            height: 32,
+                                            bgcolor: '#fff',
+                                            ml: -0.5,
+                                            mr: 1,
+                                        },
+                                    },
+                                }}
+                                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                            >
+                                <MenuItem>
+                                    <SnippetsCard addSnippet={()=> handleAddSnippet()} title={"title snipts"}/>
+                                </MenuItem>
+                            </Menu>
                             <div id="basic-button"
                                  aria-controls={open ? 'account-menu' : undefined}
                                  aria-haspopup="true"
