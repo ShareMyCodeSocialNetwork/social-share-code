@@ -7,12 +7,13 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import {Link, useHistory, useLocation} from "react-router-dom";
 import {useForm} from "react-hook-form";
-import {Box, Modal} from "@mui/material";
 import AuthService from "../components/Auth/AuthService";
 import {isEmpty} from "../components/utils/Utils";
-import {useDispatch} from "react-redux";
-import {createProject} from "../actions/API/project.action";
-import {addGroup} from "../actions/API/group.action";
+import {useDispatch, useSelector} from "react-redux";
+import {getProjectByOwner} from "../actions/API/project.action";
+import NewCollection from "./Modals/NewCollection";
+import NewProject from "./Modals/NewProject";
+import NewPen from "./Modals/NewPen";
 
 const MainHeader = () => {
 
@@ -32,22 +33,22 @@ const MainHeader = () => {
     };
 
 
-
-
     const [isConnected, setIsConnected] = useState(AuthService.getCurrentUser())
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const [openModalProject, setOpenModalProject] = useState(false);
-    const [openModalCollection, setOpenModalCollection] = useState(false);
+    const [openModalPen, setOpenModalPen] = useState(false);
     const handleOpenModalProject = () => setOpenModalProject(true);
-    const handleOpenModalCollection = () => setOpenModalCollection(true);
+    const handleOpenModalPen = () => setOpenModalPen(true);
     const handleCloseModalProject = () => setOpenModalProject(false);
-    const handleCloseModalCollection = () => setOpenModalCollection(false);
+    const handleCloseModalPen = () => setOpenModalPen(false);
     const search = useForm();
-    const project = useForm();
-    const group = useForm();
+    const [openModalCollection, setOpenModalCollection] = useState(false);
+    const handleOpenModalCollection = () => setOpenModalCollection(true);
+    const handleCloseModalCollection = () => setOpenModalCollection(false);
     const history = useHistory();
-    const dispatch = useDispatch();
+
+
 
     const _handleKeyDown = (e) => {
         if (e.key === 'Enter') {
@@ -59,6 +60,7 @@ const MainHeader = () => {
     useEffect(() => {
         setIsConnected(AuthService.getCurrentUser())
     }, [location.key])
+
 
 
     const onSubmitSearch = (data) => {
@@ -74,19 +76,6 @@ const MainHeader = () => {
         }
     }
 
-    const onSubmitProject = (data) => {
-        data["user_id"] = localStorage.getItem("user_id");
-        dispatch(createProject(data));
-        handleCloseModalProject();
-    }
-
-    const onSubmitGroup = (data) => {
-        data["user_id"] = localStorage.getItem("user_id");
-        console.log(data);
-        dispatch(addGroup(data));
-        handleCloseModalCollection();
-    }
-
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -97,67 +86,10 @@ const MainHeader = () => {
 
     return (
         <>
-            <Modal
-                open={openModalCollection}
-                onClose={handleCloseModalCollection}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <div className="composant-modal">
-                        <div className="header-modal">
-                            <div className="container-title-modal">
-                                <div className="title-modal">Create New Collection</div>
-                                <div className="line-back"/>
-                            </div>
-                            <img onClick={()=> handleCloseModalCollection()} className="close-modal" src="/assets/logo/close.svg" alt="close modal"/>
-                        </div>
-                        <div className="hr"/>
-                        <form className="form-container-modal" name="groupForm" onSubmit={group.handleSubmit(onSubmitGroup)}>
-                            <div className="container-form-modal">
-                                <div className="title-input-modal">Name</div>
-                                <input {...group.register("name")} type="text" className="input-modal"/>
-                            </div>
-                            <div className="container-form-modal">
-                                <div className="title-input-modal">Description</div>
-                                <textarea {...group.register("description")} type="text" className="input-modal textura"/>
-                            </div>
-                            <button type="submit" className="button-save">Save</button>
-                        </form>
-                    </div>
-                </Box>
-            </Modal>
-            <Modal
-                open={openModalProject}
-                onClose={handleCloseModalProject}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <div className="composant-modal">
-                        <div className="header-modal">
-                            <div className="container-title-modal">
-                                <div className="title-modal">Create New Project</div>
-                                <div className="line-back"/>
-                            </div>
-                            <img src="/assets/logo/close.svg" onClick={()=> handleCloseModalProject()}   className="close-modal" alt="close modal"/>
-                        </div>
-                        <div className="hr"/>
-                        <form className="form-container-modal" name="projectForm" onSubmit={project.handleSubmit(onSubmitProject)}>
-                            <div className="container-form-modal">
-                                <div className="title-input-modal" >Name</div>
-                                <input {...project.register("name")} type="text" name="name" className="input-modal"/>
-                            </div>
-                            <div className="container-form-modal">
-                                <div className="title-input-modal">Description</div>
-                                <textarea {...project.register("description")} type="" name="description" className="input-modal textura"/>
-                            </div>
-                            <input {...project.register("user_id")} type="hidden" name="user_id" />
-                            <button type="submit" className="button-save">Save</button>
-                        </form>
-                    </div>
-                </Box>
-            </Modal>
+           <NewCollection handleCloseModalCollection={handleCloseModalCollection}  style={style} openModalCollection={openModalCollection}></NewCollection>
+            <NewProject handleCloseModalProject={handleCloseModalProject} style={style} openModalProject={openModalProject}></NewProject>
+            <NewPen style={style} handleCloseModalPen={handleCloseModalPen} openModalPen={openModalPen}></NewPen>
+
             <div className="main-header">
                 <Link to="/" style={{textDecoration:'none',color:'#fff'}}>
                     <div className="logo">CODEBACK</div>
@@ -246,7 +178,7 @@ const MainHeader = () => {
                                 </MenuItem>
                                 <MenuItem>
                                     <div>
-                                        <Link to="/profil"  style={{textDecoration:'none', color:'#fff'}}>
+                                        <Link to={"/profil/" + localStorage.getItem("user_id")}  style={{textDecoration:'none', color:'#fff'}}>
                                             Profile
                                         </Link>
                                     </div>
@@ -265,6 +197,10 @@ const MainHeader = () => {
                                 <MenuItem onClick={() => handleOpenModalCollection()}>
                                     New Collection
                                 </MenuItem>
+                                <MenuItem onClick={() => handleOpenModalPen()}>
+                                    New Pen
+                                </MenuItem>
+
                                 <Divider sx={{bgcolor:'#C4C4C4'}} />
                                 <MenuItem>
                                     <ListItemIcon>
