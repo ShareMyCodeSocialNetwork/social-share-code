@@ -6,25 +6,29 @@ import {useDispatch, useSelector} from "react-redux";
 import {isEmpty} from "../../components/utils/Utils";
 import {getProjectByOwner} from "../../actions/API/project.action";
 import {getLanguages} from "../../actions/API/language.action";
+import {addCode} from "../../actions/API/code.action";
 
 
 
-const NewPenModal = ({handleCloseModalPen, openModalPen, style}) => {
+const NewPenModal = ({handleCloseModalPen, openModalPen, style, project_id}) => {
 
     const dispatch = useDispatch();
     const user_id = localStorage.getItem("user_id");
-    const pen = useForm();
     const [language,setLanguage] = useState("1");
-    const [dataLanguage, setDataLanguage] = useState([]);
+    const pen = useForm();
+
 
     useEffect(() => {
         dispatch(getProjectByOwner(user_id));
         dispatch(getLanguages())
-    }, [dispatch, user_id]);
+    }, []);
 
     const projectsModal = useSelector( state => state.projectReducer);
+    const [dataLanguage, setDataLanguage] = useState([]);
     const [data_projectsModal, setData_projectsModal] = useState([]);
     const dbLanguages = useSelector( state=> state.languageReducer)
+
+
 
     const loadData = async () =>{
         let projectsData = await projectsModal;
@@ -44,9 +48,10 @@ const NewPenModal = ({handleCloseModalPen, openModalPen, style}) => {
     }
 
     const onSubmitPen = (data) => {
-        data.user_id = user_id;
+        data.userId = user_id;
         console.log(data);
-        console.log(data.project_id)
+        dispatch(addCode(data));
+        window.location.reload();
     }
 
     return (
@@ -97,17 +102,9 @@ const NewPenModal = ({handleCloseModalPen, openModalPen, style}) => {
                                             ))
                                         }
                                     </select>
+                                    <input type="hidden" value={project_id} {...pen.register("project_id")}/>
+                                    <input type="hidden" value="Hello World !" {...pen.register("content")}/>
                                     <br/>
-                                        <select>
-                                            {
-                                                !isEmpty(data_projectsModal) &&
-                                                data_projectsModal.map((item, index) => (
-                                                    <option key={index} value={item.id}>{item.name}</option>
-                                                ))
-                                            }
-                                            <option value={null} {...pen.register("project_id")}>Without project</option>
-                                        </select>
-
                                 </div>
                             </div>
                         </div>
