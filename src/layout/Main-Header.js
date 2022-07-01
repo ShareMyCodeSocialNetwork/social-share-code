@@ -217,7 +217,7 @@ const MainHeader = () => {
                                 </MenuItem>
                                 <MenuItem>
                                     <div>
-                                        <Link to="/myProjects"  style={{textDecoration:'none', color:'#fff'}}>
+                                        <Link to="/my-projects"  style={{textDecoration:'none', color:'#fff'}}>
                                             Your Projects
                                         </Link>
                                     </div>
