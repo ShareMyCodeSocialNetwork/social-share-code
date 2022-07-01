@@ -100,7 +100,7 @@ const MainHeader = () => {
         <>
            <NewCollection handleCloseModalCollection={handleCloseModalCollection}  style={style} openModalCollection={openModalCollection}></NewCollection>
             <NewProject handleCloseModalProject={handleCloseModalProject} style={style} openModalProject={openModalProject}></NewProject>
-            <NewPen style={style} handleCloseModalPen={handleCloseModalPen} openModalPen={openModalPen}></NewPen>
+
 
             <div className="main-header">
                 <Link to="/" style={{textDecoration:'none',color:'#fff'}}>
