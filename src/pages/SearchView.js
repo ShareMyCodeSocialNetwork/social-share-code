@@ -3,7 +3,7 @@ import CardSearchCode from "../components/pages/CardSearchCode";
 import {useParams} from "react-router-dom";
 import {filter_array} from "../components/utils/Utils";
 
-const Project = () => {
+const SearchView = () => {
 
     const { filters } = useParams();
 
@@ -30,4 +30,4 @@ const Project = () => {
     );
 };
 
-export default Project;
+export default SearchView;

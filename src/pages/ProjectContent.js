@@ -6,7 +6,7 @@ import {getCodeByProject} from "../actions/API/code.action";
 import {isEmpty} from "../components/utils/Utils";
 import MyCodeView from "../components/pages/MyCodeView";
 
-const Project = () => {
+const ProjectContent = () => {
     const history = useHistory();
     const { id } = useParams();
     const dispatch = useDispatch();
@@ -62,8 +62,8 @@ const Project = () => {
                 {
                     !isEmpty(dataCode) &&
                     dataCode.map((item, index) => (
-                       <div className="post-code" key={index}>
-                           <MyCodeView language={item.language.name} code={item.nameCode} userPseudo={item.user.pseudo} codeId={item.id} userId={item.user.id}></MyCodeView>
+                       <div className="post-code">
+                           <MyCodeView key={index} language={item.language.name} code={item.nameCode} userPseudo={item.user.pseudo} codeId={item.id} userId={item.user.id}></MyCodeView>
                        </div>
                     ))
                 }
@@ -77,4 +77,4 @@ const Project = () => {
 
 };
 
-export default Project;
+export default ProjectContent;

@@ -1,17 +1,15 @@
-import React, {useState} from 'react';
+import React from 'react';
 import CodeMirror from "@uiw/react-codemirror";
 import {useForm} from "react-hook-form";
-import {deleteCode} from "../../actions/API/code.action";
-import {useDispatch} from "react-redux";
 import {deleteProject} from "../../actions/API/project.action";
+import {useDispatch} from "react-redux";
+import {isEmpty} from "../utils/Utils";
 
 const ProjectView = ({name= "",description= "", userPseudo="", projectId = "" , userId = ""}) => {
-
     const dispatch = useDispatch();
-
     const remove = useForm();
 
-    const submitRemove = () => {
+    const submitRemove = (projectId) => {
         dispatch(deleteProject(projectId));
         window.location.reload();
     }
@@ -33,15 +31,22 @@ const ProjectView = ({name= "",description= "", userPseudo="", projectId = "" , 
             </div>
             </a>
             <div className="social-code-search">
-                <a href={"/profile/" + userId}>
+                <a href={"/profil/" + userId}>
                 <div className="profile-editor">
                     <img className="profile-img" src="/assets/logo/profil.svg" alt="profile" />
                     <div className="title-name-editor">{userPseudo}</div>
                 </div>
                 </a>
-                <form>
-                    <button onClick={remove.handleSubmit(submitRemove)} className="button-profile" type="submit">Remove</button>
-                </form>
+                {
+                    !isEmpty(userId) &&
+                    userId.toString() === localStorage.getItem("user_id").toString() ?
+                        <form>
+                            <button  onClick={remove.handleSubmit(submitRemove)}  className="button-profile" type="submit">Remove</button>
+                        </form>
+                        :
+                        <div></div>
+                }
+
             </div>
 
         </div>
