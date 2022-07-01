@@ -4,7 +4,7 @@ import {useForm} from "react-hook-form";
 import {useDispatch} from "react-redux";
 import {deleteCode} from "../../actions/API/code.action";
 
-const MyCodeView = ({language= "Python",code= "", userPseudo="" , codeId = ""}, userId = "") => {
+const MyCodeView = ({language= "Python",code= "", userPseudo="" , codeId = "", userId}) => {
 
     const dispatch = useDispatch();
 
@@ -48,16 +48,22 @@ const MyCodeView = ({language= "Python",code= "", userPseudo="" , codeId = ""}, 
                 </div>
             </div>
             <div className="social-code-search">
-                <a href={"/profile/" + userId}>
+                <a href={"/profil/" + userId}>
                 <div className="profile-editor">
                     <img className="profile-img" src="/assets/logo/profil.svg" alt="profile" />
                     <div className="title-name-editor">{userPseudo}</div>
                 </div>
                     </a>
                 <div>
-                    <form>
-                        <button onClick={remove.handleSubmit(submitRemove)} className="button-profile" type="submit">Remove</button>
-                    </form>
+                    {
+                        userId.toString() === localStorage.getItem("user_id").toString() ?
+                            <form>
+                                <button onClick={remove.handleSubmit(submitRemove)} className="button-profile" type="submit">Remove</button>
+                            </form>
+                            :
+                            <span></span>
+                    }
+
                 </div>
             </div>
         </div>
