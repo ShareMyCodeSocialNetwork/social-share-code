@@ -20,16 +20,16 @@ const NewPenModal = ({handleCloseModalPen, openModalPen, style}) => {
     useEffect(() => {
         dispatch(getProjectByOwner(user_id));
         dispatch(getLanguages())
-    }, []);
+    }, [dispatch, user_id]);
 
-    const projects = useSelector( state => state.projectReducer);
-    const [data_projects, setData_projects] = useState([]);
+    const projectsModal = useSelector( state => state.projectReducer);
+    const [data_projectsModal, setData_projectsModal] = useState([]);
     const dbLanguages = useSelector( state=> state.languageReducer)
 
     const loadData = async () =>{
-        let projectsData = await projects;
-        setData_projects(projectsData);
-        console.log(data_projects);
+        let projectsData = await projectsModal;
+        setData_projectsModal(projectsData);
+        console.log(data_projectsModal);
 
         let languageData = await dbLanguages;
         setDataLanguage(languageData);
@@ -98,15 +98,16 @@ const NewPenModal = ({handleCloseModalPen, openModalPen, style}) => {
                                         }
                                     </select>
                                     <br/>
-                                    <select>
-                                        {
-                                            !isEmpty(data_projects) &&
-                                            data_projects.map((item, index) => (
-                                                <option key={index} value={item.id}>{item.name}</option>
-                                            ))
-                                        }
-                                        <option value={null} {...pen.register("project_id")}>Without project</option>
-                                    </select>
+                                        <select>
+                                            {
+                                                !isEmpty(data_projectsModal) &&
+                                                data_projectsModal.map((item, index) => (
+                                                    <option key={index} value={item.id}>{item.name}</option>
+                                                ))
+                                            }
+                                            <option value={null} {...pen.register("project_id")}>Without project</option>
+                                        </select>
+
                                 </div>
                             </div>
                         </div>
