@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="a9c3448e-8f9f-42f2-98a0-ec5b274f2900" name="Changes" comment=":rocket:">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/ci.yml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="27LAPovHzvalQK3cZcBItOLSBTL" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/davidhenriarnaud/Documents/Esgi/Master1/Projet_Annuel/social-share-code/src/test&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs.jest.jest_package&quot;: &quot;/Users/davidhenriarnaud/Documents/Esgi/Master1/Projet_Annuel/social-share-code/node_modules/react-scripts&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/test" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src/components/utils" />
+      <recent name="$PROJECT_DIR$/src/components" />
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/components/pages" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.build (1)">
+    <configuration name="Test function utils" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/test/utils.test.js" />
+      <test-names>
+        <test-name value="Test function utils" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="Test function utils.Test function isEmpty.Test validate Empty" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/test/utils.test.js" />
+      <test-names>
+        <test-name value="Test function utils" />
+        <test-name value="Test function isEmpty" />
+        <test-name value="Test validate Empty" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="build (1)" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="build" type="js.build_tools.npm" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="build" />
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="start" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="start" />
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Jest.Test function utils" />
+      <item itemvalue="Jest.Test function utils.Test function isEmpty.Test validate Empty" />
+      <item itemvalue="npm.start" />
+      <item itemvalue="npm.build" />
+      <item itemvalue="npm.build (1)" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.build (1)" />
+        <item itemvalue="Jest.Test function utils" />
+        <item itemvalue="Jest.Test function utils.Test function isEmpty.Test validate Empty" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a9c3448e-8f9f-42f2-98a0-ec5b274f2900" name="Changes" comment="" />
+      <created>1649088972668</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1649088972668</updated>
+      <workItem from="1649088975624" duration="2803000" />
+      <workItem from="1649095367764" duration="1197000" />
+      <workItem from="1651311908781" duration="9272000" />
+      <workItem from="1651500279108" duration="36850000" />
+      <workItem from="1651833298465" duration="1561000" />
+      <workItem from="1652097638245" duration="599000" />
+      <workItem from="1652112079312" duration="3943000" />
+      <workItem from="1652533908328" duration="3736000" />
+      <workItem from="1652629491568" duration="6057000" />
+      <workItem from="1652901581207" duration="4186000" />
+      <workItem from="1653340619325" duration="263000" />
+      <workItem from="1653340928701" duration="892000" />
+      <workItem from="1653510497476" duration="1197000" />
+      <workItem from="1653643849659" duration="598000" />
+      <workItem from="1653750360675" duration="3197000" />
+      <workItem from="1653818357459" duration="579000" />
+      <workItem from="1653821963958" duration="6493000" />
+      <workItem from="1653903903159" duration="47000" />
+      <workItem from="1653904070083" duration="933000" />
+      <workItem from="1653912002570" duration="5046000" />
+      <workItem from="1653920214049" duration="282000" />
+      <workItem from="1653983444442" duration="24669000" />
+      <workItem from="1654159076504" duration="6000" />
+      <workItem from="1654945789307" duration="611000" />
+      <workItem from="1655558946165" duration="615000" />
+      <workItem from="1655751072605" duration="10952000" />
+      <workItem from="1656076210012" duration="2707000" />
+      <workItem from="1656153406661" duration="5476000" />
+      <workItem from="1656402453669" duration="1335000" />
+      <workItem from="1656504388666" duration="7370000" />
+      <workItem from="1656590908766" duration="6671000" />
+      <workItem from="1656859063788" duration="7821000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
