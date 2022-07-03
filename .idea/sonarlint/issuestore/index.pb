@@ -15,8 +15,6 @@ X
 (src/sass/components/pages/card-home.scss,b/5/b598b8a96893a6071dce9d0026ca66686ff94c73
 M
 src/sass/utils/_settings.scss,e/d/ede314402a11606ed02f8d9f915d97148b3e6b44
-V
-&src/components/pages/CardSearchCode.js,7/3/7358b16b25b3bed451b416e6a72c464ce8e4417a
 ]
 -src/sass/components/pages/cardsearchcode.scss,3/9/394dbba44f7ea44b3d6bb04da45cfc8efe085042
 H
@@ -33,14 +31,10 @@ H
 src/sass/pages/home.scss,8/0/8073511c35d5ad5e4260404e95c8e1689e759f30
 K
 src/sass/pages/project.scss,6/f/6f63b46266c2764ca52575b8ffaa16c698bd8e78
-P
- src/sass/layout/main-header.scss,6/0/60c1361b552acdc778c0aff8957a73d7bb2f83e5
 <
 src/index.js,f/9/f900edc44cb929c2267a16100a32851f6d5b477d
 L
 src/actions/tools..action.js,1/3/13eb4295d34696af6e5bcb7ecbcd565dbb3e07da
-M
-src/components/utils/Utils.js,f/d/fd51530007cbef2549c5f682e162879a0c68e8b9
 :
 
 src/App.js,1/e/1e43fa63aecd2127be034b3fb9d4caa172275714
