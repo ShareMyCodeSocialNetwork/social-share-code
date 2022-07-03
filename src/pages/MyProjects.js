@@ -31,7 +31,7 @@ const MyProjects = () => {
                 !isEmpty(dataProjects)&&
                 dataProjects.map(
                     (item, index) => (
-                        <div key={index }className="post-code" >
+                        <div key={index} className="post-code" >
                             <ProjectView  userPseudo={item.user.pseudo} name={item.name} description={item.description} projectId={item.id} userId={item.user.id}></ProjectView>
                         </div>
                     ))
