@@ -30,8 +30,8 @@ const Register = () => {
             <div className="left-part-auth">
                 <div className="title-auth-left">Register</div>
                 <form action="" className="auth-from">
-                    <input {...register("lastName")} type="text" placeholder="Lastname" className="form-input"/>
-                    <input {...register("firstName")} type="text" placeholder="firstname" className="form-input"/>
+                    <input {...register("lastname")} type="text" placeholder="lastname" className="form-input"/>
+                    <input {...register("firstname")} type="text" placeholder="firstname" className="form-input"/>
                     <input {...register("pseudo")} type="text" placeholder="pseudo" className="form-input"/>
                     <input {...register("password")} type="password" placeholder="password" className="form-input"/>
                     <input {...register("email")} type="text" placeholder="email" className="form-input"/>

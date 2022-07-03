@@ -1,9 +1,7 @@
 import axios from "axios";
 import AuthService from "../../components/Auth/AuthService";
+import {API_URL} from "../global";
 
-
-
-export const API_URL = "http://localhost:8080"
 export const GET_PROJECT = "GET_PROJECT";
 export const GET_PROJECT_BY_ID = "GET_PROJECT_BY_ID";
 export const GET_PROJECT_BY_NAME = "GET_PROJECT_BY_NAME";
@@ -13,6 +11,8 @@ export const ADD_PROJECT = "ADD_PROJECT";
 export const UPDATE_PROJECT = "UPDATE_PROJECT";
 export const UPDATE_OWNER_PROJECT = "UPDATE_OWNER_PROJECT";
 export const UPDATE_GROUP_PROJECT = "UPDATE_GROUP_PROJECT";
+export const UPDATE_PROJECT_NAME = "UPDATE_PROJECT_NAME";
+export const UPDATE_PROJECT_DESCRIPTION = "UPDATE_PROJECT_DESCRIPTION";
 export const DELETE_PROJECT = "DELETE_PROJECT";
 
 export const getProjects = () => {
@@ -52,7 +52,7 @@ export const getProjectsByName = (projectName) => {
 export const getProjectByOwner = (userId) => {
     return (dispatch) => {
         return axios
-            .get(`${API_URL}/user/${userId}`,{ headers:  AuthService.authHeader() })
+            .get(`${API_URL}/project/user/${userId}`,{ headers:  AuthService.authHeader() })
             .then((res) => {
                 dispatch({ type: GET_PROJECT_BY_OWNER, payload: res.data });
             })
@@ -71,16 +71,28 @@ export const getProjectByGroup = (groupId) => {
     };
 };
 
-export const addProject = (data) => {
+export const createProject = (data) => {
     return (dispatch) => {
-        return axios
-            .post(`${API_URL}/project/create`, data, { headers:  AuthService.authHeader() })
-            .then(() => {
-                dispatch({ type: ADD_PROJECT, payload: data });
-            })
-            .catch((err) => console.log(err));
-    };
-};
+        const init = {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${AuthService.getCurrentUser()}`
+            },
+            data: JSON.stringify(data),
+            url: API_URL + '/project/create',
+        }
+        axios(init).then(response =>{
+            //dispatch({ type: ADD_PROJECT, payload: response.data });
+            //todo : probleme avec le reducer : TypeError: state is not iterable
+            alert("Project created successfully");
+            return response.data;
+        }).catch(e => {
+            alert("missing information");
+            console.log(e);
+        });
+    }
+}
 
 export const updateGroupForProject = (projectId,data) => {
     return (dispatch) => {
@@ -111,7 +123,18 @@ export const changeProjectName = (projectId,data) => {
         return axios
             .patch(`${API_URL}/project/${projectId}/name`, data, { headers:  AuthService.authHeader() })
             .then(() => {
-                dispatch({ type: UPDATE_PROJECT, payload: data });
+                dispatch({ type: UPDATE_PROJECT_NAME, payload: data });
+            })
+            .catch((err) => console.log(err));
+    };
+};
+
+export const changeProjectDescription = (projectId,data) => {
+    return (dispatch) => {
+        return axios
+            .patch(`${API_URL}/project/${projectId}/description`, data, { headers:  AuthService.authHeader() })
+            .then(() => {
+                dispatch({ type: UPDATE_PROJECT_DESCRIPTION, payload: data });
             })
             .catch((err) => console.log(err));
     };

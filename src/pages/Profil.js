@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useForm} from "react-hook-form";
 import AuthService from "../components/Auth/AuthService";
-import {useHistory} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {
     getOneUserById,
     updateUserEmail,
@@ -15,29 +15,35 @@ import {isEmpty, wait} from "../components/utils/Utils";
 import {getFollowed, getFollowers} from "../actions/API/follower.action";
 
 const Profil = () => {
+    const {id} = useParams();
+
     const dispatch = useDispatch();
     const history = useHistory();
 
     if (AuthService.getCurrentUser() === null || AuthService.isExpiredToken()) {
-        history.push("/login");
+        //todo fix date, show AuthService.isExpiredToken todo
+        //if(AuthService.getCurrentUser() !== null && AuthService.isExpiredToken()){
+          //  AuthService.logout();
+        //}
+        //history.push("/login");
     }
 
     const user_id = localStorage.getItem("user_id");
     useEffect(() => {
-        dispatch(getOneUserById(user_id));
-    }, [dispatch, user_id]);
+        dispatch(getOneUserById(id));
+    }, []);
     const user = useSelector(state => state.userReducer);
     const [dataUser,setDataUser] = useState();
 
     useEffect(() => {
-        dispatch(getFollowed(user_id));
-    }, [dispatch, user_id]);
+        dispatch(getFollowed(id));
+    }, []);
     const followed = useSelector((state) => state.followerReducer);
     const [dataFollowed, setDataFollowed] = useState();
 
     useEffect(() => {
-        dispatch(getFollowers(user_id));
-    }, [dispatch, user_id]);
+        dispatch(getFollowers(id));
+    }, []);
     const followers = useSelector((state) => state.followerReducer);
     const [dataFollowers, setDataFollowers] = useState();
     const {register, handleSubmit, watch, formState: {errors}} = useForm({ shouldUseNativeValidation: true });
@@ -58,17 +64,17 @@ const Profil = () => {
         let followersData = await followers;
         setDataFollowers(followersData);
 
-        setPseudo(userData['pseudo']);
-        setFirstname(userData["firstname"]);
-        setLastname(userData["lastname"]);
-        setPassword(userData["password"]);
-        setMail(userData["email"]);
+        setPseudo(userData.pseudo);
+        setFirstname(userData.firstname);
+        setLastname(userData.lastname);
+        setPassword(userData.password);
+        setMail(userData.email);
         console.log(dataUser);
-        if(!isEmpty(dataFollowers["length"])){
+        if(!isEmpty(dataFollowers)){
             setFollowersInput(dataFollowers["length"]);
         }
         console.log(dataFollowers);
-        if(!isEmpty(dataFollowed["length"])){
+        if(!isEmpty(dataFollowed)){
             setFollowedInput(dataFollowed["length"]);
         }
         console.log(dataFollowed);
@@ -108,7 +114,7 @@ const Profil = () => {
         })
 
     }
-
+if (user_id === id){
     return (
         <div className="view--profile">
             <div className="header-profile">
@@ -170,6 +176,64 @@ const Profil = () => {
             </div>
         </div>
     );
+}else{
+    return (
+        <div className="view--profile">
+            <div className="header-profile">
+                <img className="overlay-profile" src="" alt=""/>
+                <div className="profile-data">
+                    <div className="title-name">{pseudo}</div>
+                    <div className="image-profile">
+                        <img src="/assets/logo/profil_header.png" alt="profile"/>
+                    </div>
+                </div>
+            </div>
+            <div className="body-profile">
+                <div className="social-profile">
+                    <div className="social-follow margin">
+                        <div className="number-social-follow">{followersInput}</div>
+                        <div className="title-social-follow">followers</div>
+                    </div>
+                    <div className="social-follow">
+                        <div className="number-social-follow">{followedInput}</div>
+                        <div className="title-social-follow">following</div>
+                    </div>
+                </div>
+                <form onSubmit={handleSubmit(onSubmit)} className="form-profile">
+                    <div className="container-profile">
+                        <div className="social-profile-input">
+                            <div className="title-input">Nom</div>
+                            <input type="text" readOnly {...register("lastname",{ required: "Please enter your last name valid." })} className="input-profile"
+                                   value={lastname}/>
+                        </div>
+                        <div className="social-profile-input">
+                            <div className="title-input">Prenom</div>
+                            <input type="text" readOnly {...register("firstname", { required: "Please enter your first name valid." })} className="input-profile"
+                                   value={firstname}/>
+                        </div>
+                    </div>
+                    <div className="container-profile">
+                    </div>
+                    <div className="container-profile">
+                        <div className="social-profile-input">
+                            <div className="title-input">Tel</div>
+                            <input type="tel"readOnly  {...register("tel", { required: "Please enter your password valid." })} className="input-profile" value={tel}/>
+                        </div>
+                        <div className="social-profile-input">
+                            <div className="title-input">Email</div>
+                            <input type="text" readOnly {...register("email", { required: "Please enter your password valid." })} className="input-profile" value={email}/>
+                        </div>
+                    </div>
+                </form>
+
+                <form>
+                    <button type={"submit"}> follow this beautiful guys</button>
+                </form>
+            </div>
+        </div>
+    )
+}
+
 };
 
 export default Profil;

@@ -8,7 +8,9 @@ import {
     UPDATE_GROUP_PROJECT,
     ADD_PROJECT,
     UPDATE_PROJECT,
-    DELETE_PROJECT
+    DELETE_PROJECT,
+    UPDATE_PROJECT_NAME,
+    UPDATE_PROJECT_DESCRIPTION
 } from "../../actions/API/project.action";
 
 const initialState = {};
@@ -47,6 +49,24 @@ export default function projectReducer(state = initialState, action) {
             });
 
         case UPDATE_GROUP_PROJECT:
+            return state.map((team) => {
+                if (team.id === action.payload.id) {
+                    return {
+                        ...team,
+                        content: action.payload.content,
+                    };
+                } else return team;
+            });
+        case UPDATE_PROJECT_NAME:
+            return state.map((team) => {
+                if (team.id === action.payload.id) {
+                    return {
+                        ...team,
+                        content: action.payload.content,
+                    };
+                } else return team;
+            });
+        case UPDATE_PROJECT_DESCRIPTION:
             return state.map((team) => {
                 if (team.id === action.payload.id) {
                     return {

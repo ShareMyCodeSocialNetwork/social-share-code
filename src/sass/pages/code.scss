@@ -70,6 +70,28 @@
           font-weight:500;
         }
       }
+      .connected{
+        padding: 9px 12px;
+        background: #1E1F25;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius:5px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        &:hover{
+          transform: scale(1.1);
+        }
+        &.margin-right{
+          margin-right: 24px;
+        }
+        .connected-img{
+          width: 29px;
+          height: 29px;
+        }
+      }
     }
   }
   .body-code{
@@ -113,6 +135,7 @@
         height: 100%;
         position: relative;
         .button-send-code{
+          cursor: pointer;
           position: absolute;
           bottom:20px;
           right:20px;
@@ -158,6 +181,9 @@
         flex-direction: column;
         align-items: flex-start;
         margin-top: 40px;
+        max-height: 732px;
+        overflow-y: scroll;
+        overflow-x: hidden;
         .title-response{
           font-size: 16px;
           line-height: 25px;

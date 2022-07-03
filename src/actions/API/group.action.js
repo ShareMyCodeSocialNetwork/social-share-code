@@ -1,15 +1,17 @@
 import axios from "axios";
 import AuthService from "../../components/Auth/AuthService";
+import {API_URL} from "../global";
 
 
 
-export const API_URL = "http://localhost:8080"
+
 export const GET_GROUP = "GET_GROUP";
 export const GET_GROUP_BY_ID = "GET_GROUP_BY_ID";
 export const GET_GROUP_BY_NAME = "GET_GROUP_BY_NAME";
 export const ADD_GROUP = "ADD_GROUP";
 export const UPDATE_GROUP = "UPDATE_GROUP";
 export const UPDATE_GROUP_NAME = "UPDATE_GROUP_NAME";
+export const UPDATE_GROUP_DESCRIPTION = "UPDATE_GROUP_DESCRIPTION";
 export const DELETE_GROUP = "DELETE_GROUP";
 
 export const getGroups = () => {
@@ -35,16 +37,29 @@ export const getOneGroupById = (groupId) => {
     };
 };
 
+
 export const addGroup = (data) => {
     return (dispatch) => {
-        return axios
-            .post(`${API_URL}/group/create`, data, { headers:  AuthService.authHeader() })
-            .then(() => {
-                dispatch({ type: ADD_GROUP, payload: data });
-            })
-            .catch((err) => console.log(err));
-    };
-};
+        const init = {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${AuthService.getCurrentUser()}`
+            },
+            data: JSON.stringify(data),
+            url: API_URL + '/group/create',
+        }
+        axios(init).then(response =>{
+            //dispatch({ type: ADD_GROUP, payload: response.data });
+            //todo : probleme avec le reducer : TypeError: state is not iterable
+            alert("Collection created successfully");
+            return response.data;
+        }).catch(e => {
+            alert("missing information");
+            console.log(e);
+        });
+    }
+}
 
 
 
@@ -65,6 +80,18 @@ export const changeGroupName = (groupId,data) => {
             .put(`${API_URL}/group/update/name/${groupId}`, data, { headers:  AuthService.authHeader() })
             .then(() => {
                 dispatch({ type: UPDATE_GROUP_NAME, payload: data });
+            })
+            .catch((err) => console.log(err));
+    };
+};
+
+
+export const changeGroupDescription = (groupId,data) => {
+    return (dispatch) => {
+        return axios
+            .put(`${API_URL}/group/update/description/${groupId}`, data, { headers:  AuthService.authHeader() })
+            .then(() => {
+                dispatch({ type: UPDATE_GROUP_DESCRIPTION, payload: data });
             })
             .catch((err) => console.log(err));
     };

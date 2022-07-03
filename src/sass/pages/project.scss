@@ -11,11 +11,7 @@
       width: calc(30% - 24px);
       margin-right: 32px;
       margin-bottom: 27px;
-      transition: all .3s;
       cursor: pointer;
-      &:hover{
-        transform: scale(1.1);
-      }
       &:nth-child(3n + 3){
         margin-right: 32px;
       }

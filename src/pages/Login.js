@@ -24,6 +24,8 @@ const Login = () => {
             history.push({
                 pathname:"/"
             })
+        }else {
+            window.confirm("invalid credentials");
         }
     }
 

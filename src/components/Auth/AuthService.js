@@ -10,6 +10,10 @@ class  AuthService {
         localStorage.removeItem("access_expire");
     }
 
+    getUserId = () => {
+        return localStorage.getItem('user_id')
+    }
+
     getCurrentUser = () => {
           return JSON.parse(localStorage.getItem('user'));
     }
@@ -29,7 +33,14 @@ class  AuthService {
     isExpiredToken = () => {
         let expToken = new Date(localStorage.getItem("access_expire"));
         let now = new Date();
-        return expToken < now;
+        console.log(expToken);
+        console.log(now);
+        console.log(expToken.valueOf());
+        console.log(now.valueOf());
+        //todo a voir le format de date dans l'api
+        //  1655848800000 // api manque une partie de la date (les 0). cest coter js front ou java api
+        //  1655849843889 // now
+        return expToken.valueOf() <= now.valueOf();
     }
 
     getCurrentUserEmail = () => {

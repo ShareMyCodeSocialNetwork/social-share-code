@@ -1,9 +1,8 @@
 import axios from "axios";
 import AuthService from "../../components/Auth/AuthService";
+import {API_URL} from "../global";
 
 
-
-export const API_URL = "http://localhost:8080"
 export const GET_POST = "GET_POST";
 export const GET_POST_BY_ID = "GET_POST_BY_ID";
 export const GET_POST_BY_USER_ID = "GET_POST_BY_USER_ID";
