@@ -48,8 +48,11 @@ export const addCode = (data) => {
     return (dispatch) => {
         return axios
             .post(`${API_URL}/code/create`, data, { headers:  AuthService.authHeader() })
-            .then(() => {
+            .then((res) => {
                 dispatch({ type: ADD_CODE, payload: data });
+                if(res.status === 201) {
+                    window.location.replace('/project-all/all');
+                }
             })
             .catch((err) => console.log(err));
     };
