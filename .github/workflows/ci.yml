@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node-version: [ 18.x]
+        node-version: [18.x]
         os: [ubuntu-latest]
     steps:
     - uses: actions/checkout@v2
@@ -76,7 +76,7 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/social-share-code:latest
-      
+
 
 
 
