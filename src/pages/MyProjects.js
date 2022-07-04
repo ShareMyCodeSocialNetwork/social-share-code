@@ -19,7 +19,6 @@ const MyProjects = () => {
         let projectsData = await projects;
         setDataProjects(projectsData);
         console.log(dataProjects);
-
     }
     loadProjectData().then();
 
@@ -27,16 +26,18 @@ const MyProjects = () => {
     return (
         <div className="view--project">
             <div className="container-project">
-                <div className="post-code" >
+
             {
                 !isEmpty(dataProjects) &&
                 dataProjects.map(
                     (item, index) => (
+                        <div className="post-code" >
                         <ProjectView  key={index} userPseudo={item.user.pseudo} name={item.name} description={item.description} projectId={item.id} userId={item.user.id}></ProjectView>
+                        </div>
                     ))
             }
                 {isEmpty(dataProjects) && "No project found ! Create on on top right !"}
-                </div>
+
             </div>
             </div>
         );
