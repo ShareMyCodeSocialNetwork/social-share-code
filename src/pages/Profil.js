@@ -244,43 +244,78 @@ if (user_id === id){
 
                 <form>
                     <button type={"submit"}> follow this beautiful guys</button>
+                    {
+                        //todo implement it ! show it if get by follower && followed is null && create follow on click
+                    }
                 </form>
-            </div>
-            {
-                !isEmpty(dataProjectProfile) &&
-                dataProjectProfile.map( (item, index) => (
-                    <div key={index} className="view--project">
-                        <div className="container-project">
-                            <div className="post-code">
-                            <ProjectView  userPseudo={item.user.pseudo} name={item.name} description={item.description} projectId={item.id} userId={item.user.id}></ProjectView>
-                        </div>
-                        </div>
-                    </div>
-                ))
 
-            }
-            <div className="view--project">
+            </div>
+
+            <div  className="view--project">
+                {
+                    !isEmpty(dataUser) &&
+                    dataUser.pseudo + " projects : "
+                }
+                <br/>
+                <br/>
                 <div className="container-project">
-                    code :
+                    {
+                        !isEmpty(dataProjectProfile) &&
+                        dataProjectProfile.map(
+                            (item, index) => (
+                                <div key={index} className="post-code">
+                                    <ProjectView  key={index} userPseudo={item.user.pseudo} name={item.name} description={item.description} projectId={item.id} userId={item.user.id}></ProjectView>
+                                </div>
+                            )
+                        )
+                    }
                 </div>
             </div>
+
             <div className="view--project">
+                {
+                    !isEmpty(dataUser) &&
+                    dataUser.pseudo + " codes : "
+                }
+                <br/>
+                <br/>
                 <div className="container-project">
-                    group :
+                    <div className="post-code">codes insides</div>
                 </div>
             </div>
-            {
-                !isEmpty(dataPosts) &&
-                dataPosts.map(
-                    (item, index) => (
-                        <div className="view--project" key={index}>
-                            <div className="container-project">
-                                <PostView postData={item}></PostView>
-                            </div>
-                        </div>
-                    )
-                )
-            }
+
+            <div className="view--project">
+                {
+                    !isEmpty(dataUser) &&
+                    dataUser.pseudo + " groups : "
+                }
+                <br/>
+                <br/>
+                <div className="container-project">
+                    <div className="post-code">groups inside</div>
+                </div>
+            </div>
+
+            <div className="view--project">
+                {
+                    !isEmpty(dataUser) &&
+                    dataUser.pseudo + " posts : "
+                }
+                <br/>
+                <br/>
+                <div className="container-project">
+                    {
+                        !isEmpty(dataPosts) &&
+                        dataPosts.map(
+                            (item, index) => (
+                                <div key={index} className="post-code">
+                                    <PostView  postData={item}></PostView>
+                                </div>
+                            )
+                        )
+                    }
+                </div>
+            </div>
         </div>
     )
 }
