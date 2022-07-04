@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a9c3448e-8f9f-42f2-98a0-ec5b274f2900" name="Changes" comment=":rocket:" />
+    <list default="true" id="a9c3448e-8f9f-42f2-98a0-ec5b274f2900" name="Changes" comment=":rocket:">
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sonar-project.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sonar-project.properties" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -59,7 +63,7 @@
       <recent name="$PROJECT_DIR$/src/components/pages" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.build (1)">
+  <component name="RunManager" selected="npm.start">
     <configuration name="Test function utils" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -166,7 +170,8 @@
       <workItem from="1656402453669" duration="1335000" />
       <workItem from="1656504388666" duration="7370000" />
       <workItem from="1656590908766" duration="6671000" />
-      <workItem from="1656859063788" duration="9139000" />
+      <workItem from="1656859063788" duration="10354000" />
+      <workItem from="1656920861855" duration="609000" />
     </task>
     <servers />
   </component>

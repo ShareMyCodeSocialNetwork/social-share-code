@@ -82,3 +82,23 @@ W
 'src/actions/API/userRoleGroup.action.js,e/3/e30de37ce2dd3540155d9502b4cb600a71dfb925
 O
 src/actions/API/group.action.js,5/8/58b1c028dcbfd0a7949ae9d145ae5e2fb3319fbc
+N
+src/actions/API/code.action.js,0/9/09cc150994a584346e2edf2b87f42cbeb26a3b31
+N
+src/actions/API/auth.action.js,2/f/2f9642f8e956782d48b18733c2905e06a0adb98b
+V
+&src/components/pages/CardSearchCode.js,7/3/7358b16b25b3bed451b416e6a72c464ce8e4417a
+R
+"src/components/Auth/AuthService.js,1/5/1589c7bf4e0ef868c6f51967a162313596955639
+C
+src/pages/Profil.js,5/c/5cb845e6aec83e0b9b88880fde98bc3aa7d6b614
+P
+ src/sass/layout/main-header.scss,6/0/60c1361b552acdc778c0aff8957a73d7bb2f83e5
+I
+src/layout/Main-Header.js,d/4/d473a1deb4da26b628866f1a48f02881b682263c
+H
+src/sass/pages/code.scss,c/c/cc4e6c7e4bccddef2f3383e5b3651df3f51a5436
+A
+src/pages/Code.js,0/a/0a07a77dc29df517cc8b79c5e6bc8c612df0336f
+M
+src/components/utils/Utils.js,f/d/fd51530007cbef2549c5f682e162879a0c68e8b9
