@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a9c3448e-8f9f-42f2-98a0-ec5b274f2900" name="Changes" comment=":rocket:">
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sonar-project.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sonar-project.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +62,7 @@
       <recent name="$PROJECT_DIR$/src/components/pages" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.start">
+  <component name="RunManager" selected="Docker.Dockerfile">
     <configuration name="Test function utils" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -92,6 +91,14 @@
       </test-names>
       <method v="2" />
     </configuration>
+    <configuration name="Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="sourceFilePath" value="Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
     <configuration name="build (1)" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -117,6 +124,7 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Docker.Dockerfile" />
       <item itemvalue="Jest.Test function utils" />
       <item itemvalue="Jest.Test function utils.Test function isEmpty.Test validate Empty" />
       <item itemvalue="npm.start" />
@@ -125,6 +133,7 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Docker.Dockerfile" />
         <item itemvalue="npm.build (1)" />
         <item itemvalue="Jest.Test function utils" />
         <item itemvalue="Jest.Test function utils.Test function isEmpty.Test validate Empty" />
@@ -171,7 +180,7 @@
       <workItem from="1656504388666" duration="7370000" />
       <workItem from="1656590908766" duration="6671000" />
       <workItem from="1656859063788" duration="10354000" />
-      <workItem from="1656920861855" duration="609000" />
+      <workItem from="1656920861855" duration="1656000" />
     </task>
     <servers />
   </component>

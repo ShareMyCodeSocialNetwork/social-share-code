@@ -1,6 +1,8 @@
 FROM node:alpine
-COPY build build
-RUN npm install -g serve
+WORKDIR /usr/src/app
+COPY build ./
+RUN npm ci -g serve
+COPY . .
 CMD ["serve", "-s","build"]
 
 
