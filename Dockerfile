@@ -1,7 +1,15 @@
-FROM node:alpine
+FROM node
 WORKDIR /usr/src/app
 COPY build ./
+RUN npm install
+COPY . .
+EXPOSE 3001
 CMD ["serve", "-s","build"]
+
+##FROM node:alpine
+  #WORKDIR /usr/src/app
+  #COPY build ./
+  #CMD ["serve", "-s","build"]
 
 
 ##FROM node:18-alpine AS builder
