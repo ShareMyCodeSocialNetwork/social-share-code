@@ -1,8 +1,6 @@
 FROM node:alpine
 WORKDIR /usr/src/app
 COPY build ./
-RUN npm ci -g serve
-COPY . .
 CMD ["serve", "-s","build"]
 
 
