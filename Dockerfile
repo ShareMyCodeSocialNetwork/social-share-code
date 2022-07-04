@@ -1,10 +1,10 @@
 FROM node
 WORKDIR /usr/src/app
-COPY build ./
+COPY package*.json ./
 RUN npm install
 COPY . .
 EXPOSE 3000
-CMD ["serve", "-s","build"]
+CMD ["npm","start"]
 
 ##FROM node:alpine
   #WORKDIR /usr/src/app
