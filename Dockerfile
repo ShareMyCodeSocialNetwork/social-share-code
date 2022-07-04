@@ -3,7 +3,7 @@ WORKDIR /usr/src/app
 COPY build ./
 RUN npm install
 COPY . .
-EXPOSE 3001
+EXPOSE 3000
 CMD ["serve", "-s","build"]
 
 ##FROM node:alpine
