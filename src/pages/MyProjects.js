@@ -36,7 +36,7 @@ const MyProjects = () => {
                         </div>
                     ))
             }
-                {isEmpty(dataProjects) && "No project found ! Create on on top right !"}
+                {isEmpty(dataProjects) && "No project found ! Create one on top right !"}
 
             </div>
             </div>
