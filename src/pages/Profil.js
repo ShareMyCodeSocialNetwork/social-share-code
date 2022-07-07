@@ -17,7 +17,8 @@ import {getProjectByOwner} from "../actions/API/project.action";
 import ProjectView from "../components/pages/ProjectView";
 import {getPostByUserId} from "../actions/API/post.action";
 import PostView from "./PostView";
-import CardSearchCode from "../components/pages/CardSearchCode";
+import {getCodeByUser} from "../actions/API/code.action";
+import MyCodeView from "../components/pages/MyCodeView";
 
 const Profil = () => {
     const {id} = useParams();
@@ -39,7 +40,8 @@ const Profil = () => {
         dispatch(getFollowed(id));
         dispatch(getFollowers(id));
         dispatch(getProjectByOwner(id));
-        dispatch(getPostByUserId(id))
+        dispatch(getPostByUserId(id));
+        dispatch(getCodeByUser(id))
     }, []);
     const user = useSelector(state => state.userReducer);
     const [dataUser,setDataUser] = useState();
@@ -55,6 +57,9 @@ const Profil = () => {
 
     const projectProfile = useSelector( (state) => state.projectReducer);
     const [dataProjectProfile, setDataProjectProfile] = useState([]);
+
+    const codeProfile = useSelector( (state) => state.codeReducer);
+    const [dataCodeProfile, setDataCodeProfile] = useState([]);
 
     const {register, handleSubmit, watch, formState: {errors}} = useForm({ shouldUseNativeValidation: true });
 
@@ -75,9 +80,13 @@ const Profil = () => {
         let followersData = await followers;
         let projectProfileDate = await projectProfile;
         let dbPosts = await posts;
+        let dbCodes = await codeProfile;
         setDataUser(userData);
         setDataFollowed(followedData);
         setDataFollowers(followersData);
+        setDataCodeProfile(dbCodes);
+        setDataPosts(dbPosts);
+        setDataProjectProfile(projectProfileDate);
 
         setPseudo(dataUser.pseudo);
         setFirstname(dataUser.firstname);
@@ -92,11 +101,6 @@ const Profil = () => {
         if(!isEmpty(dataFollowed)){
             setFollowedInput(dataFollowed["length"]);
         }
-
-        setDataProjectProfile(projectProfileDate);
-
-        setDataPosts(dbPosts);
-        console.log(dataPosts);
     }
 
     loadData().then()
@@ -134,7 +138,7 @@ if (user_id === id){
             <div className="header-profile">
                 <img className="overlay-profile" src="" alt=""/>
                 <div className="profile-data">
-                    <div className="title-name">{pseudo}</div>
+                    <div className="title-name">{!isEmpty(dataUser) && pseudo}</div>
                     <div className="image-profile">
                         <img src="/assets/logo/profil_header.png" alt="profile"/>
                     </div>
@@ -280,7 +284,14 @@ if (user_id === id){
                 <br/>
                 <br/>
                 <div className="container-project">
-                    <div className="post-code">codes insides</div>
+                    {
+                        !isEmpty(dataCodeProfile) &&
+                        dataCodeProfile.map( (item, index) =>(
+                            <div key={index} className="post-code">
+                                <MyCodeView language={isEmpty(item.language) ? "removed language" : item.language.name} userId={item.user.id} userPseudo={item.user.pseudo} codeId={item.id} code={item.content}></MyCodeView>
+                            </div>
+                        ))
+                    }
                 </div>
             </div>
 
@@ -295,6 +306,7 @@ if (user_id === id){
                     <div className="post-code">groups inside</div>
                 </div>
             </div>
+
 
             <div className="view--project">
                 {
