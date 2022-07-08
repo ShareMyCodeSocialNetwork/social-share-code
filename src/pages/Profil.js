@@ -19,6 +19,9 @@ import {getPostByUserId} from "../actions/API/post.action";
 import PostView from "./PostView";
 import {getCodeByUser} from "../actions/API/code.action";
 import MyCodeView from "../components/pages/MyCodeView";
+import groupCard from "./GroupCard";
+import GroupCard from "./GroupCard";
+import {getGroupsByOwner} from "../actions/API/group.action";
 
 const Profil = () => {
     const {id} = useParams();
@@ -42,6 +45,7 @@ const Profil = () => {
         dispatch(getProjectByOwner(id));
         dispatch(getPostByUserId(id));
         dispatch(getCodeByUser(id))
+        dispatch(getGroupsByOwner(id))
     }, []);
     const user = useSelector(state => state.userReducer);
     const [dataUser,setDataUser] = useState();
@@ -60,6 +64,9 @@ const Profil = () => {
 
     const codeProfile = useSelector( (state) => state.codeReducer);
     const [dataCodeProfile, setDataCodeProfile] = useState([]);
+
+    const groupProfile = useSelector( (state) => state.groupReducer);
+    const [dataGroupProfile, setDataGroupProfile] = useState([]);
 
     const {register, handleSubmit, watch, formState: {errors}} = useForm({ shouldUseNativeValidation: true });
 
@@ -81,12 +88,15 @@ const Profil = () => {
         let projectProfileDate = await projectProfile;
         let dbPosts = await posts;
         let dbCodes = await codeProfile;
+        let dbGroup = await groupProfile;
+
         setDataUser(userData);
         setDataFollowed(followedData);
         setDataFollowers(followersData);
         setDataCodeProfile(dbCodes);
         setDataPosts(dbPosts);
         setDataProjectProfile(projectProfileDate);
+        setDataGroupProfile(dbGroup);
 
         setPseudo(dataUser.pseudo);
         setFirstname(dataUser.firstname);
@@ -303,7 +313,14 @@ if (user_id === id){
                 <br/>
                 <br/>
                 <div className="container-project">
-                    <div className="post-code">groups inside</div>
+                    {
+                        !isEmpty(dataGroupProfile) &&
+                        dataGroupProfile.map( (item, index) =>(
+                            <div key={index} className="post-code">
+                                <GroupCard group={item}></GroupCard>
+                            </div>
+                        ))
+                    }
                 </div>
             </div>
 
