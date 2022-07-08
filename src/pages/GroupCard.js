@@ -21,12 +21,13 @@ const GroupCard = ({group}) => {
         <div className="component--card-search-code">
             <div className="container-code">
                 <div className="language-code">
+                    <a href={"/group/" + group.owner.id}>
                     <div className="language-title">
                         {
                             group.name
                         }
                     </div>
-
+                    </a>
                 </div>
                 <div className="codemirror">
                     <CodeMirror
