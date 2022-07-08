@@ -6,7 +6,8 @@ import {
     DELETE_GROUP,
     GET_GROUP_BY_NAME,
     UPDATE_GROUP_NAME,
-    UPDATE_GROUP_DESCRIPTION
+    UPDATE_GROUP_DESCRIPTION,
+    GET_GROUP_BY_OWNER
 } from "../../actions/API/group.action";
 
 const initialState = {};
@@ -18,6 +19,8 @@ export default function groupReducer(state = initialState, action) {
         case GET_GROUP_BY_ID:
             return action.payload;
         case GET_GROUP_BY_NAME :
+            return action.payload;
+        case GET_GROUP_BY_OWNER :
             return action.payload;
         case ADD_GROUP:
             return [action.payload, ...state];

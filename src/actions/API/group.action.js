@@ -11,6 +11,7 @@ export const GET_GROUP_BY_NAME = "GET_GROUP_BY_NAME";
 export const ADD_GROUP = "ADD_GROUP";
 export const UPDATE_GROUP = "UPDATE_GROUP";
 export const UPDATE_GROUP_NAME = "UPDATE_GROUP_NAME";
+export const GET_GROUP_BY_OWNER = "GET_GROUP_BY_OWNER";
 export const UPDATE_GROUP_DESCRIPTION = "UPDATE_GROUP_DESCRIPTION";
 export const DELETE_GROUP = "DELETE_GROUP";
 
@@ -103,6 +104,16 @@ export const getGroupsByName = (name) => {
             .get(`${API_URL}/group/name/${name}`,{ headers:  AuthService.authHeader() })
             .then((res) => {
                 dispatch({ type: GET_GROUP_BY_NAME, payload: res.data });
+            })
+            .catch((err) => console.log(err));
+    };
+};
+export const getGroupsByOwner = (userId) => {
+    return (dispatch) => {
+        return axios
+            .get(`${API_URL}/group/owner/${userId}`,{ headers:  AuthService.authHeader() })
+            .then((res) => {
+                dispatch({ type: GET_GROUP_BY_OWNER, payload: res.data });
             })
             .catch((err) => console.log(err));
     };
