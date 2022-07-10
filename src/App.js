@@ -11,6 +11,8 @@ import Profil from "./pages/Profil";
 import AuthService from "./components/Auth/AuthService";
 import MyProjects from "./pages/MyProjects";
 import ProjectContent from "./pages/ProjectContent";
+import MyGroups from "./pages/MyGroups";
+import GroupContent from "./pages/GroupContent";
 
 
 const App =  () => {
@@ -35,7 +37,9 @@ const App =  () => {
               <Route path="/register" exact component={Register} />
               <Route path="/project-all/:filters" exact component={SearchView} />
               <Route path="/my-projects" exact component={MyProjects} />
+              <Route path="/my-groups" exact component={MyGroups} />
               <Route path="/project/:id" exact component={ProjectContent} />
+              <Route path="/group/:id" exact component={GroupContent} />
               <Route path="/code/:id" exact component={Code} />
               <Route path="/logout" exact component={logOut} />
               <Route path="/" exact component={Home} />
