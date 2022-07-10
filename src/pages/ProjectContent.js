@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useHistory, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getOneProjectsById} from "../actions/API/project.action";
 import {getCodeByProject} from "../actions/API/code.action";
@@ -63,7 +63,7 @@ const ProjectContent = () => {
             {!isEmpty(dataProject) && "project description : " + dataProject.description}
             <br/>
             <br/>
-            {!isEmpty(dataProject) && !isEmpty(dataProject.group) && "project group : " + dataProject.group.name}
+            {!isEmpty(dataProject) && !isEmpty(dataProject.group) && <a href={"/group/" + dataProject.group.id}>project group : { dataProject.group.name}</a>}
             {!isEmpty(dataProject) && isEmpty(dataProject.group) && "No group for this project"}
             <br/>
             <br/>
