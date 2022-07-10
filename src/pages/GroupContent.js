@@ -53,14 +53,14 @@ const GroupContent = () => {
     const [groupData, setGroupData] = useState();
     const group = useSelector(state => state.groupReducer);
 
+    const [projectData, setProjectData] = useState([]);
+    const project = useSelector(state => state.projectReducer);
+
     const [usersInGroup, setUsersInGroup] = useState([]);
     const usersInGroupAsync = useSelector(state => state.userRoleGroupReducer);
 
     const [userRoleGroupData, setUserRoleGroupData] = useState();
     const userRoleGroup = useSelector(state => state.userRoleGroupReducer);
-
-    const [projectData, setProjectData] = useState([]);
-    const project = useSelector(state => state.projectReducer);
 
     const loadProjectData = async () => {
         let dbGroup = await group;
@@ -125,12 +125,15 @@ const GroupContent = () => {
             <div>
                 {!isEmpty(groupData) && <a href={"/profil/" + groupData.owner.id}>{"Group's owner : " + groupData.owner.pseudo} </a> }
                 <ul>
-                    {
+                    {/*//todo ca me gave comprends pas le probleme
                         !isEmpty(usersInGroup) &&
+                        !isEmpty(usersInGroup.user) &&
+                        !isEmpty(usersInGroup.role) &&
+                        !isEmpty(usersInGroup.group) &&
                         usersInGroup.map( (item, index) => (
-                            <li key={index}>{item.pseudo}</li>
+                            <li key={index}>{item.user.pseudo}</li>
                         ))
-                    }
+                    */}
                 </ul>
             </div>
 
