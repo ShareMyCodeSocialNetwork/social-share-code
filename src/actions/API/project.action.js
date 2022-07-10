@@ -63,7 +63,7 @@ export const getProjectByOwner = (userId) => {
 export const getProjectByGroup = (groupId) => {
     return (dispatch) => {
         return axios
-            .get(`${API_URL}/group/${groupId}`,{ headers:  AuthService.authHeader() })
+            .get(`${API_URL}/project/group/${groupId}`,{ headers:  AuthService.authHeader() })
             .then((res) => {
                 dispatch({ type: GET_PROJECT_BY_GROUP, payload: res.data });
             })
