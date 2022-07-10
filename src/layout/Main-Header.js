@@ -91,7 +91,7 @@ const MainHeader = () => {
     return (
         <>
            <NewCollection handleCloseModalCollection={handleCloseModalCollection}  style={style} openModalCollection={openModalCollection}></NewCollection>
-            <NewProject handleCloseModalProject={handleCloseModalProject} style={style} openModalProject={openModalProject}></NewProject>
+            <NewProject handleCloseModalProject={handleCloseModalProject} style={style} openModalProject={openModalProject} group_id={0}></NewProject>
 
 
             <div className="main-header">
@@ -182,6 +182,13 @@ const MainHeader = () => {
                                 </MenuItem>
                                 <MenuItem>
                                     <div>
+                                        <Link to="/my-groups"  style={{textDecoration:'none', color:'#fff'}}>
+                                            Your Groups
+                                        </Link>
+                                    </div>
+                                </MenuItem>
+                                <MenuItem>
+                                    <div>
                                         <Link to={"/profil/" + localStorage.getItem("user_id")}  style={{textDecoration:'none', color:'#fff'}}>
                                             Profile
                                         </Link>
@@ -199,7 +206,7 @@ const MainHeader = () => {
                                     New Project
                                 </MenuItem>
                                 <MenuItem onClick={() => handleOpenModalCollection()}>
-                                    New Collection
+                                    New Group
                                 </MenuItem>
                                 <MenuItem onClick={() => handleOpenModalPen()}>
                                     New Pen
