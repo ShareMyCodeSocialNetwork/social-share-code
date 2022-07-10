@@ -20,22 +20,22 @@ const GroupCard = ({group}) => {
     return (
         <div className="component--card-search-code">
             <div className="container-code">
-                <div className="language-code">
-                    <a href={"/group/" + group.owner.id}>
-                    <div className="language-title">
+                <a href={"/group/" + group.id}>
+                    <div className="language-code">
+                        <div className="language-title">
                         {
                             group.name
                         }
+                        </div>
                     </div>
-                    </a>
-                </div>
-                <div className="codemirror">
-                    <CodeMirror
-                        options={{theme : "default"}}
-                        value={group.description}
-                        height="100%"
+                    <div className="codemirror">
+                        <CodeMirror
+                            options={{theme : "default"}}
+                            value={group.description}
+                            height="100%"
                         />
-                </div>
+                    </div>
+                </a>
             </div>
             <div className="social-code-search">
                 <a href={"/profil/" + group.owner.id}>
