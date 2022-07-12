@@ -91,8 +91,13 @@ export const updateUserPassword = (userId,data) => {
 
 export const updateUserFirstName = (userId,data) => {
     return (dispatch) => {
-        return axios
-            .patch(`${API_URL}/user/update/firstname/${userId}`, data, { headers:  AuthService.authHeader() })
+        return axios({
+            method: 'patch',
+            url: `${API_URL}/user/update/firstname/${userId}`,
+            data:data,
+            headers:  AuthService.authHeader()
+
+        })
             .then(() => {
                 dispatch({ type: UPDATE_USER_FIRST_NAME, payload: data });
             })
