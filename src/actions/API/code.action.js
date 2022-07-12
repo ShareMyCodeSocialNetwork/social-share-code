@@ -22,6 +22,17 @@ export const getCodes = () => {
     };
 };
 
+export const getOneCodeByUserId = (userId) => {
+    return (dispatch) => {
+        return axios
+            .get(`${API_URL}/code/user/${userId}`,{ headers:  AuthService.authHeader() })
+            .then((res) => {
+                dispatch({ type: GET_CODE_BY_ID, payload: res.data });
+            })
+            .catch((err) => console.log(err));
+    };
+};
+
 export const getOneCodeById = (codeId) => {
     return (dispatch) => {
         return axios
