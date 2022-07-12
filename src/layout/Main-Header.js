@@ -11,8 +11,9 @@ import AuthService from "../components/Auth/AuthService";
 import {isEmpty} from "../components/utils/Utils";
 import NewCollection from "./Modals/NewCollection";
 import NewProject from "./Modals/NewProject";
-import NewPen from "./Modals/NewPen";
-import SnippetsCard from "../components/pages/SnippetsCard";
+
+import NewPost from "./Modals/NewPost";
+import NewSnippets from "./Modals/NewSnippets";
 
 const MainHeader = () => {
 
@@ -34,20 +35,26 @@ const MainHeader = () => {
 
     const [isConnected, setIsConnected] = useState(AuthService.getCurrentUser())
     const [anchorEl, setAnchorEl] = useState(null);
-
+    const search = useForm();
     const open = Boolean(anchorEl);
+    const history = useHistory();
 
     const [openModalProject, setOpenModalProject] = useState(false);
-    const [openModalPen, setOpenModalPen] = useState(false);
     const handleOpenModalProject = () => setOpenModalProject(true);
-    const handleOpenModalPen = () => setOpenModalPen(true);
     const handleCloseModalProject = () => setOpenModalProject(false);
-    const handleCloseModalPen = () => setOpenModalPen(false);
-    const search = useForm();
+
     const [openModalCollection, setOpenModalCollection] = useState(false);
     const handleOpenModalCollection = () => setOpenModalCollection(true);
     const handleCloseModalCollection = () => setOpenModalCollection(false);
-    const history = useHistory();
+
+    const [openModalPost, setOpenModalPost] = useState(false);
+    const handleOpenModalPost = () => setOpenModalPost(true);
+    const handleCloseModalPost = () => setOpenModalPost(false);
+
+    const [openModalSnippet, setOpenModalSnippet] = useState(false);
+    const handleOpenModalSnippet = () => setOpenModalSnippet(true);
+    const handleCloseModalSnippet = () => setOpenModalSnippet(false);
+
 
 
 
@@ -90,8 +97,10 @@ const MainHeader = () => {
 
     return (
         <>
-           <NewCollection handleCloseModalCollection={handleCloseModalCollection}  style={style} openModalCollection={openModalCollection}></NewCollection>
-            <NewProject handleCloseModalProject={handleCloseModalProject} style={style} openModalProject={openModalProject} group_id={0}></NewProject>
+           <NewCollection handleCloseModalCollection={handleCloseModalCollection}  style={style} openModalCollection={openModalCollection}/>
+            <NewProject handleCloseModalProject={handleCloseModalProject} style={style} openModalProject={openModalProject} group_id={0}/>
+            <NewPost handleCloseModalPost={handleCloseModalPost} style={style} openModalPost={openModalPost} group_id={0}/>
+            <NewSnippets handleCloseModalSnippet={handleCloseModalSnippet} style={style} openModalSnippet={openModalSnippet} group_id={0}/>
 
 
             <div className="main-header">
@@ -125,12 +134,17 @@ const MainHeader = () => {
                     {
                         !isEmpty(isConnected) &&
                         <div className="auth-container">
+                            <div onClick={() => handleOpenModalPost()} style={{textDecoration:'none'}}>
+                                <div className="connected margin-right">
+                                    <img className="connected-img" src="/assets/logo/post.svg" alt="post"/>
+                                </div>
+                            </div>
                             <Link to="/code/new" style={{textDecoration:'none'}}>
                                 <div className="connected margin-right">
                                     <img className="connected-img" src="/assets/logo/add.svg" alt="add"/>
                                 </div>
                             </Link>
-                            <div className="connected margin-right" >
+                            <div onClick={() => handleOpenModalSnippet()} className="connected margin-right" >
                                 <img className="connected-img" src="/assets/logo/pin.svg" alt="save"/>
                             </div>
                             <div id="basic-button"
@@ -208,8 +222,8 @@ const MainHeader = () => {
                                 <MenuItem onClick={() => handleOpenModalCollection()}>
                                     New Group
                                 </MenuItem>
-                                <MenuItem onClick={() => handleOpenModalPen()}>
-                                    New Pen
+                                <MenuItem onClick={() => handleOpenModalPost()}>
+                                    New Post
                                 </MenuItem>
 
                                 <Divider sx={{bgcolor:'#C4C4C4'}} />
