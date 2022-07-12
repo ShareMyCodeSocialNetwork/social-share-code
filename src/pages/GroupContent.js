@@ -7,7 +7,7 @@ import {getOneGroupById} from "../actions/API/group.action";
 import NewProject from "../layout/Modals/NewProject";
 import ProjectView from "../components/pages/ProjectView";
 import {
-    addUserRoleGroup,
+    addUserRoleGroup, deleteUserRoleGroup,
     getUserRoleGroupByUserAndGroup,
     getUserRoleGroupsByGroup
 } from "../actions/API/userRoleGroup.action";
@@ -33,15 +33,10 @@ const GroupContent = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const user_id = localStorage.getItem("user_id");
-
     const join = useForm();
+    const leave = useForm();
 
-    const joinClick = (data) => {
-        data.user_id = user_id;
-        data.group_id = groupData.id;
-        dispatch(addUserRoleGroup(data));
-        alert("join ok");
-    };
+
 
     useEffect(() => {
         dispatch(getOneGroupById(id));
@@ -58,6 +53,7 @@ const GroupContent = () => {
 
     const [usersInGroup, setUsersInGroup] = useState([]);
     const usersInGroupAsync = useSelector(state => state.userRoleGroupReducer);
+
 
     const [userRoleGroupData, setUserRoleGroupData] = useState();
     const userRoleGroup = useSelector(state => state.userRoleGroupReducer);
@@ -76,6 +72,19 @@ const GroupContent = () => {
     }
     loadProjectData().then();
 
+    const joinClick = (data) => {
+        data.user_id = user_id;
+        data.group_id = groupData.id;
+        dispatch(addUserRoleGroup(data));
+        window.location.reload();
+    };
+
+    const leaveClick = (data) => {
+        console.log(data);
+        dispatch(deleteUserRoleGroup(data.userRoleGroupId));
+        //window.location.reload();
+        alert("you leave this group !");
+    };
 
     return (
 
@@ -98,7 +107,17 @@ const GroupContent = () => {
                 isEmpty(userRoleGroupData) && groupData.owner.id.toString() !== user_id.toString()
                 &&
                 <form onSubmit={join.handleSubmit(joinClick)}>
-                    <button type={"submit"}>join</button>
+                    <button type={"submit"}>Join</button>
+                </form>
+            }
+            {
+                !isEmpty(groupData) &&
+                !isEmpty(userRoleGroupData)
+                && groupData.owner.id.toString() !== user_id.toString()
+                &&
+                <form onSubmit={leave.handleSubmit(leaveClick)}>
+                    <input type={"hidden"} {...leave.register("userRoleGroupId")} value={userRoleGroupData.id} name="userRoleGroupId"/>
+                    <button type={"submit"}>Leave</button>
                 </form>
             }
             {
@@ -123,17 +142,18 @@ const GroupContent = () => {
             </div>
 
             <div>
-                {!isEmpty(groupData) && <a href={"/profil/" + groupData.owner.id}>{"Group's owner : " + groupData.owner.pseudo} </a> }
+                {
+                    !isEmpty(groupData) && <a href={"/profil/" + groupData.owner.id}>{"Group's owner : " + groupData.owner.pseudo} </a>
+                }
                 <ul>
-                    {/*//todo ca me gave comprends pas le probleme
+                    {//todo ca me gave comprends pas le probleme
                         !isEmpty(usersInGroup) &&
-                        !isEmpty(usersInGroup.user) &&
-                        !isEmpty(usersInGroup.role) &&
-                        !isEmpty(usersInGroup.group) &&
+                        !isEmpty(groupData) &&
+                        user_id.toString() === groupData.owner.id.toString() &&
                         usersInGroup.map( (item, index) => (
-                            <li key={index}>{item.user.pseudo}</li>
+                            <li key={index}><a href={"/profil/" + item.user.id}>{item.user.pseudo}</a></li>
                         ))
-                    */}
+                    }
                 </ul>
             </div>
 
