@@ -19,23 +19,18 @@ import {getPostByUserId} from "../actions/API/post.action";
 import PostView from "./PostView";
 import {getCodeByUser} from "../actions/API/code.action";
 import MyCodeView from "../components/pages/MyCodeView";
-import groupCard from "./GroupCard";
 import GroupCard from "./GroupCard";
 import {getGroupsByOwner} from "../actions/API/group.action";
 
 const Profil = () => {
+    AuthService.isAuth();
     const {id} = useParams();
+
 
     const dispatch = useDispatch();
     const history = useHistory();
 
-    if (AuthService.getCurrentUser() === null || AuthService.isExpiredToken()) {
-        //todo fix date, show AuthService.isExpiredToken todo
-        //if(AuthService.getCurrentUser() !== null && AuthService.isExpiredToken()){
-          //  AuthService.logout();
-        //}
-        //history.push("/login");
-    }
+
 
     const user_id = localStorage.getItem("user_id");
     useEffect(() => {
@@ -77,12 +72,12 @@ const Profil = () => {
     const [lastname, setLastname] = useState("Loading...");
     const [pseudo, setPseudo] = useState("Loading...");
     const [password, setPassword] = useState("Loading...");
-    const [tel, setTel] = useState("Loading...");
+    //const [tel, setTel] = useState("Loading...");
     const [email, setMail] = useState("Loading...");
 
 
     const loadData = async () => {
-        let userData = await user;
+        let dbUser = await user;
         let followedData = await followed;
         let followersData = await followers;
         let projectProfileDate = await projectProfile;
@@ -90,7 +85,7 @@ const Profil = () => {
         let dbCodes = await codeProfile;
         let dbGroup = await groupProfile;
 
-        setDataUser(userData);
+        setDataUser(dbUser);
         setDataFollowed(followedData);
         setDataFollowers(followersData);
         setDataCodeProfile(dbCodes);
@@ -98,11 +93,13 @@ const Profil = () => {
         setDataProjectProfile(projectProfileDate);
         setDataGroupProfile(dbGroup);
 
-        setPseudo(dataUser.pseudo);
-        setFirstname(dataUser.firstname);
-        setLastname(dataUser.lastname);
-        setPassword(dataUser.password);
-        setMail(dataUser.email);
+        if(!isEmpty(dataUser)){
+            setPseudo(dataUser.pseudo);
+            setFirstname(dataUser.firstname);
+            setLastname(dataUser.lastname);
+            setPassword(dataUser.password);
+            setMail(dataUser.email);
+        }
 
         if(!isEmpty(dataFollowers)){
             setFollowersInput(dataFollowers["length"]);
@@ -115,26 +112,42 @@ const Profil = () => {
 
     loadData().then()
 
+    const handleChangeLastnameInput = event => {
+        setLastname(event.target.value);
+    };
+    const handleChangeFirstnameInput = event => {
+        setFirstname(event.target.value);
+    };
+    const handleChangePseudoInput = event => {
+        setFirstname(event.target.value);
+    };
+    const handleChangeEmailInput = event => {
+        setFirstname(event.target.value);
+    };
+    const handleChangePasswordInput = event => {
+        setFirstname(event.target.value);
+    };
 
     const onSubmit = data => {
-        if (data["firstname"] !== dataUser["firstname"]) {
+        console.log(data);
+        if (data["firstname"] !== dataUser["firstname"] && data.firstname !== '') {
             dispatch(updateUserFirstName(user_id, data));
         }
-        if (data["lastname"] !== dataUser["lastname"]) {
+        if (data["lastname"] !== dataUser["lastname"] && data["lastname"] !== '') {
             dispatch(updateUserLastName(user_id, data));
         }
-        if (data.email !== AuthService.getCurrentUser().email) {
+        if (data.email !== AuthService.getCurrentUser().email && data["email"] !== '') {
             dispatch(updateUserEmail(user_id, data));
         }
-        if (data["pseudo"] !==  dataUser["pseudo"]) {
+        if (data["pseudo"] !==  dataUser["pseudo"] && data["pseudo"] !== '') {
             dispatch(updateUserPseudo(user_id, data));
         }
-        if (data["password"] !== dataUser["password"]) {
+        if (data["password"] !== dataUser["password"] && data["password"] !== '') {
             dispatch(updateUserPassword(user_id, data));
         }
         wait(2000).then(() => {
             history.push({
-                pathname: "/profil"
+                pathname: "/profil/" + user_id
             })
         })
 
@@ -142,70 +155,6 @@ const Profil = () => {
     if (isEmpty(dataUser))
         return (<div>User Not Found</div>)
 if (user_id === id){
-
-    return (
-        <div className="view--profile">
-            <div className="header-profile">
-                <img className="overlay-profile" src="" alt=""/>
-                <div className="profile-data">
-                    <div className="title-name">{!isEmpty(dataUser) && pseudo}</div>
-                    <div className="image-profile">
-                        <img src="/assets/logo/profil_header.png" alt="profile"/>
-                    </div>
-                </div>
-            </div>
-            <div className="body-profile">
-                <div className="social-profile">
-                    <div className="social-follow margin">
-                        <div className="number-social-follow">{followersInput}</div>
-                        <div className="title-social-follow">followers</div>
-                    </div>
-                    <div className="social-follow">
-                        <div className="number-social-follow">{followedInput}</div>
-                        <div className="title-social-follow">following</div>
-                    </div>
-                </div>
-                <form onSubmit={handleSubmit(onSubmit)} className="form-profile">
-                    <div className="container-profile">
-                        <div className="social-profile-input">
-                            <div className="title-input">Nom</div>
-                            <input type="text"  {...register("lastname",{ required: "Please enter your last name valid." })} className="input-profile"
-                                   value={lastname}/>
-                        </div>
-                        <div className="social-profile-input">
-                            <div className="title-input">Prenom</div>
-                            <input type="text"  {...register("firstname", { required: "Please enter your first name valid." })} className="input-profile"
-                                   value={firstname}/>
-                        </div>
-                    </div>
-                    <div className="container-profile">
-                        <div className="social-profile-input">
-                            <div className="title-input">Pseudo</div>
-                            <input type="text"  {...register("pseudo", { required: "Please enter your pseudo valid." })} className="input-profile"
-                                   value={pseudo}/>
-                        </div>
-                        <div className="social-profile-input">
-                            <div className="title-input">Mot de passe</div>
-                            <input type="password"  {...register("password", { required: "Please enter your password valid." })} className="input-profile" value={password}/>
-                        </div>
-                    </div>
-                    <div className="container-profile">
-                        <div className="social-profile-input">
-                            <div className="title-input">Tel</div>
-                            <input type="tel"  {...register("tel", { required: "Please enter your password valid." })} className="input-profile" value={tel}/>
-                        </div>
-                        <div className="social-profile-input">
-                            <div className="title-input">Email</div>
-                            <input type="text"  {...register("email", { required: "Please enter your password valid." })} className="input-profile" value={email}/>
-                        </div>
-                    </div>
-                    <button className="button-profile">enregistrer</button>
-                </form>
-            </div>
-        </div>
-    );
-
-}else{
 
     return (
         <div className="view--profile">
@@ -233,12 +182,99 @@ if (user_id === id){
                     <div className="container-profile">
                         <div className="social-profile-input">
                             <div className="title-input">Nom</div>
-                            <input type="text" readOnly {...register("lastname",{ required: "Please enter your last name valid." })} className="input-profile"
-                                   value={lastname}/>
+                            <input type="text"  {...register("lastname")}
+                                   className="input-profile"
+                                   name="lastname" id="lastname"
+                                   defaultValue={lastname}
+                                   onChange={handleChangeLastnameInput}
+
+                            />
                         </div>
                         <div className="social-profile-input">
                             <div className="title-input">Prenom</div>
-                            <input type="text" readOnly {...register("firstname", { required: "Please enter your first name valid." })} className="input-profile"
+                            <input type="text"  {...register("firstname")} className="input-profile"
+                                   defaultValue={firstname}
+                                   name="firstname" id="firstname"
+                                   onChange={handleChangeFirstnameInput}
+                            />
+                        </div>
+                    </div>
+                    <div className="container-profile">
+                        <div className="social-profile-input">
+                            <div className="title-input">Pseudo</div>
+                            <input type="text"  {...register("pseudo")} className="input-profile"
+                                   defaultValue={pseudo}
+                                   name="pseudo" id="pseudo"
+                                   onChange={handleChangePseudoInput}
+                            />
+                        </div>
+                        <div className="social-profile-input">
+                            <div className="title-input">Mot de passe</div>
+                            <input type="password"  {...register("password")} className="input-profile"
+                                   defaultValue={password}
+                                   name="password" id="password"
+                                   onChange={handleChangePasswordInput}
+                            />
+                        </div>
+                    </div>
+                    <div className="container-profile">
+                        <div className="social-profile-input">
+                            {/*
+                            <div className="title-input">Tel</div>
+                            <input type="tel"  {...register("tel")} className="input-profile" defaultValue={tel}/>
+                            */}
+                        </div>
+                        <div className="social-profile-input">
+                            <div className="title-input">Email</div>
+                            <input type="text"
+                                   {...register("email")}
+                                   className="input-profile"
+                                   defaultValue={email}
+                                   name="email" id="email"
+                                   onChange={handleChangeEmailInput}
+                            />
+                        </div>
+                    </div>
+                    <button className="button-profile">Save</button>
+                </form>
+            </div>
+        </div>
+    );
+    {/** Your profile on the top **/}
+}else{
+    {/** Other profile on the bottom **/}
+    return (
+        <div className="view--profile">
+            <div className="header-profile">
+                <img className="overlay-profile" src="" alt=""/>
+                <div className="profile-data">
+                    <div className="title-name">{pseudo}</div>
+                    <div className="image-profile">
+                        <img src="/assets/logo/profil_header.png" alt="profile"/>
+                    </div>
+                </div>
+            </div>
+            <div className="body-profile">
+                <div className="social-profile">
+                    <div className="social-follow margin">
+                        <div className="number-social-follow">{followersInput}</div>
+                        <div className="title-social-follow">followers</div>
+                    </div>
+                    <div className="social-follow">
+                        <div className="number-social-follow">{followedInput}</div>
+                        <div className="title-social-follow">following</div>
+                    </div>
+                </div>
+                <form className="form-profile">
+                    <div className="container-profile">
+                        <div className="social-profile-input">
+                            <div className="title-input">Lastname</div>
+                            <input type="text" readOnly className="input-profile"
+                                   value={lastname}/>
+                        </div>
+                        <div className="social-profile-input">
+                            <div className="title-input">Firstname</div>
+                            <input type="text" readOnly className="input-profile"
                                    value={firstname}/>
                         </div>
                     </div>
@@ -246,12 +282,14 @@ if (user_id === id){
                     </div>
                     <div className="container-profile">
                         <div className="social-profile-input">
-                            <div className="title-input">Tel</div>
+                            {/*
+                            <div className="title-input">Phone</div>
                             <input type="tel"readOnly  {...register("tel", { required: "Please enter your password valid." })} className="input-profile" value={tel}/>
+                            */}
                         </div>
                         <div className="social-profile-input">
                             <div className="title-input">Email</div>
-                            <input type="text" readOnly {...register("email", { required: "Please enter your password valid." })} className="input-profile" value={email}/>
+                            <input type="text" readOnly className="input-profile" value={email}/>
                         </div>
                     </div>
                 </form>
