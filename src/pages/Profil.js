@@ -93,13 +93,11 @@ const Profil = () => {
         setDataProjectProfile(projectProfileDate);
         setDataGroupProfile(dbGroup);
 
-        if(!isEmpty(dataUser)){
             setPseudo(dataUser.pseudo);
             setFirstname(dataUser.firstname);
             setLastname(dataUser.lastname);
             setPassword(dataUser.password);
             setMail(dataUser.email);
-        }
 
         if(!isEmpty(dataFollowers)){
             setFollowersInput(dataFollowers["length"]);
