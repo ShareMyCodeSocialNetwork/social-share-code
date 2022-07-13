@@ -248,6 +248,23 @@ if (user_id === id){
                     </div>
                     <button className="button-profile">Save</button>
                 </form>
+                <div className="view--project">
+                    Yours posts :
+                    <br/>
+                    <br/>
+                    <div className="container-project">
+                        {
+                            !isEmpty(dataPosts) &&
+                            dataPosts.map(
+                                (item, index) => (
+                                    <div key={index} className="post-code">
+                                        <PostView  postData={item}></PostView>
+                                    </div>
+                                )
+                            )
+                        }
+                    </div>
+                </div>
             </div>
         </div>
     );
