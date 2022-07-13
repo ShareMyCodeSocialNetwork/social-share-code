@@ -9,7 +9,13 @@ import {Redirect, useHistory} from "react-router-dom";
 const Login = () => {
     const dispatch = useDispatch();
     const history = useHistory()
+
+    if(!AuthService.isExpiredToken() && AuthService.getCurrentUser() !== null){
+        history.push("/");
+    }
+
     const { register, handleSubmit , getValues, formState,errors } = useForm();
+
 
     const onSubmit = data => {
         dispatch(login(data))

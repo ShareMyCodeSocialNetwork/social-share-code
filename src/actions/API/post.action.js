@@ -37,7 +37,7 @@ export const getOnePostById = (postId) => {
 export const getPostByUserId = (userId) => {
     return (dispatch) => {
         return axios
-            .get(`${API_URL}/post/${userId}`,{ headers:  AuthService.authHeader() })
+            .get(`${API_URL}/post/user/${userId}`,{ headers:  AuthService.authHeader() })
             .then((res) => {
                 dispatch({ type: GET_POST_BY_USER_ID, payload: res.data });
             })

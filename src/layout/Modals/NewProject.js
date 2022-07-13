@@ -6,7 +6,7 @@ import {useDispatch} from "react-redux";
 import {useForm} from "react-hook-form";
 
 
-const NewProjectModal = ({handleCloseModalProject, openModalProject, style}) => {
+const NewProjectModal = ({handleCloseModalProject, openModalProject, style, group_id = 0}) => {
 
     const dispatch = useDispatch();
     const user_id = localStorage.getItem("user_id");
@@ -14,6 +14,7 @@ const NewProjectModal = ({handleCloseModalProject, openModalProject, style}) => 
 
     const onSubmitProject = (data) => {
         data["user_id"] = user_id;
+        data["group_id"] = group_id
         dispatch(createProject(data));
         handleCloseModalProject();
     }
@@ -44,6 +45,7 @@ const NewProjectModal = ({handleCloseModalProject, openModalProject, style}) => 
                             <textarea {...project.register("description")} type="" name="description" className="input-modal textura"/>
                         </div>
                         <input {...project.register("user_id")} type="hidden" name="user_id" />
+                        <input {...project.register("group_id")} type="hidden" name="group_id" />
                         <button type="submit" className="button-save">Save</button>
                     </form>
                 </div>

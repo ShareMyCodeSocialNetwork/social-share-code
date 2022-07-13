@@ -9,6 +9,8 @@ export const GET_FOLLOWED = "GET_FOLLOWED";
 export const GET_FOLLOWER = "GET_FOLLOWER";
 export const ADD_FOLLOWER = "ADD_FOLLOWER";
 export const DELETE_FOLLOWER = "DELETE_FOLLOWER";
+export const GET_BY_FOLLOWED_AND_FOLLOWER = "GET_BY_FOLLOWED_AND_FOLLOWER";
+
 
 export const getAll = () => {
     return (dispatch) => {
@@ -22,12 +24,27 @@ export const getAll = () => {
     };
 };
 
-export const getOneFollowerById = (followerId) => {
+export const getOneFollowById = (followId) => {
     return (dispatch) => {
         return axios
-            .get(`${API_URL}/follow/${followerId}`,{ headers:  AuthService.authHeader() })
+            .get(`${API_URL}/follow/${followId}`,{ headers:  AuthService.authHeader() })
             .then((res) => {
                 dispatch({ type: GET_FOLLOWER_BY_ID, payload: res.data });
+            })
+            .catch((err) => console.log(err));
+    };
+};
+
+
+export const getByFollowedAndFollower = (followedId, followerId) => {
+    let data = {};
+    data.followedUserId = followedId;
+    data.followerUserId = followerId;
+    return (dispatch) => {
+        return axios
+            .post(`${API_URL}/follow/followed/and/follower`, data,{ headers:  AuthService.authHeader()})
+            .then((res) => {
+                dispatch({ type: GET_BY_FOLLOWED_AND_FOLLOWER, payload: res.data });
             })
             .catch((err) => console.log(err));
     };
@@ -76,7 +93,7 @@ export const deleteFollower = (followerId) => {
 
         })
             .then(() => {
-                dispatch({ type: DELETE_FOLLOWER, payload: { followerId } });
+                //dispatch({ type: DELETE_FOLLOWER, payload: { followerId } });
             })
             .catch((err) => console.log(err));
     };

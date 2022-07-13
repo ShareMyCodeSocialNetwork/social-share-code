@@ -1,5 +1,6 @@
 import React from 'react';
 import jwt from 'jwt-decode';
+import {useHistory} from "react-router-dom";
 
 class  AuthService {
 
@@ -20,7 +21,7 @@ class  AuthService {
 
     authHeader = () => {
         const user = JSON.parse(localStorage.getItem('user'));
-        console.log(user)
+        //console.log(user)
         if (user) {
             return {
                 Authorization: 'Bearer ' + user,
@@ -33,18 +34,26 @@ class  AuthService {
     isExpiredToken = () => {
         let expToken = new Date(localStorage.getItem("access_expire"));
         let now = new Date();
-        console.log(expToken);
-        console.log(now);
-        console.log(expToken.valueOf());
-        console.log(now.valueOf());
-        //todo a voir le format de date dans l'api
-        //  1655848800000 // api manque une partie de la date (les 0). cest coter js front ou java api
-        //  1655849843889 // now
-        return expToken.valueOf() <= now.valueOf();
+
+        return expToken.getFullYear() <= now.getFullYear()
+            && expToken.getDate() <= now.getDate()
+            && expToken.getMonth() <= now.getMonth();
     }
 
     getCurrentUserEmail = () => {
         return jwt(JSON.parse(localStorage.getItem('user')))["sub"];
+    }
+
+
+
+    isAuth = () => {
+        const history = useHistory();
+        if (this.getCurrentUser() === null || this.isExpiredToken()) {
+            if(this.getCurrentUser() !== null && this.isExpiredToken()){
+                this.logout();
+            }
+            history.push("/login");
+        }
     }
 
 }

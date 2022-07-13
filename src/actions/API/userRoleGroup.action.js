@@ -7,6 +7,7 @@ export const GET_USER_ROLE_GROUP = "GET_USER_ROLE_GROUP";
 export const GET_USER_ROLE_GROUP_BY_ID = "GET_USER_ROLE_GROUP_BY_ID";
 export const GET_USER_ROLE_GROUP_BY_USER = "GET_USER_ROLE_GROUP_BY_USER";
 export const GET_USER_ROLE_GROUP_BY_GROUP = "GET_USER_ROLE_GROUP_BY_GROUP";
+export const GET_USER_ROLE_GROUP_BY_USER_AND_GROUP = "GET_USER_ROLE_GROUP_BY_USER_AND_GROUP";
 export const ADD_USER_ROLE_GROUP = "ADD_USER_ROLE_GROUP";
 export const DELETE_USER_ROLE_GROUP = "DELETE_USER_ROLE_GROUP";
 
@@ -48,7 +49,7 @@ export const getUserRoleGroupsByGroup= (groupId) => {
 export const getUserRoleGroupByUser = (userId) => {
     return (dispatch) => {
         return axios
-            .get(`${API_URL}/user_role_group/group/${userId}`,{ headers:  AuthService.authHeader() })
+            .get(`${API_URL}/user_role_group/user/${userId}`,{ headers:  AuthService.authHeader() })
             .then((res) => {
                 dispatch({ type: GET_USER_ROLE_GROUP_BY_USER, payload: res.data });
             })
@@ -61,6 +62,7 @@ export const addUserRoleGroup = (data) => {
         return axios
             .post(`${API_URL}/user_role_group/create`, data, { headers:  AuthService.authHeader() })
             .then(() => {
+                alert("You joined this group ")
                 dispatch({ type: ADD_USER_ROLE_GROUP, payload: data });
             })
             .catch((err) => console.log(err));
@@ -81,6 +83,17 @@ export const deleteUserRoleGroup = (UserRoleGroupId) => {
         })
             .then(() => {
                 dispatch({ type: DELETE_USER_ROLE_GROUP, payload: { UserRoleGroupId } });
+            })
+            .catch((err) => console.log(err));
+    };
+};
+
+export const getUserRoleGroupByUserAndGroup = (userId, groupId) => {
+    return (dispatch) => {
+        return axios
+            .get(`${API_URL}/user_role_group/group/${groupId}/user/${userId}`,{ headers:  AuthService.authHeader() })
+            .then((res) => {
+                dispatch({ type: GET_USER_ROLE_GROUP_BY_USER_AND_GROUP, payload: res.data });
             })
             .catch((err) => console.log(err));
     };

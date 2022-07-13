@@ -3,8 +3,10 @@ import {useDispatch, useSelector} from "react-redux";
 import { getProjectByOwner} from "../actions/API/project.action";
 import {isEmpty} from "../components/utils/Utils";
 import ProjectView from "../components/pages/ProjectView";
+import AuthService from "../components/Auth/AuthService";
 
 const MyProjects = () => {
+    AuthService.isAuth();
     const dispatch = useDispatch();
     const user_id = localStorage.getItem("user_id");
 
@@ -19,7 +21,6 @@ const MyProjects = () => {
         let projectsData = await projects;
         setDataProjects(projectsData);
         console.log(dataProjects);
-
     }
     loadProjectData().then();
 
@@ -27,16 +28,18 @@ const MyProjects = () => {
     return (
         <div className="view--project">
             <div className="container-project">
+
             {
-                !isEmpty(dataProjects)&&
+                !isEmpty(dataProjects) &&
                 dataProjects.map(
                     (item, index) => (
-                        <div key={index} className="post-code" >
-                            <ProjectView  userPseudo={item.user.pseudo} name={item.name} description={item.description} projectId={item.id} userId={item.user.id}></ProjectView>
+                        <div className="post-code" >
+                        <ProjectView  key={index} userPseudo={item.user.pseudo} name={item.name} description={item.description} projectId={item.id} userId={item.user.id}></ProjectView>
                         </div>
                     ))
             }
-                {isEmpty(dataProjects) && "No project found ! Create on on top right !"}
+                {isEmpty(dataProjects) && "No project found ! Create one on top right !"}
+
             </div>
             </div>
         );

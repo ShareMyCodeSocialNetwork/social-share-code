@@ -6,6 +6,7 @@ import {API_URL} from "../global";
 export const GET_CODE = "GET_CODE";
 export const GET_CODE_BY_ID = "GET_CODE_BY_ID";
 export const GET_CODE_BY_PROJECT = "GET_CODE_BY_PROJECT";
+export const GET_CODE_BY_USER = "GET_CODE_BY_USER";
 export const ADD_CODE = "ADD_CODE";
 export const UPDATE_CODE = "UPDATE_CODE";
 export const DELETE_CODE = "DELETE_CODE";
@@ -16,6 +17,17 @@ export const getCodes = () => {
             .get(`${API_URL}/code`, { headers: AuthService.authHeader() })
             .then((res) => {
                 dispatch({ type: GET_CODE, payload: res.data });
+            })
+            .catch((err) => console.log(err));
+    };
+};
+
+export const getOneCodeByUserId = (userId) => {
+    return (dispatch) => {
+        return axios
+            .get(`${API_URL}/code/user/${userId}`,{ headers:  AuthService.authHeader() })
+            .then((res) => {
+                dispatch({ type: GET_CODE_BY_ID, payload: res.data });
             })
             .catch((err) => console.log(err));
     };
@@ -38,6 +50,17 @@ export const getCodeByProject = (projectId) => {
             .get(`${API_URL}/code/project/${projectId}`,{ headers:  AuthService.authHeader() })
             .then((res) => {
                 dispatch({ type: GET_CODE_BY_PROJECT, payload: res.data });
+            })
+            .catch((err) => console.log(err));
+    };
+};
+
+export const getCodeByUser = (userId) => {
+    return (dispatch) => {
+        return axios
+            .get(`${API_URL}/code/user/${userId}`,{ headers:  AuthService.authHeader() })
+            .then((res) => {
+                dispatch({ type: GET_CODE_BY_USER, payload: res.data });
             })
             .catch((err) => console.log(err));
     };
