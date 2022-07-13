@@ -5,6 +5,7 @@ import {
     DELETE_FOLLOWER,
     GET_ALL,
     GET_FOLLOWED,
+    GET_BY_FOLLOWED_AND_FOLLOWER
 
 } from "../../actions/API/follower.action";
 
@@ -15,6 +16,8 @@ export default function followerReducer(state = initialState, action) {
         case GET_ALL:
             return action.payload;
         case GET_FOLLOWER_BY_ID:
+            return action.payload;
+        case GET_BY_FOLLOWED_AND_FOLLOWER:
             return action.payload;
         case ADD_FOLLOWER:
             return [action.payload, ...state];
