@@ -1,7 +1,7 @@
 import axios from "axios";
 import qs from 'querystring';
 import AuthService from "../../components/Auth/AuthService";
-export const API_URL = "http://localhost:8080"
+import {API_URL} from "../global";
 export const LOGIN_USER = "LOGIN_USER";
 export const CURRENT_USER_INFO = "CURRENT_USER_INFO";
 export const REGISTER_USER = "REGISTER_USER";
