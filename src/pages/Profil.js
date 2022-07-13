@@ -12,7 +12,13 @@ import {
 } from "../actions/API/user.action";
 import {useDispatch, useSelector} from "react-redux";
 import {isEmpty, wait} from "../components/utils/Utils";
-import {getFollowed, getFollowers} from "../actions/API/follower.action";
+import {
+    addFollower,
+    deleteFollower,
+    getByFollowedAndFollower,
+    getFollowed,
+    getFollowers
+} from "../actions/API/follower.action";
 import {getProjectByOwner} from "../actions/API/project.action";
 import ProjectView from "../components/pages/ProjectView";
 import {getPostByUserId} from "../actions/API/post.action";
@@ -21,6 +27,7 @@ import {getCodeByUser} from "../actions/API/code.action";
 import MyCodeView from "../components/pages/MyCodeView";
 import GroupCard from "./GroupCard";
 import {getGroupsByOwner} from "../actions/API/group.action";
+import {windows} from "codemirror/src/util/browser";
 
 const Profil = () => {
     AuthService.isAuth();
@@ -29,10 +36,8 @@ const Profil = () => {
 
     const dispatch = useDispatch();
     const history = useHistory();
-
-
-
     const user_id = localStorage.getItem("user_id");
+
     useEffect(() => {
         dispatch(getOneUserById(id));
         dispatch(getFollowed(id));
@@ -41,7 +46,9 @@ const Profil = () => {
         dispatch(getPostByUserId(id));
         dispatch(getCodeByUser(id))
         dispatch(getGroupsByOwner(id))
+        dispatch(getByFollowedAndFollower(id,user_id))
     }, []);
+
     const user = useSelector(state => state.userReducer);
     const [dataUser,setDataUser] = useState();
 
@@ -63,23 +70,27 @@ const Profil = () => {
     const groupProfile = useSelector( (state) => state.groupReducer);
     const [dataGroupProfile, setDataGroupProfile] = useState([]);
 
+    const follow = useSelector( (state) => state.followerReducer)
+    const [dataFollow, setDataFollow] = useState();
+
     const {register, handleSubmit, watch, formState: {errors}} = useForm({ shouldUseNativeValidation: true });
 
-    const [followersInput, setFollowersInput] = useState(0);
-    const [followedInput, setFollowedInput] = useState(0);
 
     const [firstname, setFirstname] = useState("Loading...");
     const [lastname, setLastname] = useState("Loading...");
     const [pseudo, setPseudo] = useState("Loading...");
     const [password, setPassword] = useState("Loading...");
     //const [tel, setTel] = useState("Loading...");
-    const [email, setMail] = useState("Loading...");
+    const [email, setEmail] = useState("Loading...");
+    const followForm = useForm();
+    const unfollowForm = useForm();
 
 
     const loadData = async () => {
         let dbUser = await user;
         let followedData = await followed;
         let followersData = await followers;
+        let dbFollow = await follow; //todo ca override les gets followers et followed
         let projectProfileDate = await projectProfile;
         let dbPosts = await posts;
         let dbCodes = await codeProfile;
@@ -92,20 +103,11 @@ const Profil = () => {
         setDataPosts(dbPosts);
         setDataProjectProfile(projectProfileDate);
         setDataGroupProfile(dbGroup);
-
-            setPseudo(dataUser.pseudo);
-            setFirstname(dataUser.firstname);
-            setLastname(dataUser.lastname);
-            setPassword(dataUser.password);
-            setMail(dataUser.email);
-
-        if(!isEmpty(dataFollowers)){
-            setFollowersInput(dataFollowers["length"]);
-        }
-
-        if(!isEmpty(dataFollowed)){
-            setFollowedInput(dataFollowed["length"]);
-        }
+        setDataFollow(dbFollow);
+        console.log("dataFollowed")
+        console.log(dataFollowed)
+        console.log("dataFollowers")
+        console.log(dataFollowers)
     }
 
     loadData().then()
@@ -117,13 +119,13 @@ const Profil = () => {
         setFirstname(event.target.value);
     };
     const handleChangePseudoInput = event => {
-        setFirstname(event.target.value);
+        setPseudo(event.target.value);
     };
     const handleChangeEmailInput = event => {
-        setFirstname(event.target.value);
+        setEmail(event.target.value);
     };
     const handleChangePasswordInput = event => {
-        setFirstname(event.target.value);
+        setPassword(event.target.value);
     };
 
     const onSubmit = data => {
@@ -143,13 +145,24 @@ const Profil = () => {
         if (data["password"] !== dataUser["password"] && data["password"] !== '') {
             dispatch(updateUserPassword(user_id, data));
         }
-        wait(2000).then(() => {
-            history.push({
-                pathname: "/profil/" + user_id
-            })
+        wait(500).then(() => {
+            window.location.reload();
         })
 
     }
+
+    const onFollowSubmit = (data) => {
+        data.followedUserId = id;
+        data.followerUserId = user_id;
+        dispatch(addFollower(data));
+        wait(500).then(()=>window.location.reload());
+    }
+    const onUnfollowSubmit = () => {
+        console.log(dataFollow.id);
+        dispatch(deleteFollower(dataFollow.id));
+        wait(500).then(()=>window.location.reload());
+    }
+
     if (isEmpty(dataUser))
         return (<div>User Not Found</div>)
 if (user_id === id){
@@ -159,7 +172,7 @@ if (user_id === id){
             <div className="header-profile">
                 <img className="overlay-profile" src="" alt=""/>
                 <div className="profile-data">
-                    <div className="title-name">{pseudo}</div>
+                    <div className="title-name">{!isEmpty(dataUser) && dataUser.pseudo}</div>
                     <div className="image-profile">
                         <img src="/assets/logo/profil_header.png" alt="profile"/>
                     </div>
@@ -168,11 +181,11 @@ if (user_id === id){
             <div className="body-profile">
                 <div className="social-profile">
                     <div className="social-follow margin">
-                        <div className="number-social-follow">{followersInput}</div>
+                        <div className="number-social-follow">{!isEmpty(dataFollowers) && dataFollowers.length}</div>
                         <div className="title-social-follow">followers</div>
                     </div>
                     <div className="social-follow">
-                        <div className="number-social-follow">{followedInput}</div>
+                        <div className="number-social-follow">{!isEmpty(dataFollowed) && dataFollowed.length}</div>
                         <div className="title-social-follow">following</div>
                     </div>
                 </div>
@@ -183,7 +196,7 @@ if (user_id === id){
                             <input type="text"  {...register("lastname")}
                                    className="input-profile"
                                    name="lastname" id="lastname"
-                                   defaultValue={lastname}
+                                   defaultValue={!isEmpty(dataUser) && dataUser.lastname}
                                    onChange={handleChangeLastnameInput}
 
                             />
@@ -191,7 +204,7 @@ if (user_id === id){
                         <div className="social-profile-input">
                             <div className="title-input">Prenom</div>
                             <input type="text"  {...register("firstname")} className="input-profile"
-                                   defaultValue={firstname}
+                                   defaultValue={!isEmpty(dataUser) && dataUser.firstname}
                                    name="firstname" id="firstname"
                                    onChange={handleChangeFirstnameInput}
                             />
@@ -201,7 +214,7 @@ if (user_id === id){
                         <div className="social-profile-input">
                             <div className="title-input">Pseudo</div>
                             <input type="text"  {...register("pseudo")} className="input-profile"
-                                   defaultValue={pseudo}
+                                   defaultValue={!isEmpty(dataUser) && dataUser.pseudo}
                                    name="pseudo" id="pseudo"
                                    onChange={handleChangePseudoInput}
                             />
@@ -209,7 +222,7 @@ if (user_id === id){
                         <div className="social-profile-input">
                             <div className="title-input">Mot de passe</div>
                             <input type="password"  {...register("password")} className="input-profile"
-                                   defaultValue={password}
+                                   defaultValue={!isEmpty(dataUser) && dataUser.password}
                                    name="password" id="password"
                                    onChange={handleChangePasswordInput}
                             />
@@ -227,7 +240,7 @@ if (user_id === id){
                             <input type="text"
                                    {...register("email")}
                                    className="input-profile"
-                                   defaultValue={email}
+                                   defaultValue={!isEmpty(dataUser) && dataUser.email}
                                    name="email" id="email"
                                    onChange={handleChangeEmailInput}
                             />
@@ -246,7 +259,7 @@ if (user_id === id){
             <div className="header-profile">
                 <img className="overlay-profile" src="" alt=""/>
                 <div className="profile-data">
-                    <div className="title-name">{pseudo}</div>
+                    <div className="title-name">{!isEmpty(dataUser) && dataUser.pseudo}</div>
                     <div className="image-profile">
                         <img src="/assets/logo/profil_header.png" alt="profile"/>
                     </div>
@@ -255,11 +268,11 @@ if (user_id === id){
             <div className="body-profile">
                 <div className="social-profile">
                     <div className="social-follow margin">
-                        <div className="number-social-follow">{followersInput}</div>
+                        <div className="number-social-follow">{!isEmpty(dataFollowers) && dataFollowers.length}</div>
                         <div className="title-social-follow">followers</div>
                     </div>
                     <div className="social-follow">
-                        <div className="number-social-follow">{followedInput}</div>
+                        <div className="number-social-follow">{!isEmpty(dataFollowed) && dataFollowed.length}</div>
                         <div className="title-social-follow">following</div>
                     </div>
                 </div>
@@ -268,12 +281,12 @@ if (user_id === id){
                         <div className="social-profile-input">
                             <div className="title-input">Lastname</div>
                             <input type="text" readOnly className="input-profile"
-                                   value={lastname}/>
+                                   value={!isEmpty(dataUser) && dataUser.lastname}/>
                         </div>
                         <div className="social-profile-input">
                             <div className="title-input">Firstname</div>
                             <input type="text" readOnly className="input-profile"
-                                   value={firstname}/>
+                                   value={!isEmpty(dataUser) && dataUser.firstname}/>
                         </div>
                     </div>
                     <div className="container-profile">
@@ -287,17 +300,24 @@ if (user_id === id){
                         </div>
                         <div className="social-profile-input">
                             <div className="title-input">Email</div>
-                            <input type="text" readOnly className="input-profile" value={email}/>
+                            <input type="text" readOnly className="input-profile" value={!isEmpty(dataUser) && dataUser.email}/>
                         </div>
                     </div>
                 </form>
 
-                <form>
-                    <button type={"submit"}> follow this beautiful guys</button>
-                    {
-                        //todo implement it ! show it if get by follower && followed is null && create follow on click
-                    }
-                </form>
+                {
+                    !isEmpty(dataFollow) && isEmpty(dataFollow.id) &&
+                    <form onSubmit={followForm.handleSubmit(onFollowSubmit)}>
+                        <button type="submit"> follow this beautiful guys</button>
+                    </form>
+                }
+                {
+                    !isEmpty(dataFollow) && !isEmpty(dataFollow.id) &&
+                    <form onSubmit={unfollowForm.handleSubmit(onUnfollowSubmit)}>
+                        <input {...unfollowForm.register("id")} type="hidden" value={!isEmpty(dataFollow) && dataFollow.id}/>
+                        <button type="submit"> unfollow this beautiful guys</button>
+                    </form>
+                }
 
             </div>
 
