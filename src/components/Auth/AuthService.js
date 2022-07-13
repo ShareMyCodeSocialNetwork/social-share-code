@@ -51,6 +51,7 @@ class  AuthService {
         if (this.getCurrentUser() === null || this.isExpiredToken()) {
             if(this.getCurrentUser() !== null && this.isExpiredToken()){
                 this.logout();
+                alert('Session expired, please login again')
             }
             history.push("/login");
         }
