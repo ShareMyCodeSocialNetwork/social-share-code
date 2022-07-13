@@ -3,8 +3,10 @@ import {useDispatch, useSelector} from "react-redux";
 import { getProjectByOwner} from "../actions/API/project.action";
 import {isEmpty} from "../components/utils/Utils";
 import ProjectView from "../components/pages/ProjectView";
+import AuthService from "../components/Auth/AuthService";
 
 const MyProjects = () => {
+    AuthService.isAuth();
     const dispatch = useDispatch();
     const user_id = localStorage.getItem("user_id");
 

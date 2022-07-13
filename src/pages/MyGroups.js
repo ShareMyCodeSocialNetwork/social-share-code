@@ -4,8 +4,10 @@ import {isEmpty} from "../components/utils/Utils";
 import ProjectView from "../components/pages/ProjectView";
 import {getGroupsByOwner} from "../actions/API/group.action";
 import GroupCard from "./GroupCard";
+import AuthService from "../components/Auth/AuthService";
 
 const MyGroups = () => {
+    AuthService.isAuth();
     const dispatch = useDispatch();
     const user_id = localStorage.getItem("user_id");
 

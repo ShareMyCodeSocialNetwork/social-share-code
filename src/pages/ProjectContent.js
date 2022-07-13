@@ -6,8 +6,10 @@ import {getCodeByProject} from "../actions/API/code.action";
 import {isEmpty} from "../components/utils/Utils";
 import MyCodeView from "../components/pages/MyCodeView";
 import NewPen from "../layout/Modals/NewPen";
+import AuthService from "../components/Auth/AuthService";
 
 const ProjectContent = () => {
+    AuthService.isAuth();
     const style = {
         position: 'absolute',
         top: '50%',

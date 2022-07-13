@@ -12,8 +12,10 @@ import {
     getUserRoleGroupsByGroup
 } from "../actions/API/userRoleGroup.action";
 import {useForm} from "react-hook-form";
+import AuthService from "../components/Auth/AuthService";
 
 const GroupContent = () => {
+    AuthService.isAuth();
     const style = {
         position: 'absolute',
         top: '50%',
