@@ -42,7 +42,7 @@ export const getByFollowedAndFollower = (followedId, followerId) => {
     data.followedUserId = followerId;
     return (dispatch) => {
         return axios
-            .get(`${API_URL}/follow/followed/and/follower`,{ headers:  AuthService.authHeader() , data })
+            .post(`${API_URL}/follow/followed/and/follower`, data,{ headers:  AuthService.authHeader()})
             .then((res) => {
                 dispatch({ type: GET_BY_FOLLOWED_AND_FOLLOWER, payload: res.data });
             })
