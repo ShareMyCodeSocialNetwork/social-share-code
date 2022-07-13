@@ -43,11 +43,6 @@ const ProjectContent = () => {
     const loadProjectData = async () => {
         let projectsData = await projects;
         setDataProject(projectsData);
-        if(dataProject === undefined || dataProject === null){
-            //alert("project not found");
-            //history.push( "/");
-            //window.location.reload();
-        }
         let codesData = await codes;
         setDataCode(codesData);
     }
@@ -80,8 +75,8 @@ const ProjectContent = () => {
                 {
                     !isEmpty(dataCode) &&
                     dataCode.map((item, index) => (
-                       <div className="post-code">
-                           <MyCodeView key={index} language={item.language.name} code={item.nameCode} userPseudo={item.user.pseudo} codeId={item.id} userId={item.user.id}></MyCodeView>
+                       <div key={index} className="post-code">
+                           <MyCodeView language={item.language.name} code={item.nameCode} userPseudo={item.user.pseudo} codeId={item.id} userId={item.user.id}></MyCodeView>
                        </div>
                     ))
                 }
