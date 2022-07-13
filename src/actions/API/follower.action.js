@@ -38,8 +38,8 @@ export const getOneFollowById = (followId) => {
 
 export const getByFollowedAndFollower = (followedId, followerId) => {
     let data = {};
-    data.followerUserId = followedId;
-    data.followedUserId = followerId;
+    data.followedUserId = followedId;
+    data.followerUserId = followerId;
     return (dispatch) => {
         return axios
             .post(`${API_URL}/follow/followed/and/follower`, data,{ headers:  AuthService.authHeader()})
@@ -93,7 +93,7 @@ export const deleteFollower = (followerId) => {
 
         })
             .then(() => {
-                dispatch({ type: DELETE_FOLLOWER, payload: { followerId } });
+                //dispatch({ type: DELETE_FOLLOWER, payload: { followerId } });
             })
             .catch((err) => console.log(err));
     };
