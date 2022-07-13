@@ -56,12 +56,12 @@ export const addLike = (data) => {
     };
 };
 
-export const getPostLike = (postId,data) => {
+export const getPostLike = (postId) => {
     return (dispatch) => {
         return axios
             .get(`${API_URL}/post/${postId}`, { headers:  AuthService.authHeader() })
-            .then(() => {
-                dispatch({ type: GET_POST_LIKE, payload: data });
+            .then((res) => {
+                dispatch({ type: GET_POST_LIKE, payload: res.data });
             })
             .catch((err) => console.log(err));
     };
