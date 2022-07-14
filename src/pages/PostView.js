@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import CodeMirror from "@uiw/react-codemirror";
-import {Box, Modal, TextareaAutosize} from "@mui/material";
+import {Box, Modal} from "@mui/material";
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {isEmpty} from "../components/utils/Utils";
+import {getCommentsByPost, getCommentsByUser} from "../actions/API/comment.action";
+import {getPostLike} from "../actions/API/like.action";
 
 const PostView = ({postData}) => {
     const style = {
@@ -26,20 +28,29 @@ const PostView = ({postData}) => {
     const handleCloseModalComments = () => setOpenModalComments(false);
     const [tabComment, setTabComment] = useState([]);
 
-    /*useEffect(() => {
-        //get all comments by post id
+    useEffect(() => {
+        //dispatch(getCommentsByPost(postData.id))
+        dispatch(getPostLike(postData.id))
         // get all likes by post Id
     }, []);
 
-    const user = useSelector(state => state.userReducer);
-    const [userData, setUserData] = useState()
+    const likes = useSelector(state => state.likeReducer);
+    const [likeData, setLikeData] = useState([]);
+
+    const comments = useSelector(state => state.commentReducer);
+    const [commentData, setcommentData] = useState([])
 
     const loadData = async () => {
-        let userData = await user;
-        setUserData(userData);
+        let dbComments = await comments;
+        let dbLikes = await likes;
+
+        setcommentData(dbComments);
+        setLikeData(dbLikes);
+        console.log(likeData);
+        //setTabComment(dbComments)
     }
     loadData().then()
-*/
+
     const onSubmit = (data) => {
         console.log(data);
         const array = [...tabComment]
@@ -70,7 +81,7 @@ const PostView = ({postData}) => {
                     <div className="composant-modal-comments">
                         <div className="header-modal-comments">
                             <div className="left-part-header-comments">
-                                <div className="title-code-modal">Title will be remove</div>
+                                <div className="title-code-modal"></div>
                                 <div className="name-creator">{postData.user.id}</div>
                             </div>
                             <div className="right-part-header-comments">
@@ -155,26 +166,26 @@ const PostView = ({postData}) => {
                 </div>
                 <div className="social-code-search">
                     <div className="profile-editor">
-                        <div className="title-name-editor">Code name will be remove</div>
+                        <div className="title-name-editor">Code name work in progress</div>
                     </div>
                     <div className="profile-editor">
                         <img className="profile-img" src="/assets/logo/profil.svg" alt="profile" />
-                        <div className="title-name-editor">Code creator, will be remove</div>
+                        <div className="title-name-editor">Code creator,work in progress</div>
                     </div>
 
                     <div className="container-social-code">
                         <div className="social-code">
                             <img className="social-code-img" src="/assets/logo/like.svg" alt="like"/>
-                            <div onClick={() => handleAddLike()} className="title-social-code">Like </div>
+                            <div onClick={() => handleAddLike()} className="title-social-code">Like {!isEmpty(likeData) && likeData.length}{isEmpty(likeData) && "0"}</div>
                         </div>
                         <div className="social-code" onClick={() => handleOpenModalComments()}>
                             <img className="social-code-img" src="/assets/logo/comments.svg" alt="comments"/>
-                            <div  className="title-social-code">{"comments.length"}</div>
+                            <div  className="title-social-code">{comments.length}</div>
                         </div>
-                        <div className="social-code">
+                        {/*<div className="social-code">
                             <img className="social-code-img" src="/assets/logo/view.svg" alt="like"/>
-                            <div className="title-social-code">{"view will be remove or add in api"}</div>
-                        </div>
+                            <div className="title-social-code">view </div>
+                        </div>*/}
                     </div>
                 </div>
             </div>
