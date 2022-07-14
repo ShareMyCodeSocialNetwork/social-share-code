@@ -27,7 +27,6 @@ import {getCodeByUser} from "../actions/API/code.action";
 import MyCodeView from "../components/pages/MyCodeView";
 import GroupCard from "./GroupCard";
 import {getGroupsByOwner} from "../actions/API/group.action";
-import {windows} from "codemirror/src/util/browser";
 
 const Profil = () => {
     AuthService.isAuth();
@@ -38,44 +37,7 @@ const Profil = () => {
     const history = useHistory();
     const user_id = localStorage.getItem("user_id");
 
-    useEffect(() => {
-        dispatch(getOneUserById(id));
-        dispatch(getFollowed(id));
-        dispatch(getFollowers(id));
-        dispatch(getProjectByOwner(id));
-        dispatch(getPostByUserId(id));
-        dispatch(getCodeByUser(id))
-        dispatch(getGroupsByOwner(id))
-        dispatch(getByFollowedAndFollower(id,user_id))
-    }, []);
-
-    const user = useSelector(state => state.userReducer);
-    const [dataUser,setDataUser] = useState();
-
-    const followed = useSelector((state) => state.followerReducer);
-    const [dataFollowed, setDataFollowed] = useState([]);
-
-    const followers = useSelector((state) => state.followerReducer);
-    const [dataFollowers, setDataFollowers] = useState([]);
-
-    const posts = useSelector((state) => state.postReducer);
-    const [dataPosts, setDataPosts] = useState([]);
-
-    const projectProfile = useSelector( (state) => state.projectReducer);
-    const [dataProjectProfile, setDataProjectProfile] = useState([]);
-
-    const codeProfile = useSelector( (state) => state.codeReducer);
-    const [dataCodeProfile, setDataCodeProfile] = useState([]);
-
-    const groupProfile = useSelector( (state) => state.groupReducer);
-    const [dataGroupProfile, setDataGroupProfile] = useState([]);
-
-    const follow = useSelector( (state) => state.followerReducer)
-    const [dataFollow, setDataFollow] = useState();
-
     const {register, handleSubmit, watch, formState: {errors}} = useForm({ shouldUseNativeValidation: true });
-
-
     const [firstname, setFirstname] = useState("Loading...");
     const [lastname, setLastname] = useState("Loading...");
     const [pseudo, setPseudo] = useState("Loading...");
@@ -85,32 +47,104 @@ const Profil = () => {
     const followForm = useForm();
     const unfollowForm = useForm();
 
-
-    const loadData = async () => {
+    useEffect(() => {
+        dispatch(getOneUserById(id));
+    }, []);
+    const user = useSelector(state => state.userReducer);
+    const [dataUser,setDataUser] = useState();
+    const loadDataUser = async () => {
         let dbUser = await user;
-        let followedData = await followed;
-        let followersData = await followers;
-        let dbFollow = await follow; //todo ca override les gets followers et followed
-        let projectProfileDate = await projectProfile;
-        let dbPosts = await posts;
-        let dbCodes = await codeProfile;
-        let dbGroup = await groupProfile;
-
         setDataUser(dbUser);
-        setDataFollowed(followedData);
-        setDataFollowers(followersData);
-        setDataCodeProfile(dbCodes);
-        setDataPosts(dbPosts);
-        setDataProjectProfile(projectProfileDate);
-        setDataGroupProfile(dbGroup);
-        setDataFollow(dbFollow);
-        console.log("dataFollowed")
-        console.log(dataFollowed)
-        console.log("dataFollowers")
-        console.log(dataFollowers)
     }
+    loadDataUser().then()
 
-    loadData().then()
+
+    useEffect(() => {
+        dispatch(getFollowed(id));
+    }, []);
+    const followed = useSelector((state) => state.followerReducer);
+    const [dataFollowed, setDataFollowed] = useState([]);
+    const loadDataFollowed = async () => {
+        let followedData = await followed;
+        setDataFollowed(followedData);
+    }
+    loadDataFollowed().then()
+
+
+    useEffect(() => {
+        dispatch(getFollowers(id));
+    }, []);
+    const followers = useSelector((state) => state.followerReducer);
+    const [dataFollowers, setDataFollowers] = useState([]);
+    const loadDataFollowers = async () => {
+        let followersData = await followers;
+        setDataFollowers(followersData);
+    }
+    loadDataFollowers().then()
+
+
+    useEffect( () => {
+        dispatch(getPostByUserId(id));
+    },[])
+    const posts = useSelector((state) => state.postReducer);
+    const [dataPosts, setDataPosts] = useState([]);
+    const loadDataPost = async () => {
+        let dbPosts = await posts;
+        setDataPosts(dbPosts);
+    }
+    loadDataPost().then()
+
+
+    useEffect( () => {
+        dispatch(getProjectByOwner(id));
+    },[])
+    const projectProfile = useSelector( (state) => state.projectReducer);
+    const [dataProjectProfile, setDataProjectProfile] = useState([]);
+    const loadDataProject = async () => {
+        let projectProfileData = await projectProfile;
+        setDataProjectProfile(projectProfileData);
+    }
+    loadDataProject().then()
+
+
+    useEffect( () => {
+        dispatch(getCodeByUser(id));
+    },[]);
+    const codeProfile = useSelector( (state) => state.codeReducer);
+    const [dataCodeProfile, setDataCodeProfile] = useState([]);
+    const loadDataCode = async () => {
+        let dbCodes = await codeProfile;
+        setDataCodeProfile(dbCodes);
+    }
+    loadDataCode().then()
+
+
+    useEffect(() => {
+        dispatch(getGroupsByOwner(id));
+    }, []);
+    const groupProfile = useSelector( (state) => state.groupReducer);
+    const [dataGroupProfile, setDataGroupProfile] = useState([]);
+    const loadDataGroup = async () => {
+        let dbGroup = await groupProfile;
+        setDataGroupProfile(dbGroup);
+    }
+    loadDataGroup().then()
+
+
+    useEffect(() => {
+        dispatch(getByFollowedAndFollower(id,user_id))
+    }, []);
+    const follow = useSelector( (state) => state.followerReducer)
+    const [dataFollow, setDataFollow] = useState();
+    const loadDataFollow = async () => {
+        let dbFollow = await follow;
+        setDataFollow(dbFollow);
+    }
+    loadDataFollow().then()
+
+
+
+
 
     const handleChangeLastnameInput = event => {
         setLastname(event.target.value);
