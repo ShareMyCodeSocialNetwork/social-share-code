@@ -11,7 +11,7 @@ import {
     execute_code_ruby
 } from "../actions/API/execode.action";
 import AuthService from "../components/Auth/AuthService";
-import {addSnippet} from "../actions/API/snippets.action";
+import {addSnippet, getAllSnippetsByUser} from "../actions/API/snippets.action";
 import {addCode} from "../actions/API/code.action";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -26,7 +26,8 @@ const Code = () => {
 
     const dispatch = useDispatch();
     const { id } = useParams();
-    const [codeTest, setCodeTest] =  useState(``)
+    const [codeTest, setCodeTest] =  useState(`5555555`)
+    const [codeSnippetsAdd,setCodeSnippetsAdd] = useState(``)
     const [nameCode,setCodeName] = useState("Unititled")
     const { register, handleSubmit,watch } = useForm({mode: 'onChange'});
     const [responseCode, setResponseCode] = useState([""])
@@ -40,19 +41,22 @@ const Code = () => {
     const openSnippets = Boolean(anchorElSnippets);
     const [projectChoices, setProjectChoices] = useState([]);
     const [allProject,setAllProject] = useState([]);
+    const [allSnippets, setAllSnippets] = useState([]);
 
     useEffect(() => {
         dispatch(getProjectByOwner(user_id));
-
+        dispatch(getAllSnippetsByUser(user_id))
     }, []);
 
     const projects = useSelector( state => state.projectReducer);
-
+    const snippets = useSelector( state => state.snippetsReducer);
 
 
     const loadProjectData = async () => {
         let projectsData = await projects;
+        let snippetsData = await snippets
         setAllProject(projectsData)
+        setAllSnippets(snippetsData)
     }
 
     loadProjectData().then(r => {
@@ -64,12 +68,19 @@ const Code = () => {
 
 
     console.log(allProject)
+    console.log(allSnippets)
+    console.log(codeTest)
 
     const [openModalSave, setOpenModalSave] = useState(false);
     const handleOpenModalSave = () => {
-        if(allProject[0].id !== 0){
+        if(allProject.length > 1){
+            if(allProject[0].id !== 0){
+                    allProject.push({id:0,name:"Aucun"})
+            }
+        }else {
             allProject.push({id:0,name:"Aucun"})
         }
+
         setOpenModalSave(true)
     };
     const handleCloseModalSave = () => setOpenModalSave(false);
@@ -107,8 +118,9 @@ const Code = () => {
     const onSubmit = (data) => {
         if(data.nameCode !== "Unititled"){
             console.log(reconstructJsonSendApi(data));
-            handleCloseModalSave()
             dispatch(addCode(reconstructJsonSendApi(data)))
+            handleCloseModalSave()
+
         }else{
             alert("Donner un nom a votre code")
         }
@@ -137,7 +149,7 @@ const Code = () => {
     const reconstructJsonSendApi = (data) => {
         data.name = data["nameCode"];
         data.user_id = parseInt(user_id);
-        data.content = data["content"]
+        data.content = data["contentinput"]
         data.language_id = language.id
         if(projectChoices.id !== 0){
             data.project_id = projectChoices.id
@@ -172,17 +184,15 @@ const Code = () => {
     const handleClickSnippets = (event) => {
         setAnchorElSnippets(event.currentTarget);
     };
-    const handleAddSnippet = () => {
-        console.log('addSnippet')
+    const handleAddSnippet = (content) => {
+        const test = content
+        setCodeTest(codeTest + "\n" + test)
     }
 
     const handleCloseSnippets = () => {
         setAnchorElSnippets(null);
     };
-    const addSnippetToCompte = () => {
-        //TODO call add snipets
-        dispatch(addSnippet())
-    }
+
 
     const handleChangeNameCode = () => {
         let nameCodeChange = watch("nameCode");
@@ -235,7 +245,7 @@ const Code = () => {
                            </div>
                            <div className="container-form-modal">
                                <div className="title-input-modal">Code</div>
-                               <textarea style={{padding:10,fontSize:10,resize: "none"}} defaultValue={codeTest} {...register("content")}  cols="30" rows="10" name="content-code" placeholder="votre code ...." />
+                               <textarea {...register("contentinput")} defaultValue={codeTest}  cols="30" rows="10"  placeholder="votre code ...." style={{padding:10,fontSize:10,resize: "none"}}   />
                            </div>
                            <div className="container-form-modal">
                                <div className="title-input-modal">Project</div>
@@ -300,9 +310,14 @@ const Code = () => {
                                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                            >
-                               <MenuItem>
-                                   <SnippetsCard addSnippet={()=> handleAddSnippet()} title={"title snipts"}/>
-                               </MenuItem>
+                               {
+                                   !isEmpty(allSnippets) &&
+                                   allSnippets.map((value,index) =>
+                                       <MenuItem key={index} onClick={()=> handleAddSnippet(value.content)}>
+                                           <SnippetsCard  title={value.name}/>
+                                       </MenuItem>
+                                   )
+                               }
                            </Menu>
                            <div onClick={() => handleOpenModalSave()} className="option-button">
                                <img className="img-option" src="/assets/logo/save.svg" alt="save"/>
@@ -337,10 +352,10 @@ const Code = () => {
                            <div className="codemirror">
                                <CodeMirror
                                    options={{theme : "dracula", mode: language.name }}
-                                   value=""
+                                   value={codeTest}
                                    height="100%"
                                    onChange={(editor, viewUpdate) => {
-                                       console.log('value:', editor.getValue());
+                                       console.log('value:', editor.getValue() + codeSnippetsAdd);
                                        setCodeTest(editor.getValue())
                                    }}/>
                                <div className="button-send-code" onClick={()=> getCodeTest(codeTest)}>Executer</div>
