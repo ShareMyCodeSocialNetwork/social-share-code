@@ -9,20 +9,21 @@ const NewSnippets = ({handleCloseModalSnippet, openModalSnippet, style, group_id
 
     const dispatch = useDispatch();
     const user_id = localStorage.getItem("user_id");
-    const { register, handleSubmit,watch } = useForm();
+    const { register, handleSubmit,watch,resetField } = useForm();
     const [language,setLanguage] = useState({id:1,name:"python"})
     const languagelist = [{id:1,name:"python"},{id:2,name:"js"},{id:4,name:"ruby"}]
 
-    const group = useForm();
 
-    const onSubmitGroup = (data) => {
-        data.name = data["name"]
-        data.content = data["content"]
+    const onSubmit = (data) => {
+        data.name = data["namesnippets"]
+        data.content = data["contentinput"]
         data.user_id = user_id;
         data.language_id = language.id;
         console.log(data);
+        resetField("namesnippets");
+        resetField("contentinput");
         dispatch(addSnippet(data));
-        handleCloseModalSnippet();
+        //handleCloseModalSnippet();
     }
 
     const handleChangeLanguage = () => {
@@ -55,10 +56,10 @@ const NewSnippets = ({handleCloseModalSnippet, openModalSnippet, style, group_id
                         <img onClick={()=> handleCloseModalSnippet()} className="close-modal" src="/assets/logo/close.svg" alt="close modal"/>
                     </div>
                     <div className="hr"/>
-                    <form className="form-container-modal" name="groupForm" onSubmit={group.handleSubmit(onSubmitGroup)}>
+                    <form className="form-container-modal"  onSubmit={handleSubmit(onSubmit)}>
                         <div className="container-form-modal">
                             <div className="title-input-modal">Name</div>
-                            <input {...register("name")} type="text" className="input-modal"/>
+                            <input {...register("namesnippets")} type="text" className="input-modal"/>
                         </div>
                         <div className="container-form-modal">
                             <div className="choice-langage">
@@ -86,7 +87,7 @@ const NewSnippets = ({handleCloseModalSnippet, openModalSnippet, style, group_id
                         </div>
                         <div className="container-form-modal">
                             <div className="title-input-modal">code</div>
-                            <textarea style={{padding:20,fontSize:14}} {...register("content")} cols="30" rows="10" name="content-code" placeholder="votre code ...." />
+                            <textarea {...register("contentinput")} cols="30" rows="10"  placeholder="votre code ...." style={{padding:20,fontSize:14,resize: "none"}}   />
                         </div>
 
                         <button type="submit" className="button-save">Save</button>
