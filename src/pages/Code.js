@@ -11,7 +11,7 @@ import {
     execute_code_ruby
 } from "../actions/API/execode.action";
 import AuthService from "../components/Auth/AuthService";
-import {addSnippet, getAllSnippetsByUser} from "../actions/API/snippets.action";
+import {addSnippet, deleteSnippet, getAllSnippetsByUser} from "../actions/API/snippets.action";
 import {addCode} from "../actions/API/code.action";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -26,7 +26,7 @@ const Code = () => {
 
     const dispatch = useDispatch();
     const { id } = useParams();
-    const [codeTest, setCodeTest] =  useState(`5555555`)
+    const [codeTest, setCodeTest] =  useState(``)
     const [codeSnippetsAdd,setCodeSnippetsAdd] = useState(``)
     const [nameCode,setCodeName] = useState("Unititled")
     const { register, handleSubmit,watch } = useForm({mode: 'onChange'});
@@ -200,6 +200,10 @@ const Code = () => {
         setCodeName(nameCodeChange)
     }
 
+    const handleDeleteSnippets = (id) => {
+        dispatch(deleteSnippet(id))
+    }
+
     return (
        <>
            <Modal
@@ -313,8 +317,12 @@ const Code = () => {
                                {
                                    !isEmpty(allSnippets) &&
                                    allSnippets.map((value,index) =>
-                                       <MenuItem key={index} onClick={()=> handleAddSnippet(value.content)}>
-                                           <SnippetsCard  title={value.name}/>
+                                       <MenuItem  key={index} >
+                                           <div className="component-snippets-card">
+                                               <div className="title-snippets">{value.name}</div>
+                                               <img onClick={()=> handleAddSnippet(value.content)} src="/assets/logo/add.svg" alt="add"/>
+                                               <img onClick={()=> handleDeleteSnippets(value.id)} src="/assets/logo/close_red.svg" alt="add"/>
+                                           </div>
                                        </MenuItem>
                                    )
                                }

@@ -23,7 +23,7 @@ const NewSnippets = ({handleCloseModalSnippet, openModalSnippet, style, group_id
         resetField("namesnippets");
         resetField("contentinput");
         dispatch(addSnippet(data));
-        //handleCloseModalSnippet();
+        handleCloseModalSnippet();
     }
 
     const handleChangeLanguage = () => {
