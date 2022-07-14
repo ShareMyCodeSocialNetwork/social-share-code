@@ -4,8 +4,8 @@ import {Box, Modal} from "@mui/material";
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {isEmpty} from "../components/utils/Utils";
-import {getCommentsByPost, getCommentsByUser} from "../actions/API/comment.action";
 import {getPostLike} from "../actions/API/like.action";
+import {API_URL} from "../actions/global";
 
 const PostView = ({postData}) => {
     const style = {
@@ -29,27 +29,45 @@ const PostView = ({postData}) => {
     const [tabComment, setTabComment] = useState([]);
 
     useEffect(() => {
-        //dispatch(getCommentsByPost(postData.id))
         dispatch(getPostLike(postData.id))
-        // get all likes by post Id
     }, []);
-
     const likes = useSelector(state => state.likeReducer);
     const [likeData, setLikeData] = useState([]);
-
-    const comments = useSelector(state => state.commentReducer);
-    const [commentData, setcommentData] = useState([])
-
     const loadData = async () => {
-        let dbComments = await comments;
         let dbLikes = await likes;
-
-        setcommentData(dbComments);
         setLikeData(dbLikes);
-        console.log(likeData);
-        //setTabComment(dbComments)
     }
     loadData().then()
+
+    /*const headers = new Headers();
+    headers.set("Authorization","Bearer " + localStorage.key("user"));
+
+    const init = { method: 'GET',
+        headers,
+        mode: 'cors',
+        cache: 'default' };
+
+    fetch(`${API_URL}/like/post/${postData.id}`,init)
+        .then( (response) => {
+            return response.json();
+        }).then((response) =>{
+            setLikeData(response);
+            console.log(likeData);
+        });*/
+
+
+
+    useEffect(() => {
+        //dispatch(getCommentsByPost(postData.id))
+    }, []);
+    const comments = useSelector(state => state.commentReducer);
+    const [commentData, setCommentData] = useState([]);
+    const loadDataComment = async () => {
+        let dbComments = await comments;
+        setCommentData(dbComments);
+        //setTabComment(dbComments)
+    }
+    loadDataComment().then()
 
     const onSubmit = (data) => {
         console.log(data);
@@ -59,7 +77,7 @@ const PostView = ({postData}) => {
     }
 
     const handleCopyLink = () => {
-
+        console.log(window.location.toString())
     }
     const handleClickEditor = () => {
 
@@ -97,7 +115,7 @@ const PostView = ({postData}) => {
                             <div className="left-part-body-comments">
                                 <form onSubmit={commentForm.handleSubmit(onSubmit)} className="comment-form">
                                     <textarea {...commentForm.register("content")}  cols="30" rows="10"/>{/*todo change it to content */}
-                                    <button  className="button-comments">Comment</button>
+                                    <button  className="button-comments">Send</button>
                                 </form>
                                 <div className="response-comments">
                                     <div className="title-comment">
@@ -129,7 +147,7 @@ const PostView = ({postData}) => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="title-date">
+                                {/*<div className="title-date">
                                     <div className="title-date-code">Created On</div>
                                     <div className="subtitle-date-code">22/05/1996</div>
                                 </div>
@@ -146,7 +164,7 @@ const PostView = ({postData}) => {
                                     <img src="/assets/logo/view.svg" alt="view"/>
                                     <div className="number-logo">1000000</div>
                                     <div className="subtitle-information">Comments</div>
-                                </div>
+                                </div>*/}
 
                             </div>
                         </div>
@@ -166,11 +184,11 @@ const PostView = ({postData}) => {
                 </div>
                 <div className="social-code-search">
                     <div className="profile-editor">
-                        <div className="title-name-editor">Code name work in progress</div>
+                        <div className="title-name-editor">{!isEmpty(postData) && !isEmpty(postData.code) && postData.code.nameCode}</div>
                     </div>
                     <div className="profile-editor">
                         <img className="profile-img" src="/assets/logo/profil.svg" alt="profile" />
-                        <div className="title-name-editor">Code creator,work in progress</div>
+                        <div className="title-name-editor">{!isEmpty(postData) && postData.user.pseudo}</div>
                     </div>
 
                     <div className="container-social-code">
@@ -180,7 +198,7 @@ const PostView = ({postData}) => {
                         </div>
                         <div className="social-code" onClick={() => handleOpenModalComments()}>
                             <img className="social-code-img" src="/assets/logo/comments.svg" alt="comments"/>
-                            <div  className="title-social-code">{comments.length}</div>
+                            <div  className="title-social-code">Comments {!isEmpty(commentData) && commentData.length}{isEmpty(commentData) && "0"}</div>
                         </div>
                         {/*<div className="social-code">
                             <img className="social-code-img" src="/assets/logo/view.svg" alt="like"/>
