@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import {filter_array, isEmpty} from "../components/utils/Utils";
-import {getPosts} from "../actions/API/post.action";
+import {getFullPosts} from "../actions/API/post.action";
 import {useDispatch, useSelector} from "react-redux";
 import PostView from "./PostView";
 import AuthService from "../components/Auth/AuthService";
@@ -14,7 +14,7 @@ const SearchView = () => {
 
 
     useEffect(() => {
-        dispatch(getPosts());
+        dispatch(getFullPosts());
     }, []);
 
     const [arrayPost, setArrayPost] = useState([]);

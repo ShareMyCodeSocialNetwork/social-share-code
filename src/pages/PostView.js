@@ -22,7 +22,7 @@ const PostView = ({postData}) => {
     };
     const dispatch = useDispatch();
     const commentForm = useForm();
-    const user_id = localStorage.key("user_id");
+    const user_id = localStorage.getItem("user_id");
     const [openModalComments, setOpenModalComments] = useState(false);
     const handleOpenModalComments = () => {
 
@@ -30,7 +30,7 @@ const PostView = ({postData}) => {
     }
 
 
-    useEffect(() => {
+    /*useEffect(() => {
         dispatch(getPostLike(postData.id))
     }, []);
     const likes = useSelector(state => state.likeReducer);
@@ -39,12 +39,13 @@ const PostView = ({postData}) => {
         let dbLikes = await likes;
         setLikeData(dbLikes);
     }
-    loadData().then()
 
+    loadData().then()
+    */
 
     const handleCloseModalComments = () => setOpenModalComments(false);
     const [tabComment, setTabComment] = useState([]);
-    useEffect(() => {
+    /*useEffect(() => {
         //dispatch(getCommentsByPost(postData.id))
     }, []);
     const comments = useSelector(state => state.commentReducer);
@@ -55,11 +56,12 @@ const PostView = ({postData}) => {
         //setTabComment(dbComments)
     }
     loadDataComment().then()
+     */
 
     const onSubmit = (data) => {
-        console.log(data);
-        //todo create comment on post
         data.user_id = user_id;
+        data.post_id = postData.post.id;
+        console.log(data);
         dispatch(addComment(data));
         //const array = [...tabComment]
         //array.push({content: data.content});
@@ -74,7 +76,7 @@ const PostView = ({postData}) => {
     }
 
     const handleAddLike = () => {
-
+        // todo create like
     }
 
     return (
@@ -90,7 +92,7 @@ const PostView = ({postData}) => {
                         <div className="header-modal-comments">
                             <div className="left-part-header-comments">
                                 <div className="title-code-modal"></div>
-                                <div className="name-creator">{postData.user.id}</div>
+                                <div className="name-creator">{postData.post.user.id}</div>
                             </div>
                             <div className="right-part-header-comments">
                                 <div className="logo">
@@ -109,13 +111,14 @@ const PostView = ({postData}) => {
                                 </form>
                                 <div className="response-comments">
                                     <div className="title-comment">
-                                        <div className="number-comments">{tabComment.length}</div>
+                                        <div className="number-comments">{postData.comments.length}</div>
                                         <div className="title-response-comment">COMMENTS</div>
                                     </div>
                                     <div className="response">
                                         {
-                                            !isEmpty(tabComment) &&
-                                            tabComment.map((value,index) => (
+                                            !isEmpty(postData) &&
+                                            !isEmpty(postData.comments) &&
+                                            postData.comments.map((value,index) => (
                                                 <div key={index} className="card-response-comments">
                                                     {<div className="title-creator-comment">{value.user.pseudo}</div>}
                                                     <div className="title-comment">{value.content}</div>
@@ -168,27 +171,27 @@ const PostView = ({postData}) => {
                     <div className="codemirror">
                         <CodeMirror
                             options={{theme : "default", readOnly: true, className: "readOnly" }}
-                            value={postData.content}
+                            value={postData.post.content}
                             height="100%"/>
                     </div>
                 </div>
                 <div className="social-code-search">
                     <div className="profile-editor">
-                        <div className="title-name-editor">{!isEmpty(postData) && !isEmpty(postData.code) && postData.code.nameCode}</div>
+                        <div className="title-name-editor">{!isEmpty(postData.post) && !isEmpty(postData.post.code) && postData.post.code.nameCode}</div>
                     </div>
                     <div className="profile-editor">
                         <img className="profile-img" src="/assets/logo/profil.svg" alt="profile" />
-                        <div className="title-name-editor">{!isEmpty(postData) && postData.user.pseudo}</div>
+                        <div className="title-name-editor">{!isEmpty(postData.post) && postData.post.user.pseudo}</div>
                     </div>
 
                     <div className="container-social-code">
                         <div className="social-code">
                             <img className="social-code-img" src="/assets/logo/like.svg" alt="like"/>
-                            <div onClick={() => handleAddLike()} className="title-social-code">Like {!isEmpty(likeData) && likeData.length}{isEmpty(likeData) && "0"}</div>
+                            <div onClick={() => handleAddLike()} className="title-social-code">Like {!isEmpty(postData.likes) && postData.likes.length}{isEmpty(postData.likes) && "0"}</div>
                         </div>
                         <div className="social-code" onClick={() => handleOpenModalComments()}>
                             <img className="social-code-img" src="/assets/logo/comments.svg" alt="comments"/>
-                            <div  className="title-social-code">Comments {!isEmpty(commentData) && commentData.length}{isEmpty(commentData) && "0"}</div>
+                            <div  className="title-social-code">Comments {!isEmpty(postData.comments) && postData.comments.length}{isEmpty(postData.comments) && "0"}</div>
                         </div>
                         {/*<div className="social-code">
                             <img className="social-code-img" src="/assets/logo/view.svg" alt="like"/>

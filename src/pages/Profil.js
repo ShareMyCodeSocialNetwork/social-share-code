@@ -21,7 +21,7 @@ import {
 } from "../actions/API/follower.action";
 import {getProjectByOwner} from "../actions/API/project.action";
 import ProjectView from "../components/pages/ProjectView";
-import {getPostByUserId} from "../actions/API/post.action";
+import {getFullPostByUser} from "../actions/API/post.action";
 import PostView from "./PostView";
 import {getCodeByUser} from "../actions/API/code.action";
 import MyCodeView from "../components/pages/MyCodeView";
@@ -84,7 +84,7 @@ const Profil = () => {
 
 
     useEffect( () => {
-        dispatch(getPostByUserId(id));
+        dispatch(getFullPostByUser(id));
     },[])
     const posts = useSelector((state) => state.postReducer);
     const [dataPosts, setDataPosts] = useState([]);
