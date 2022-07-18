@@ -5,7 +5,7 @@ import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {isEmpty} from "../components/utils/Utils";
 import {getPostLike} from "../actions/API/like.action";
-import {API_URL} from "../actions/global";
+import {addComment} from "../actions/API/comment.action";
 
 const PostView = ({postData}) => {
     const style = {
@@ -22,11 +22,13 @@ const PostView = ({postData}) => {
     };
     const dispatch = useDispatch();
     const commentForm = useForm();
-
+    const user_id = localStorage.key("user_id");
     const [openModalComments, setOpenModalComments] = useState(false);
-    const handleOpenModalComments = () => setOpenModalComments(true);
-    const handleCloseModalComments = () => setOpenModalComments(false);
-    const [tabComment, setTabComment] = useState([]);
+    const handleOpenModalComments = () => {
+
+        setOpenModalComments(true);
+    }
+
 
     useEffect(() => {
         dispatch(getPostLike(postData.id))
@@ -39,24 +41,9 @@ const PostView = ({postData}) => {
     }
     loadData().then()
 
-    /*const headers = new Headers();
-    headers.set("Authorization","Bearer " + localStorage.key("user"));
 
-    const init = { method: 'GET',
-        headers,
-        mode: 'cors',
-        cache: 'default' };
-
-    fetch(`${API_URL}/like/post/${postData.id}`,init)
-        .then( (response) => {
-            return response.json();
-        }).then((response) =>{
-            setLikeData(response);
-            console.log(likeData);
-        });*/
-
-
-
+    const handleCloseModalComments = () => setOpenModalComments(false);
+    const [tabComment, setTabComment] = useState([]);
     useEffect(() => {
         //dispatch(getCommentsByPost(postData.id))
     }, []);
@@ -71,9 +58,12 @@ const PostView = ({postData}) => {
 
     const onSubmit = (data) => {
         console.log(data);
-        const array = [...tabComment]
-        array.push({content: data.content});
-        setTabComment(array)
+        //todo create comment on post
+        data.user_id = user_id;
+        dispatch(addComment(data));
+        //const array = [...tabComment]
+        //array.push({content: data.content});
+        //setTabComment(array)
     }
 
     const handleCopyLink = () => {
