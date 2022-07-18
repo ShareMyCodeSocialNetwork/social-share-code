@@ -15,9 +15,7 @@ import {isEmpty, wait} from "../components/utils/Utils";
 import {
     addFollower,
     deleteFollower,
-    getByFollowedAndFollower,
-    getFollowed,
-    getFollowers
+    getFullFollow
 } from "../actions/API/follower.action";
 import {getProjectByOwner} from "../actions/API/project.action";
 import ProjectView from "../components/pages/ProjectView";
@@ -31,10 +29,7 @@ import {getGroupsByOwner} from "../actions/API/group.action";
 const Profil = () => {
     AuthService.isAuth();
     const {id} = useParams();
-
-
     const dispatch = useDispatch();
-    const history = useHistory();
     const user_id = localStorage.getItem("user_id");
 
     const {register, handleSubmit, watch, formState: {errors}} = useForm({ shouldUseNativeValidation: true });
@@ -57,31 +52,6 @@ const Profil = () => {
         setDataUser(dbUser);
     }
     loadDataUser().then()
-
-
-    useEffect(() => {
-        dispatch(getFollowed(id));
-    }, []);
-    const followed = useSelector((state) => state.followerReducer);
-    const [dataFollowed, setDataFollowed] = useState([]);
-    const loadDataFollowed = async () => {
-        let followedData = await followed;
-        setDataFollowed(followedData);
-    }
-    loadDataFollowed().then()
-
-
-    useEffect(() => {
-        dispatch(getFollowers(id));
-    }, []);
-    const followers = useSelector((state) => state.followerReducer);
-    const [dataFollowers, setDataFollowers] = useState([]);
-    const loadDataFollowers = async () => {
-        let followersData = await followers;
-        setDataFollowers(followersData);
-    }
-    loadDataFollowers().then()
-
 
     useEffect( () => {
         dispatch(getFullPostByUser(id));
@@ -132,19 +102,16 @@ const Profil = () => {
 
 
     useEffect(() => {
-        dispatch(getByFollowedAndFollower(id,user_id))
+        dispatch(getFullFollow(id,user_id))
     }, []);
     const follow = useSelector( (state) => state.followerReducer)
     const [dataFollow, setDataFollow] = useState();
     const loadDataFollow = async () => {
         let dbFollow = await follow;
         setDataFollow(dbFollow);
+        console.log(dataFollow);
     }
     loadDataFollow().then()
-
-
-
-
 
     const handleChangeLastnameInput = event => {
         setLastname(event.target.value);
@@ -192,8 +159,7 @@ const Profil = () => {
         wait(500).then(()=>window.location.reload());
     }
     const onUnfollowSubmit = () => {
-        console.log(dataFollow.id);
-        dispatch(deleteFollower(dataFollow.id));
+        dispatch(deleteFollower(dataFollow.isFollow.id));
         wait(500).then(()=>window.location.reload());
     }
 
@@ -215,11 +181,11 @@ if (user_id === id){
             <div className="body-profile">
                 <div className="social-profile">
                     <div className="social-follow margin">
-                        <div className="number-social-follow">{!isEmpty(dataFollowers) && dataFollowers.length}</div>
+                        <div className="number-social-follow">{!isEmpty(dataFollow) && !isEmpty(dataFollow.followers) && dataFollow.followers.length}</div>
                         <div className="title-social-follow">followers</div>
                     </div>
                     <div className="social-follow">
-                        <div className="number-social-follow">{!isEmpty(dataFollowed) && dataFollowed.length}</div>
+                        <div className="number-social-follow">{!isEmpty(dataFollow) && !isEmpty(dataFollow.followed) && dataFollow.followed.length}</div>
                         <div className="title-social-follow">following</div>
                     </div>
                 </div>
@@ -319,11 +285,11 @@ if (user_id === id){
             <div className="body-profile">
                 <div className="social-profile">
                     <div className="social-follow margin">
-                        <div className="number-social-follow">{!isEmpty(dataFollowers) && dataFollowers.length}</div>
+                        <div className="number-social-follow">{!isEmpty(dataFollow) && !isEmpty(dataFollow.followers) && dataFollow.followers.length}</div>
                         <div className="title-social-follow">followers</div>
                     </div>
                     <div className="social-follow">
-                        <div className="number-social-follow">{!isEmpty(dataFollowed) && dataFollowed.length}</div>
+                        <div className="number-social-follow">{!isEmpty(dataFollow) && !isEmpty(dataFollow.followed) && dataFollow.followed.length}</div>
                         <div className="title-social-follow">following</div>
                     </div>
                 </div>
@@ -357,15 +323,15 @@ if (user_id === id){
                 </form>
 
                 {
-                    !isEmpty(dataFollow) && isEmpty(dataFollow.id) &&
+                    !isEmpty(dataFollow) && isEmpty(dataFollow.isFollow) && dataFollow.isFollow === null &&
                     <form onSubmit={followForm.handleSubmit(onFollowSubmit)}>
                         <button type="submit"> follow this beautiful guys</button>
                     </form>
                 }
                 {
-                    !isEmpty(dataFollow) && !isEmpty(dataFollow.id) &&
+                    !isEmpty(dataFollow) && !isEmpty(dataFollow.isFollow) &&
                     <form onSubmit={unfollowForm.handleSubmit(onUnfollowSubmit)}>
-                        <input {...unfollowForm.register("id")} type="hidden" value={!isEmpty(dataFollow) && dataFollow.id}/>
+                        <input {...unfollowForm.register("id")} type="hidden" value={!isEmpty(dataFollow) && !isEmpty(dataFollow.isFollow) && dataFollow.isFollow.id}/>
                         <button type="submit"> unfollow this beautiful guys</button>
                     </form>
                 }
