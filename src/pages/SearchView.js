@@ -4,8 +4,10 @@ import {filter_array, isEmpty} from "../components/utils/Utils";
 import {getPosts} from "../actions/API/post.action";
 import {useDispatch, useSelector} from "react-redux";
 import PostView from "./PostView";
+import AuthService from "../components/Auth/AuthService";
 
 const SearchView = () => {
+    AuthService.isAuth();
     const dispatch = useDispatch();
 
     const { filters } = useParams();
