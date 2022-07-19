@@ -1,5 +1,4 @@
 import React, { useState} from 'react';
-import React, {useState} from 'react';
 import CodeMirror from "@uiw/react-codemirror";
 import {Box, Modal} from "@mui/material";
 import {useForm} from "react-hook-form";
@@ -52,8 +51,9 @@ const PostView = ({postData}) => {
 
     }
 
-    const handleAddLike = (data) => {
+    const handleAddLike = () => {
         // todo create like
+        let data = {};
         data.user_id = user_id;
         data.post_id = postData.post.id
         console.log(data);
