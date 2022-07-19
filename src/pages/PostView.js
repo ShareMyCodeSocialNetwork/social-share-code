@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import CodeMirror from "@uiw/react-codemirror";
 import {Box, Modal} from "@mui/material";
 import {useForm} from "react-hook-form";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {isEmpty} from "../components/utils/Utils";
-import {getPostLike} from "../actions/API/like.action";
 import {addComment} from "../actions/API/comment.action";
+import {addLike} from "../actions/API/like.action";
 
 const PostView = ({postData}) => {
     const style = {
@@ -29,43 +29,17 @@ const PostView = ({postData}) => {
         setOpenModalComments(true);
     }
 
-
-    /*useEffect(() => {
-        dispatch(getPostLike(postData.id))
-    }, []);
-    const likes = useSelector(state => state.likeReducer);
-    const [likeData, setLikeData] = useState([]);
-    const loadData = async () => {
-        let dbLikes = await likes;
-        setLikeData(dbLikes);
-    }
-
-    loadData().then()
-    */
-
     const handleCloseModalComments = () => setOpenModalComments(false);
     const [tabComment, setTabComment] = useState([]);
-    /*useEffect(() => {
-        //dispatch(getCommentsByPost(postData.id))
-    }, []);
-    const comments = useSelector(state => state.commentReducer);
-    const [commentData, setCommentData] = useState([]);
-    const loadDataComment = async () => {
-        let dbComments = await comments;
-        setCommentData(dbComments);
-        //setTabComment(dbComments)
-    }
-    loadDataComment().then()
-     */
+
+
 
     const onSubmit = (data) => {
         data.user_id = user_id;
         data.post_id = postData.post.id;
         console.log(data);
         dispatch(addComment(data));
-        //const array = [...tabComment]
-        //array.push({content: data.content});
-        //setTabComment(array)
+        postData.comments.push(data);
     }
 
     const handleCopyLink = () => {
@@ -75,8 +49,10 @@ const PostView = ({postData}) => {
 
     }
 
-    const handleAddLike = () => {
+    const handleAddLike = (data) => {
+
         // todo create like
+        //dispatch(addLike(data));
     }
 
     return (
@@ -120,7 +96,7 @@ const PostView = ({postData}) => {
                                             !isEmpty(postData.comments) &&
                                             postData.comments.map((value,index) => (
                                                 <div key={index} className="card-response-comments">
-                                                    {<div className="title-creator-comment">{value.user.pseudo}</div>}
+                                                    <div className="title-creator-comment"><a href={"/profil/" + value.user.id}> {value.user.pseudo}</a></div>
                                                     <div className="title-comment">{value.content}</div>
                                                 </div>
                                             ))
