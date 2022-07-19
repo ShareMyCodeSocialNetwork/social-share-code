@@ -1,4 +1,5 @@
 import React, { useState} from 'react';
+import React, {useState} from 'react';
 import CodeMirror from "@uiw/react-codemirror";
 import {Box, Modal} from "@mui/material";
 import {useForm} from "react-hook-form";
@@ -31,6 +32,8 @@ const PostView = ({postData}) => {
 
     const handleCloseModalComments = () => setOpenModalComments(false);
     const [tabComment, setTabComment] = useState([]);
+
+
 
     const onSubmit = (data) => {
         data.user_id = user_id;
@@ -98,7 +101,7 @@ const PostView = ({postData}) => {
                                             !isEmpty(postData.comments) &&
                                             postData.comments.map((value,index) => (
                                                 <div key={index} className="card-response-comments">
-                                                    {<div className="title-creator-comment">{value.user.pseudo}</div>}
+                                                    <div className="title-creator-comment"><a href={"/profil/" + value.user.id}> {value.user.pseudo}</a></div>
                                                     <div className="title-comment">{value.content}</div>
                                                 </div>
                                             ))
