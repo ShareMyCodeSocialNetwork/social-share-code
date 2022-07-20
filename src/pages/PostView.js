@@ -190,7 +190,7 @@ const PostView = ({postData}) => {
                     </div>
                     <div className="profile-editor">
                         <img className="profile-img" src="/assets/logo/profil.svg" alt="profile" />
-                        <div className="title-name-editor">{!isEmpty(postData.post) && postData.post.user.pseudo}</div>
+                        <div className="title-name-editor">{!isEmpty(postData.post) && <a href={"/profil/" + postData.post.user.id}>{postData.post.user.pseudo}</a>}</div>
                     </div>
 
                     <div className="container-social-code">
