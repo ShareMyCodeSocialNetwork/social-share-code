@@ -5,7 +5,7 @@ import {useForm} from "react-hook-form";
 import {useDispatch} from "react-redux";
 import {isEmpty} from "../components/utils/Utils";
 import {addComment} from "../actions/API/comment.action";
-import {addLike} from "../actions/API/like.action";
+import {addLike, deleteLike} from "../actions/API/like.action";
 
 const PostView = ({postData}) => {
     const style = {
@@ -31,17 +31,25 @@ const PostView = ({postData}) => {
 
     const handleCloseModalComments = () => setOpenModalComments(false);
     const [tabComment, setTabComment] = useState([]);
-
-
-
+    const [tabLikes , setTabLikes] = useState([]);
+    const loadComment = async ()=>{
+        let dbComments = await postData.comments
+        setTabComment(dbComments);
+        let dbLikes = await postData.likes
+        setTabLikes(dbLikes);
+    }
+    loadComment().then();
     const onSubmit = (data) => {
         data.user_id = user_id;
         data.post_id = postData.post.id;
         console.log(data);
         dispatch(addComment(data));
-        //const array = [...tabComment]
-        //array.push({content: data.content});
-        //setTabComment(array)
+        /*
+        //ne fonctionne pas car on recois avec le commentaire, le user complet via lapi et non juste son id
+        const array = [...tabComment];
+        array.push(data);
+        setTabComment(array)
+        */
     }
 
     const handleCopyLink = () => {
@@ -52,12 +60,25 @@ const PostView = ({postData}) => {
     }
 
     const handleAddLike = () => {
-        // todo create like
+
         let data = {};
         data.user_id = user_id;
         data.post_id = postData.post.id
         console.log(data);
+
         dispatch(addLike(data))
+    }
+    const handleDislike = () => {
+        let data = {};
+        data.user_id = user_id;
+        data.post_id = postData.post.id
+        let likeId = "";
+        tabLikes.forEach(like => {
+            if(like.user.id.toString() === user_id.toString() && like.post.id.toString()){
+                likeId = like.id;
+            }
+        });
+        dispatch(deleteLike(likeId))
     }
 
     return (
@@ -92,14 +113,21 @@ const PostView = ({postData}) => {
                                 </form>
                                 <div className="response-comments">
                                     <div className="title-comment">
-                                        <div className="number-comments">{postData.comments.length}</div>
+                                        <div className="number-comments">{tabComment.length}</div>
                                         <div className="title-response-comment">COMMENTS</div>
                                     </div>
                                     <div className="response">
-                                        {
+                                        {/*
                                             !isEmpty(postData) &&
                                             !isEmpty(postData.comments) &&
                                             postData.comments.map((value,index) => (
+                                                <div key={index} className="card-response-comments">
+                                                    <div className="title-creator-comment"><a href={"/profil/" + value.user.id}> {value.user.pseudo}</a></div>
+                                                    <div className="title-comment">{value.content}</div>
+                                                </div>
+                                            ))*/
+                                            !isEmpty(tabComment) &&
+                                            tabComment.map((value,index) => (
                                                 <div key={index} className="card-response-comments">
                                                     <div className="title-creator-comment"><a href={"/profil/" + value.user.id}> {value.user.pseudo}</a></div>
                                                     <div className="title-comment">{value.content}</div>
@@ -167,8 +195,31 @@ const PostView = ({postData}) => {
 
                     <div className="container-social-code">
                         <div className="social-code">
-                            <img className="social-code-img" src="/assets/logo/like.svg" alt="like"/>
-                            <div onClick={() => handleAddLike()} className="title-social-code">Like {!isEmpty(postData.likes) && postData.likes.length}{isEmpty(postData.likes) && "0"}</div>
+                            {
+                                !isEmpty(tabLikes) &&
+                                tabLikes.some(like => like.user.id.toString() === user_id.toString() && like.post.id.toString()) &&
+                                <div  onClick={() => handleDislike()}>
+                                    <img className="social-code-img" src="/assets/logo/liked.png" alt="like"/>
+                                    <div className="title-social-code">Like {!isEmpty(tabLikes) && tabLikes.length}{isEmpty(tabLikes) && "0"}</div>
+                                </div>
+                            }
+                            {
+                                isEmpty(tabLikes) &&
+                                <div onClick={() => handleAddLike()}>
+                                    <img className="social-code-img" src="/assets/logo/like.svg" alt="like"/>
+                                    <div className="title-social-code">Like {!isEmpty(tabLikes) && tabLikes.length}{isEmpty(tabLikes) && "0"}</div>
+                                </div>
+                            }
+                            {
+                                !isEmpty(tabLikes) &&
+                                !tabLikes.some(like => like.user.id.toString() === user_id.toString() && like.post.id.toString()) &&
+                                <div onClick={() => handleAddLike()}>
+                                    <img className="social-code-img" src="/assets/logo/like.svg" alt="like"/>
+                                    <div className="title-social-code">Like {!isEmpty(tabLikes) && tabLikes.length}{isEmpty(tabLikes) && "0"}</div>
+                                </div>
+                            }
+
+
                         </div>
                         <div className="social-code" onClick={() => handleOpenModalComments()}>
                             <img className="social-code-img" src="/assets/logo/comments.svg" alt="comments"/>
