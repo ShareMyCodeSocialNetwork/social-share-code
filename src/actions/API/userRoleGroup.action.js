@@ -7,6 +7,7 @@ export const GET_USER_ROLE_GROUP = "GET_USER_ROLE_GROUP";
 export const GET_USER_ROLE_GROUP_BY_ID = "GET_USER_ROLE_GROUP_BY_ID";
 export const GET_USER_ROLE_GROUP_BY_USER = "GET_USER_ROLE_GROUP_BY_USER";
 export const GET_USER_ROLE_GROUP_BY_GROUP = "GET_USER_ROLE_GROUP_BY_GROUP";
+export const GET_FULL_USER_ROLE_GROUP = "GET_FULL_USER_ROLE_GROUP";
 export const GET_USER_ROLE_GROUP_BY_USER_AND_GROUP = "GET_USER_ROLE_GROUP_BY_USER_AND_GROUP";
 export const ADD_USER_ROLE_GROUP = "ADD_USER_ROLE_GROUP";
 export const DELETE_USER_ROLE_GROUP = "DELETE_USER_ROLE_GROUP";
@@ -40,6 +41,17 @@ export const getUserRoleGroupsByGroup= (groupId) => {
             .get(`${API_URL}/user_role_group/group/${groupId}`,{ headers:  AuthService.authHeader() })
             .then((res) => {
                 dispatch({ type: GET_USER_ROLE_GROUP_BY_GROUP, payload: res.data });
+            })
+            .catch((err) => console.log(err));
+    };
+};
+
+export const getFullUserRoleGroups= (groupId, userId) => {
+    return (dispatch) => {
+        return axios
+            .get(`${API_URL}/user_role_group/full/group/${groupId}/user/${userId}`,{ headers:  AuthService.authHeader() })
+            .then((res) => {
+                dispatch({ type: GET_FULL_USER_ROLE_GROUP, payload: res.data });
             })
             .catch((err) => console.log(err));
     };
