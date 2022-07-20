@@ -325,14 +325,14 @@ if (user_id === id){
                 {
                     !isEmpty(dataFollow) && isEmpty(dataFollow.isFollow) && dataFollow.isFollow === null &&
                     <form onSubmit={followForm.handleSubmit(onFollowSubmit)}>
-                        <button type="submit"> follow this beautiful guys</button>
+                        <button type="submit">Follow</button>
                     </form>
                 }
                 {
                     !isEmpty(dataFollow) && !isEmpty(dataFollow.isFollow) &&
                     <form onSubmit={unfollowForm.handleSubmit(onUnfollowSubmit)}>
                         <input {...unfollowForm.register("id")} type="hidden" value={!isEmpty(dataFollow) && !isEmpty(dataFollow.isFollow) && dataFollow.isFollow.id}/>
-                        <button type="submit"> unfollow this beautiful guys</button>
+                        <button type="submit">Unfollow</button>
                     </form>
                 }
 
