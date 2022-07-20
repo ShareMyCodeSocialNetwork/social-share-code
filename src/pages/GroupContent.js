@@ -7,7 +7,7 @@ import {getOneGroupById} from "../actions/API/group.action";
 import NewProject from "../layout/Modals/NewProject";
 import ProjectView from "../components/pages/ProjectView";
 import {
-    addUserRoleGroup, deleteUserRoleGroup,
+    addUserRoleGroup, deleteUserRoleGroup, getFullUserRoleGroups,
     getUserRoleGroupByUserAndGroup,
     getUserRoleGroupsByGroup
 } from "../actions/API/userRoleGroup.action";
@@ -43,8 +43,7 @@ const GroupContent = () => {
     useEffect(() => {
         dispatch(getOneGroupById(id));
         dispatch(getProjectByGroup(id));
-        dispatch(getUserRoleGroupsByGroup(id));
-        dispatch(getUserRoleGroupByUserAndGroup(user_id, id));
+        dispatch(getFullUserRoleGroups(id, user_id));
     }, []);
 
     const [groupData, setGroupData] = useState();
@@ -53,9 +52,6 @@ const GroupContent = () => {
     const [projectData, setProjectData] = useState([]);
     const project = useSelector(state => state.projectReducer);
 
-    const [usersInGroup, setUsersInGroup] = useState([]);
-    const usersInGroupAsync = useSelector(state => state.userRoleGroupReducer);
-
 
     const [userRoleGroupData, setUserRoleGroupData] = useState();
     const userRoleGroup = useSelector(state => state.userRoleGroupReducer);
@@ -63,14 +59,11 @@ const GroupContent = () => {
     const loadProjectData = async () => {
         let dbGroup = await group;
         let dbProject = await project;
-        let dbUsersInGroup = await usersInGroupAsync;
         let dbUserRoleGroup = await userRoleGroup;
 
         setGroupData(dbGroup);
         setProjectData(dbProject);
-        setUsersInGroup(dbUsersInGroup);
         setUserRoleGroupData(dbUserRoleGroup);
-        console.log(usersInGroup)
     }
     loadProjectData().then();
 
@@ -114,9 +107,8 @@ const GroupContent = () => {
             }
             {
                 !isEmpty(groupData) &&
-                !isEmpty(userRoleGroupData)
-                && groupData.owner.id.toString() !== user_id.toString()
-                &&
+                !isEmpty(userRoleGroupData) &&
+                //groupData.owner.id.toString() !== user_id.toString() &&
                 <form onSubmit={leave.handleSubmit(leaveClick)}>
                     <input type={"hidden"} {...leave.register("userRoleGroupId")} value={userRoleGroupData.id} name="userRoleGroupId"/>
                     <button type={"submit"}>Leave</button>
@@ -134,7 +126,7 @@ const GroupContent = () => {
                         !isEmpty(projectData) &&
                         projectData.map((item, index) => (
                             <div key={index} className="post-code">
-                                <ProjectView name={item.name} description={item.description} projectId={item.id} userId={item.user.id} userPseudo={item.user.id}></ProjectView>
+                                <ProjectView name={item.name} description={item.description} projectId={item.id} userId={item.user.id} userPseudo={item.user.pseudo}></ProjectView>
                             </div>
                         ))
                     }
@@ -149,10 +141,11 @@ const GroupContent = () => {
                 }
                 <ul>
                     {//todo ca me gave comprends pas le probleme
-                        !isEmpty(usersInGroup) &&
+                        !isEmpty(userRoleGroupData) &&
+                        !isEmpty(userRoleGroupData.userInGroupWithRole) &&
                         !isEmpty(groupData) &&
                         user_id.toString() === groupData.owner.id.toString() &&
-                        usersInGroup.map( (item, index) => (
+                        userRoleGroupData.userInGroupWithRole.map( (item, index) => (
                             <li key={index}><a href={"/profil/" + item.user.id}>{item.user.pseudo}</a></li>
                         ))
                     }
