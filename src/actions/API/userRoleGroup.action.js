@@ -74,7 +74,6 @@ export const addUserRoleGroup = (data) => {
         return axios
             .post(`${API_URL}/user_role_group/create`, data, { headers:  AuthService.authHeader() })
             .then(() => {
-                alert("You joined this group ")
                 dispatch({ type: ADD_USER_ROLE_GROUP, payload: data });
             })
             .catch((err) => console.log(err));
