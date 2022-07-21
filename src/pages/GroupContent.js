@@ -140,7 +140,7 @@ const GroupContent = () => {
                     !isEmpty(groupData) && <a href={"/profil/" + groupData.owner.id}>{"Group's owner : " + groupData.owner.pseudo} </a>
                 }
                 <ul>
-                    {//todo ca me gave comprends pas le probleme
+                    {
                         !isEmpty(userRoleGroupData) &&
                         !isEmpty(userRoleGroupData.userInGroupWithRole) &&
                         !isEmpty(groupData) &&
