@@ -17,8 +17,6 @@ import NewSnippets from "./Modals/NewSnippets";
 
 const MainHeader = () => {
 
-    //TODO : faire les modals et les liens
-
     const style = {
         position: 'absolute',
         top: '50%',
@@ -181,6 +179,12 @@ const MainHeader = () => {
                                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                             >
                                 <MenuItem>
+                                    <div>
+                                        <Link to="/my-feed"  style={{textDecoration:'none', color:'#fff'}}>
+                                            Your Feed
+                                        </Link>
+                                    </div>
+                                </MenuItem><MenuItem>
                                     <div>
                                         <Link to="/my-works"  style={{textDecoration:'none', color:'#fff'}}>
                                             Your Work
