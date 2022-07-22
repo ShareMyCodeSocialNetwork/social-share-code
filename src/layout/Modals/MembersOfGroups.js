@@ -9,7 +9,7 @@ const MembersOfGroup = ({handleCloseModal, openModal, style, groupData, fullUser
     const remove = useForm();
     const RemoveUserFromGroup = (data) => {
         console.log(data);
-        //handleCloseModal();
+        handleCloseModal();
     }
     console.log(fullUserRoleGroupData);
     return (
