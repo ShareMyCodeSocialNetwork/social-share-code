@@ -11,7 +11,7 @@ const NewSnippets = ({handleCloseModal, openModal, style }) => {
 
 
     const onSubmit = (data) => {
-        fetch(`${API_URL}/user/search/${data.v}`,
+        fetch(`${API_URL}/user/search/levenshtein/${data.v}`,
             {
                 method:'GET',
                 headers:{
