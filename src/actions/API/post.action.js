@@ -10,6 +10,7 @@ export const GET_FULL_POST = "GET_FULL_POST";
 export const GET_FULL_POST_BY_ID = "GET_FULL_POST_BY_ID";
 export const GET_FULL_POST_BY_USER_ID = "GET_FULL_POST_BY_USER_ID";
 export const GET_FULL_USER_POST_FOLLOWED_BY_USER_FOLLOWER = "GET_FULL_USER_POST_FOLLOWED_BY_USER_FOLLOWER";
+export const SEARCH_POST = "SEARCH_POST";
 export const ADD_POST = "ADD_POST";
 export const UPDATE_POST = "UPDATE_POST";
 export const DELETE_POST = "DELETE_POST";
@@ -32,6 +33,17 @@ export const getOnePostById = (postId) => {
             .get(`${API_URL}/post/${postId}`,{ headers:  AuthService.authHeader() })
             .then((res) => {
                 dispatch({ type: GET_POST_BY_ID, payload: res.data });
+            })
+            .catch((err) => console.log(err));
+    };
+};
+
+export const searchPostL = (value) => {
+    return (dispatch) => {
+        return axios
+            .get(`${API_URL}/post/search/levenshtein/${value}`,{ headers:  AuthService.authHeader() })
+            .then((res) => {
+                dispatch({ type: SEARCH_POST, payload: res.data });
             })
             .catch((err) => console.log(err));
     };
