@@ -1,6 +1,7 @@
 import axios from "axios";
 import AuthService from "../../components/Auth/AuthService";
 import {API_URL} from "../global";
+import {isEmpty} from "../../components/utils/Utils";
 
 
 export const GET_CODE = "GET_CODE";
@@ -74,7 +75,13 @@ export const addCode = (data) => {
             .then((res) => {
                 dispatch({ type: ADD_CODE, payload: data });
                 if(res.status === 201) {
-                    window.location.replace('/project-all/all');
+                    if(!isEmpty(data.project_id)){
+                        window.location.replace('/my-projects');
+                    }
+                    else if(isEmpty(data.project_id)){
+                        window.location.replace('/my-works');
+                    }
+
                 }
             })
             .catch((err) => console.log(err));

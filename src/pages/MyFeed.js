@@ -1,29 +1,27 @@
 import React, {useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
-import {filter_array, isEmpty} from "../components/utils/Utils";
-import {getFullPosts, searchPostL} from "../actions/API/post.action";
+import {isEmpty} from "../components/utils/Utils";
+import {getFullPostFollowedUserByFollowerUser} from "../actions/API/post.action";
 import {useDispatch, useSelector} from "react-redux";
 import PostView from "./PostView";
 import AuthService from "../components/Auth/AuthService";
 
-const SearchView = () => {
+const MyFeed = () => {
     AuthService.isAuth();
     const dispatch = useDispatch();
-
-    const { filters } = useParams();
+    const user_id = localStorage.getItem("user_id");
 
 
     useEffect(() => {
-        dispatch(searchPostL(filters));
+        dispatch(getFullPostFollowedUserByFollowerUser(user_id));
     }, []);
 
-    const [arrayPost, setArrayPost] = useState([]);
     const posts = useSelector((state) => state.postReducer);
+    const [arrayPost, setArrayPost] = useState([]);
 
     const loadPost = async () => {
         let dbPosts = await posts;
         setArrayPost(dbPosts);
-        console.log(arrayPost)
+        console.log(arrayPost);
     }
     loadPost().then()
 
@@ -38,12 +36,9 @@ const SearchView = () => {
                         </div>
                     )
                 }
-                {
-                    isEmpty(arrayPost) && "No Result"
-                }
             </div>
         </div>
     );
 };
 
-export default SearchView;
+export default MyFeed;

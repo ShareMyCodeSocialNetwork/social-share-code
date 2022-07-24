@@ -7,6 +7,7 @@ export const GET_ALL = "GET_ALL";
 export const GET_FOLLOWER_BY_ID = "GET_FOLLOWER_BY_ID";
 export const GET_FOLLOWED = "GET_FOLLOWED";
 export const GET_FOLLOWER = "GET_FOLLOWER";
+export const GET_FULL_FOLLOW = "GET_FULL_FOLLOW";
 export const ADD_FOLLOWER = "ADD_FOLLOWER";
 export const DELETE_FOLLOWER = "DELETE_FOLLOWER";
 export const GET_BY_FOLLOWED_AND_FOLLOWER = "GET_BY_FOLLOWED_AND_FOLLOWER";
@@ -45,6 +46,20 @@ export const getByFollowedAndFollower = (followedId, followerId) => {
             .post(`${API_URL}/follow/followed/and/follower`, data,{ headers:  AuthService.authHeader()})
             .then((res) => {
                 dispatch({ type: GET_BY_FOLLOWED_AND_FOLLOWER, payload: res.data });
+            })
+            .catch((err) => console.log(err));
+    };
+};
+
+export const getFullFollow = (followedId, followerId) => {
+    let data = {};
+    data.followedUserId = followedId;
+    data.followerUserId = followerId;
+    return (dispatch) => {
+        return axios
+            .post(`${API_URL}/follow/full`, data,{ headers:  AuthService.authHeader()})
+            .then((res) => {
+                dispatch({ type: GET_FULL_FOLLOW, payload: res.data });
             })
             .catch((err) => console.log(err));
     };

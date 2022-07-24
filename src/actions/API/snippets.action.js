@@ -35,6 +35,17 @@ export const getOneSnippetById = (snippetId) => {
     };
 };
 
+export const getAllSnippetsByUser = (userId) => {
+    return (dispatch) => {
+        return axios
+            .get(`${API_URL}/snippet/user/${userId}`,{ headers:  AuthService.authHeader() })
+            .then((res) => {
+                dispatch({ type: GET_SNIPPET_BY_ID, payload: res.data });
+            })
+            .catch((err) => console.log(err));
+    };
+};
+
 
 export const getOneSnippetByUserId = (userId) => {
     return (dispatch) => {
