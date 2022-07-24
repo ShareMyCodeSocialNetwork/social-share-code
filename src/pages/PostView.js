@@ -6,6 +6,8 @@ import {useDispatch} from "react-redux";
 import {isEmpty} from "../components/utils/Utils";
 import {addComment} from "../actions/API/comment.action";
 import {addLike, deleteLike} from "../actions/API/like.action";
+import {API_URL} from "../actions/global";
+import AuthService from "../components/Auth/AuthService";
 
 const PostView = ({postData}) => {
     const style = {
@@ -24,12 +26,13 @@ const PostView = ({postData}) => {
     const commentForm = useForm();
     const user_id = localStorage.getItem("user_id");
     const [openModalComments, setOpenModalComments] = useState(false);
+    const removeComment = useForm();
     const handleOpenModalComments = () => {
-
         setOpenModalComments(true);
     }
 
     const handleCloseModalComments = () => setOpenModalComments(false);
+
     const [tabComment, setTabComment] = useState([]);
     const [tabLikes , setTabLikes] = useState([]);
     const loadComment = async ()=>{
@@ -42,7 +45,7 @@ const PostView = ({postData}) => {
     const onSubmit = (data) => {
         data.user_id = user_id;
         data.post_id = postData.post.id;
-        console.log(data);
+        //console.log(data);
         dispatch(addComment(data));
         /*
         //ne fonctionne pas car on recois avec le commentaire, le user complet via lapi et non juste son id
@@ -63,9 +66,38 @@ const PostView = ({postData}) => {
 
         let data = {};
         data.user_id = user_id;
-        data.post_id = postData.post.id
-        console.log(data);
-
+        data.post_id = postData.post.id;
+        /*console.log(data);
+        fetch(`${API_URL}/like/create`,
+            {
+                method:'POST',
+                headers:{
+                    Authorization: "Bearer " + AuthService.getCurrentUser(),
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify(data),
+                mode:'cors'
+            }
+        )
+            .then(res=>res.json())
+            .then((res)=> {
+                fetch(`${API_URL}/like/post/${res.post.id}`,
+                    {
+                        method:'GET',
+                        headers:{
+                            Authorization: "Bearer " + AuthService.getCurrentUser(),
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        mode:'cors'
+                    }
+                )
+                    .then(res=>res.json())
+                    .then(res=>setTabLikes(res))
+                    .catch(e=>console.log(e));
+            })
+            .catch(e=>console.log(e));*/
         dispatch(addLike(data))
     }
     const handleDislike = () => {
@@ -73,12 +105,16 @@ const PostView = ({postData}) => {
         data.user_id = user_id;
         data.post_id = postData.post.id
         let likeId = "";
-        tabLikes.forEach(like => {
+        postData.likes.forEach(like => {
             if(like.user.id.toString() === user_id.toString() && like.post.id.toString()){
                 likeId = like.id;
             }
         });
         dispatch(deleteLike(likeId))
+    }
+
+    const submitRemove = (data) =>{
+        console.log(data);
     }
 
     return (
@@ -108,7 +144,7 @@ const PostView = ({postData}) => {
                         <div className="body-modal-comments">
                             <div className="left-part-body-comments">
                                 <form onSubmit={commentForm.handleSubmit(onSubmit)} className="comment-form">
-                                    <textarea {...commentForm.register("content")}  cols="30" rows="10"/>{/*todo change it to content */}
+                                    <textarea {...commentForm.register("content")}  cols="30" rows="10"/>
                                     <button  className="button-comments">Send</button>
                                 </form>
                                 <div className="response-comments">
@@ -117,20 +153,19 @@ const PostView = ({postData}) => {
                                         <div className="title-response-comment">COMMENTS</div>
                                     </div>
                                     <div className="response">
-                                        {/*
-                                            !isEmpty(postData) &&
-                                            !isEmpty(postData.comments) &&
-                                            postData.comments.map((value,index) => (
-                                                <div key={index} className="card-response-comments">
-                                                    <div className="title-creator-comment"><a href={"/profil/" + value.user.id}> {value.user.pseudo}</a></div>
-                                                    <div className="title-comment">{value.content}</div>
-                                                </div>
-                                            ))*/
+                                        {
                                             !isEmpty(tabComment) &&
                                             tabComment.map((value,index) => (
                                                 <div key={index} className="card-response-comments">
                                                     <div className="title-creator-comment"><a href={"/profil/" + value.user.id}> {value.user.pseudo}</a></div>
                                                     <div className="title-comment">{value.content}</div>
+                                                    {/*
+                                                        value.user.id.toString() === user_id.toString() &&
+                                                        <form onSubmit={removeComment.handleSubmit(submitRemove)}>
+                                                            <input {...removeComment.register("commentId")} type={"hidden"} value={value.id}/>
+                                                            <button type={"submit"}>Remove</button>
+                                                        </form>
+                                                    */}
                                                 </div>
                                             ))
                                         }
