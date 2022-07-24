@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import {filter_array, isEmpty} from "../components/utils/Utils";
-import {getFullPosts} from "../actions/API/post.action";
+import {getFullPosts, searchPostL} from "../actions/API/post.action";
 import {useDispatch, useSelector} from "react-redux";
 import PostView from "./PostView";
 import AuthService from "../components/Auth/AuthService";
@@ -14,7 +14,7 @@ const SearchView = () => {
 
 
     useEffect(() => {
-        dispatch(getFullPosts());
+        dispatch(searchPostL(filters));
     }, []);
 
     const [arrayPost, setArrayPost] = useState([]);
@@ -31,20 +31,15 @@ const SearchView = () => {
         <div className="view--project">
             <div className="container-project">
                 {
-                    !isEmpty(arrayPost) && !isEmpty(filters) &&
-                        filter_array(filters,arrayPost).map((value, index) =>
-                            <div className="post-code" key={index}>
-                                <PostView  postData={value}></PostView>
-                            </div>
-                        )
-                }
-                {
-                    isEmpty(filters) && !isEmpty(arrayPost) &&
+                    !isEmpty(arrayPost) &&
                     arrayPost.map((value, index) =>
                         <div className="post-code" key={index}>
                             <PostView  postData={value}></PostView>
                         </div>
                     )
+                }
+                {
+                    isEmpty(arrayPost) && "No Result"
                 }
             </div>
         </div>
