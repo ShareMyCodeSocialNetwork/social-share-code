@@ -79,9 +79,7 @@ const MainHeader = () => {
                 pathname:`/project-all/all`
             })
         }else{
-            history.push({
-                pathname:`/project-all/${data.search}`
-            })
+            window.location.replace(`/project-all/${data.search}`)
         }
     }
 
