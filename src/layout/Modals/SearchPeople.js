@@ -44,7 +44,6 @@ const NewSnippets = ({handleCloseModal, openModal, style }) => {
                     <div className="hr"/>
                     <form className="form-container-modal"  onSubmit={searchUser.handleSubmit(onSubmit)}>
                         <div className="container-form-modal">
-                            <div className="title-input-modal">Name</div>
                             <input {...searchUser.register("v")} type="text" className="input-modal"/>
                         </div>
                         <button type="submit" className="button-save">Search</button>
