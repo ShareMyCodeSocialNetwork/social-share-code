@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch} from "react-redux";
 import {useForm} from "react-hook-form";
 import {Box, Modal} from "@mui/material";
 import {isEmpty} from "../../components/utils/Utils";
 import AuthService from "../../components/Auth/AuthService";
 import {API_URL} from "../../actions/global";
-const NewSnippets = ({handleCloseModal, openModal, style }) => {
+const SearchPeople = ({handleCloseModal, openModal, style }) => {
     const searchUser = useForm();
     const [users, setUsers] = useState([]);
 
@@ -70,4 +69,4 @@ const NewSnippets = ({handleCloseModal, openModal, style }) => {
     );
 };
 
-export default NewSnippets;
+export default SearchPeople;
