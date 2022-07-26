@@ -1,6 +1,4 @@
-ARG environment=prod
 FROM node:latest as node
-ARG environment
 WORKDIR /app
 COPY . .
 RUN npm install --legacy-peer-deps
