@@ -71,6 +71,9 @@ const MainHeader = () => {
     }, [location.key])
 
 
+    const profileClick = ()=>{
+        window.location.replace("/profil/" + localStorage.getItem("user_id"));
+    }
 
     const onSubmitSearch = (data) => {
         console.log(data);
@@ -208,9 +211,9 @@ const MainHeader = () => {
                                 </MenuItem>
                                 <MenuItem>
                                     <div>
-                                        <Link to={"/profil/" + localStorage.getItem("user_id")}  style={{textDecoration:'none', color:'#fff'}}>
+                                        <span onClick={profileClick}  style={{textDecoration:'none', color:'#fff'}}>
                                             Profile
-                                        </Link>
+                                        </span>
                                     </div>
                                 </MenuItem>
                                 <MenuItem onClick={() => handleOpenModalSearchUsers()}>
