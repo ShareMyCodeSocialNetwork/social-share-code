@@ -29,7 +29,7 @@ const NewPost = ({handleCloseModalPost, openModalPost, style, group_id = 0}) => 
 
     }
 
-    loadDataCode()
+    loadDataCode().then()
 
     const handleChangeCode = () => {
         const getCode = watch("code");
@@ -37,10 +37,10 @@ const NewPost = ({handleCloseModalPost, openModalPost, style, group_id = 0}) => 
     }
 
     const onSubmitPost = (data) => {
-        data["user_id"] = user_id;
+        data.user_id = user_id;
         console.log(data);
         dispatch(addPost(data));
-
+        window.location.replace("/profil/" + localStorage.getItem("user_id"));
     }
 
     return (
@@ -62,18 +62,19 @@ const NewPost = ({handleCloseModalPost, openModalPost, style, group_id = 0}) => 
                     <div className="hr"/>
                     <form className="form-container-modal" name="projectForm" onSubmit={handleSubmit(onSubmitPost)}>
                         <div className="container-form-modal">
-                            <div className="title-input-modal" >description</div>
-                            <input {...register("content")} type="text" name="description" className="input-modal"/>
+                            <div className="title-input-modal" >Post content</div>
+                            <input {...register("content")} type="text" name="content" className="input-modal"/>
                         </div>
                         <div className="container-form-modal">
                             <div className="title-input-modal">Choix du Code</div>
                             {
                                 !isEmpty(codelist) &&
                                 <select onClick={handleChangeCode}
-                                        name="code" {...register("code", {required: true})}>
+                                        name="code_id" {...register("code_id", {required: true})}>
+                                    <option value={0}>Without code</option>
                                     {
-                                        codelist?.map((codeitem, index) =>
-                                            <option key={index}>{codeitem.name}</option>
+                                        codelist.map((codeitem, index) =>
+                                            <option value={codeitem.id} key={index}>{codeitem.nameCode}</option>
                                         )
                                     }
                                 </select>
