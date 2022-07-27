@@ -371,7 +371,7 @@ if (user_id === id){
                         !isEmpty(dataCodeProfile) &&
                         dataCodeProfile.map( (item, index) =>(
                             <div key={index} className="post-code">
-                                <MyCodeView language={isEmpty(item.language) ? "removed language" : item.language.name} userId={item.user.id} userPseudo={item.user.pseudo} codeId={item.id} code={item.content}></MyCodeView>
+                                <MyCodeView language={isEmpty(item.language) ? "removed language" : item.language.name} userId={item.user.id} userPseudo={item.user.pseudo} codeId={item.id} code={item}></MyCodeView>
                             </div>
                         ))
                     }

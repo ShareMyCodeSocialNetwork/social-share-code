@@ -31,7 +31,7 @@ const MyWorks = () => {
                     !isEmpty(dataCode) &&
                     dataCode.map((item, index) => (
                         <div key={index} className="post-code">
-                            <MyCodeView language={item.language.name} code={item.nameCode} userPseudo={item.user.pseudo} codeId={item.id} userId={item.user.id}></MyCodeView>
+                            <MyCodeView language={item.language.name} code={item} userPseudo={item.user.pseudo} codeId={item.id} userId={item.user.id}></MyCodeView>
                         </div>
                     ))
                 }

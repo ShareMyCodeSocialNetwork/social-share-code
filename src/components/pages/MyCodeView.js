@@ -8,7 +8,7 @@ const MyCodeView = ({language= "Python",code= "", userPseudo="" , codeId = "", u
 
     const dispatch = useDispatch();
 
-    const [codeTest, setCodeTest] =  useState(`${code}`)
+    const [codeTest, setCodeTest] =  useState(`${code.content}`)
 
     const remove = useForm();
 
@@ -20,7 +20,11 @@ const MyCodeView = ({language= "Python",code= "", userPseudo="" , codeId = "", u
 
     return (
         <div className="component--card-search-code">
+            {code.nameCode}
+            <br/>
+            <br/>
             <div className="container-code">
+
                 <div className="language-code">
                     {
                         language === "Python" &&
