@@ -80,34 +80,28 @@ const ProjectContent = () => {
                         isEmpty(dataProject) &&
                         <div className="information-title">project not found</div>
                     }
+
                     {
-                        !isEmpty(dataProject) &&
-                        <>
-                            <div className="information-title">project not found</div>
-                            <div className="information-title">project not found</div>
-                        </>
+                        !isEmpty(dataProject) && !isEmpty(dataProject.project) && !isEmpty(dataProject.project.group) &&
+                        <a className="link-information" href={"/group/" + dataProject.project.group.id}>project group : { dataProject.project.group.name}</a>
                     }
                     {
-                        !isEmpty(dataProject) && !isEmpty(dataProject.group) &&
-                        <a className="link-information" href={"/group/" + dataProject.group.id}>project group : { dataProject.group.name}</a>
-                    }
-                    {
-                        !isEmpty(dataProject) && !isEmpty(dataProject.user) && dataProject.user.id.toString() === user_id.toString() &&
-                        <a className="link-information" href={"/code/new" + dataProject.group.id}>create code in project</a>
+                        !isEmpty(dataProject) && !isEmpty(dataProject.project) && !isEmpty(dataProject.project.user) && dataProject.project.user.id.toString() === user_id.toString() &&
+                        <a className="link-information" href={"/code/new" + dataProject.project.group.id}>create code in project</a>
                     }
                 </div>
                 <div className="right-part">
                     <div className="container-project">
                         {
-                            !isEmpty(dataCode) &&
-                            dataCode.map((item, index) => (
+                            !isEmpty(dataProject) && !isEmpty(dataProject.codesInProject) &&
+                            dataProject.codesInProject.map((item, index) => (
                                 <div key={index} className="post-code">
                                     <MyCodeView language={item.language.name} code={item.nameCode} userPseudo={item.user.pseudo} codeId={item.id} userId={item.user.id}></MyCodeView>
                                 </div>
                             ))
                         }
                         {
-                            isEmpty(dataCode) &&
+                            !isEmpty(dataProject) && isEmpty(dataProject.codesInProject) &&
                             <div className="information-title">"No codes for this project"</div>
                         }
                     </div>
