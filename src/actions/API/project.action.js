@@ -7,6 +7,7 @@ export const GET_PROJECT_BY_ID = "GET_PROJECT_BY_ID";
 export const GET_PROJECT_BY_NAME = "GET_PROJECT_BY_NAME";
 export const GET_PROJECT_BY_OWNER = "GET_PROJECT_BY_OWNER";
 export const GET_PROJECT_BY_GROUP = "GET_PROJECT_BY_GROUP";
+export const GET_PROJECT_BY_ID_FULL = "GET_PROJECT_BY_ID_FULL";
 export const ADD_PROJECT = "ADD_PROJECT";
 export const UPDATE_PROJECT = "UPDATE_PROJECT";
 export const UPDATE_OWNER_PROJECT = "UPDATE_OWNER_PROJECT";
@@ -33,6 +34,17 @@ export const getOneProjectsById = (projectId) => {
             .get(`${API_URL}/project/${projectId}`,{ headers:  AuthService.authHeader() })
             .then((res) => {
                 dispatch({ type: GET_PROJECT_BY_ID, payload: res.data });
+            })
+            .catch((err) => console.log(err));
+    };
+};
+
+export const getOneProjectsByIdFull = (projectId) => {
+    return (dispatch) => {
+        return axios
+            .get(`${API_URL}/project/full/${projectId}`,{ headers:  AuthService.authHeader() })
+            .then((res) => {
+                dispatch({ type: GET_PROJECT_BY_ID_FULL, payload: res.data });
             })
             .catch((err) => console.log(err));
     };

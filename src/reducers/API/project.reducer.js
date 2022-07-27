@@ -4,6 +4,7 @@ import {
     GET_PROJECT_BY_NAME,
     GET_PROJECT_BY_OWNER,
     GET_PROJECT_BY_GROUP,
+    GET_PROJECT_BY_ID_FULL,
     UPDATE_OWNER_PROJECT,
     UPDATE_GROUP_PROJECT,
     ADD_PROJECT,
@@ -20,6 +21,8 @@ export default function projectReducer(state = initialState, action) {
         case GET_PROJECT:
             return action.payload;
         case GET_PROJECT_BY_ID:
+            return action.payload;
+        case GET_PROJECT_BY_ID_FULL:
             return action.payload;
         case GET_PROJECT_BY_NAME:
             return action.payload;
