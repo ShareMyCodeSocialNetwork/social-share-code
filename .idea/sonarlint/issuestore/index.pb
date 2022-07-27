@@ -30,8 +30,6 @@ L
 :
 
 src/App.js,1/e/1e43fa63aecd2127be034b3fb9d4caa172275714
-E
-src/pages/Register.js,6/b/6b70fd87d4ba5ad5f02598f6e9ca4a2c38eb0fb1
 A
 src/pages/Home.js,f/8/f88e17193d91c101c7e0bd70b2fc4123066b1147
 P

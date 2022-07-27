@@ -19,36 +19,31 @@ const GroupCard = ({group}) => {
 
     return (
         <div className="component--card-search-code">
-            <div className="container-code">
-                <a href={"/group/" + group.id}>
-                    <div className="language-code">
-                        <div className="language-title">
-                        {
-                            group.name
-                        }
-                        </div>
+            <div className="project-code-search" >
+                <div className="container-explain">
+                    <div  className="language-code-title">
+                        {group.name}
                     </div>
-                    <div className="codemirror">
-                        <CodeMirror
-                            options={{theme : "default"}}
-                            value={group.description}
-                            height="100%"
-                        />
+                    <div className="subtitle">
+                        {group.description}
                     </div>
+                </div>
+                <a href={"/group/" + group.id} className="button-access">
+                    <img src="/assets/logo/view.svg" alt="send"/>
                 </a>
             </div>
             <div className="social-code-search">
-                <a href={"/profil/" + group.owner.id}>
+                <a style={{textDecoration:"none"}} href={"/profil/" + group.owner.id}>
                     <div className="profile-editor">
                         <img className="profile-img" src="/assets/logo/profil.svg" alt="profile" />
                         <div className="title-name-editor">{group.owner.pseudo}</div>
                     </div>
                 </a>
-                <div>
+                <div className="button-user-code">
                     {
                         group.owner.id.toString() === localStorage.getItem("user_id").toString() ?
                             <form>
-                                <button onClick={remove.handleSubmit(submitRemove)} className="button-profile" type="submit">Remove</button>
+                                <div onClick={remove.handleSubmit(submitRemove)} className="button-profile" type="submit">Remove</div>
                             </form>
                             :
                             <span></span>
