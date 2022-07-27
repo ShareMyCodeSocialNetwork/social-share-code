@@ -19,8 +19,6 @@ A
 public/index.html,f/4/f43ecdf8d666ee908aacce037b4cd72159e4741b
 \
 ,src/sass/components/layout/modal-header.scss,e/b/eb729cee071e17a6f80b3ce88d7686a8aff42b13
-J
-src/sass/pages/profil.scss,a/a/aa726e28dd04802f4506d317130cd95cf14ac592
 H
 src/sass/pages/home.scss,8/0/8073511c35d5ad5e4260404e95c8e1689e759f30
 K

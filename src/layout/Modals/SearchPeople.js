@@ -47,19 +47,20 @@ const SearchPeople = ({handleCloseModal, openModal, style }) => {
                         </div>
                         <button type="submit" className="button-save">Search</button>
                     </form>
-                    <div>
+                    <div className="all-user-search">
                         {
                             isEmpty(users) &&
-                            "Not found"
+                            <div className="title-user">Not found</div>
                         }
                         {
                             !isEmpty(users) &&
                             users.map( (item, index) =>(
-                                <div key={index}>
-                                    <a href={"/profil/" + item.id}>
+                                <a href={"/profil/" + item.id} className="title-user-container" key={index}>
+                                    <img src="/assets/logo/profil.svg" alt=""/>
+                                    <div className="title-user" >
                                         {item.pseudo}
-                                    </a>
-                                </div>
+                                    </div>
+                                </a>
                             ))
                         }
                     </div>
