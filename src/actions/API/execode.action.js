@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export const API_URL = "http://localhost:3001/excution"
+export const API_URL = "https://localhost:3001/excution"
 
 export const EXECUTE_CODE_JS = "EXECUTE_CODE_JS";
 export const EXECUTE_CODE_PYTHON = "EXECUTE_CODE_PYTHON";
