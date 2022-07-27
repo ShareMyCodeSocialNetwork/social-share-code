@@ -21,9 +21,7 @@ const App =  () => {
     const history = useHistory();
     const logOut = () => {
         AuthService.logout();
-        return(
-            <Redirect to="/" />
-        )
+        window.location.replace("/");
     }
     const RedirectToHome = () => {
         return(
