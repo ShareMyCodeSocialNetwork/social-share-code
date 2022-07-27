@@ -96,7 +96,11 @@ P
  src/sass/layout/main-header.scss,6/0/60c1361b552acdc778c0aff8957a73d7bb2f83e5
 H
 src/sass/pages/code.scss,c/c/cc4e6c7e4bccddef2f3383e5b3651df3f51a5436
-A
-src/pages/Code.js,0/a/0a07a77dc29df517cc8b79c5e6bc8c612df0336f
 M
 src/components/utils/Utils.js,f/d/fd51530007cbef2549c5f682e162879a0c68e8b9
+@
+nginx/nginx.conf,6/6/665698d0c16ad6d96892b8344874c01c8e00f8f7
+=
+.eslintignore,8/8/88939cd7e826eac4f61dd9adac091b9d64277287
+D
+public/manifest.json,4/2/42e89cd2213b9d5dfae4f63522702c623170d792

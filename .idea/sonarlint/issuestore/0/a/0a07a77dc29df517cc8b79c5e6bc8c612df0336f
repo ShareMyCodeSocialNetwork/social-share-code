@@ -1,9 +1,0 @@
-
-Yjavascript:S1128"1Remove this unused import of 'execute_code_java'.(ÌÈ³æüÿÿÿÿ8¾Á¡ü›0
-Hjavascript:S1128"'Remove this unused import of 'addCode'.(È…˜†ÿÿÿÿÿ
-Qjavascript:S1854"0Remove this useless assignment to variable "id".(í±‘…úÿÿÿÿ
-fjavascript:S1481r"CRemove the declaration of the unused 'addSnippetToCompte' variable.(¦¬£´8‘ÍÇü›0
-cjavascript:S1854r"@Remove this useless assignment to variable "addSnippetToCompte".(¦¬£´8‘ÍÇü›0
-\javascript:S1135s"4Complete the task associated to this "TODO" comment.(¥®ÕÕøÿÿÿÿ8Î¤“ü›0
-[javascript:S1117Æ"2'language' is already declared in the upper scope.(ŸÕþœùÿÿÿÿ8Ï¤“ü›0
-”javascript:S1172Ñ"kRemove the unused function parameter "viewUpdate" or rename it to "_viewUpdate" to make intention explicit.(„ÅÞçÿÿÿÿÿ8Ï¤“ü›0
