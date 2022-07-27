@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {getOneProjectsById} from "../actions/API/project.action";
-import {getCodeByProject} from "../actions/API/code.action";
+import {GET_PROJECT_BY_ID_FULL, getOneProjectsById, getOneProjectsByIdFull} from "../actions/API/project.action";
 import {isEmpty} from "../components/utils/Utils";
 import MyCodeView from "../components/pages/MyCodeView";
 import NewPen from "../layout/Modals/NewPen";
 import AuthService from "../components/Auth/AuthService";
+import axios from "axios";
+import {API_URL} from "../actions/global";
 
 const ProjectContent = () => {
     AuthService.isAuth();
@@ -29,24 +30,31 @@ const ProjectContent = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const user_id = localStorage.getItem("user_id");
+    const [dataProject, setDataProject] = useState();
     useEffect(() => {
-        dispatch(getOneProjectsById(id));
-        dispatch(getCodeByProject(id));
+        axios
+            .get(`${API_URL}/project/full/${id}`,{ headers:  AuthService.authHeader() })
+            .then((res) => {
+                setDataProject(res.data)
+            })
+            .catch((err) => console.log(err));
+        //dispatch(getOneProjectsByIdFull(id));
+        //dispatch(getCodeByProject(id));
     }, [dispatch, id]);
 
-    const projects = useSelector( state => state.projectReducer);
-    const codes = useSelector( state => state.codeReducer);
+    //const projects = useSelector( state => state.projectReducer);
+    //const codes = useSelector( state => state.codeReducer);
 
-    const [dataCode, setDataCode] = useState([]);
-    const [dataProject, setDataProject] = useState();
+    //const [dataCode, setDataCode] = useState([]);
 
-    const loadProjectData = async () => {
+
+    /*const loadProjectData = async () => {
         let projectsData = await projects;
         setDataProject(projectsData);
-        let codesData = await codes;
-        setDataCode(codesData);
+        //let codesData = await codes;
+        //setDataCode(codesData);
     }
-    loadProjectData().then();
+    loadProjectData().then();*/
 
     return (
 
@@ -54,37 +62,39 @@ const ProjectContent = () => {
             {
                 isEmpty(dataProject) && "project not found"
             }
-            {!isEmpty(dataProject) && "project name : " + dataProject.name}
+            {!isEmpty(dataProject) && !isEmpty(dataProject.project) &&
+                "project name : " + dataProject.project.name}
             <br/>
             <br/>
-            {!isEmpty(dataProject) && "project description : " + dataProject.description}
+            {!isEmpty(dataProject) && !isEmpty(dataProject.project) && "project description : " + dataProject.project.description}
             <br/>
             <br/>
-            {!isEmpty(dataProject) && !isEmpty(dataProject.group) && <a href={"/group/" + dataProject.group.id}>project group : { dataProject.group.name}</a>}
-            {!isEmpty(dataProject) && isEmpty(dataProject.group) && "No group for this project"}
+            {!isEmpty(dataProject) && !isEmpty(dataProject.project) && !isEmpty(dataProject.project.group) && <a href={"/group/" + dataProject.project.group.id}>project group : { dataProject.project.group.name}</a>}
+            {!isEmpty(dataProject) && !isEmpty(dataProject.project) && isEmpty(dataProject.project.group) && "No group for this project"}
             <br/>
             <br/>
             {
-                !isEmpty(dataProject) && !isEmpty(dataProject.user) &&
-                dataProject.user.id.toString() === user_id.toString() &&
+                !isEmpty(dataProject) && !isEmpty(dataProject.project) && !isEmpty(dataProject.project.user) &&
+                dataProject.project.user.id.toString() === user_id.toString() &&
                 <button onClick={() => handleOpenModalPen()}>create code in project</button>
             }
 
             <div className="view--project">
                 <div className="container-project">
                 {
-                    !isEmpty(dataCode) &&
-                    dataCode.map((item, index) => (
+                    !isEmpty(dataProject) && !isEmpty(dataProject.codesInProject) &&
+                    !isEmpty(dataProject.codesInProject) &&
+                    dataProject.codesInProject.map((item, index) => (
                        <div key={index} className="post-code">
                            <MyCodeView language={item.language.name} code={item.nameCode} userPseudo={item.user.pseudo} codeId={item.id} userId={item.user.id}></MyCodeView>
                        </div>
                     ))
                 }
-                {isEmpty(dataCode) && "No codes for this project"}
+                {!isEmpty(dataProject) && isEmpty(dataProject.codesInProject) && "No codes for this project"}
 
         </div>
         </div>
-            <NewPen style={style} handleCloseModalPen={handleCloseModalPen} openModalPen={openModalPen} project_id={!isEmpty(dataProject) && dataProject.id}></NewPen>
+            <NewPen style={style} handleCloseModalPen={handleCloseModalPen} openModalPen={openModalPen} project_id={!isEmpty(dataProject) && !isEmpty(dataProject.project) && dataProject.project.id}></NewPen>
         </div>
 
     );
