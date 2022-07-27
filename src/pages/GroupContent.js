@@ -7,12 +7,11 @@ import {getOneGroupById} from "../actions/API/group.action";
 import NewProject from "../layout/Modals/NewProject";
 import ProjectView from "../components/pages/ProjectView";
 import {
-    addUserRoleGroup, deleteUserRoleGroup,
-    getUserRoleGroupByUserAndGroup,
-    getUserRoleGroupsByGroup
+    addUserRoleGroup, deleteUserRoleGroup, getFullUserRoleGroups
 } from "../actions/API/userRoleGroup.action";
 import {useForm} from "react-hook-form";
 import AuthService from "../components/Auth/AuthService";
+import MembersOfGroup from "../layout/Modals/MembersOfGroups";
 
 const GroupContent = () => {
     AuthService.isAuth();
@@ -32,6 +31,9 @@ const GroupContent = () => {
     const [openModalProject, setOpenModalProject] = useState(false);
     const handleCloseModalProject = () => setOpenModalProject(false);
     const handleOpenModalProject = () => setOpenModalProject(true);
+    const [openModalMembers, setOpenModalMembers] = useState(false);
+    const handleCloseModalMembers = () => setOpenModalMembers(false);
+    const handleOpenModalMembers = () => setOpenModalMembers(true);
     const { id } = useParams();
     const dispatch = useDispatch();
     const user_id = localStorage.getItem("user_id");
@@ -43,8 +45,7 @@ const GroupContent = () => {
     useEffect(() => {
         dispatch(getOneGroupById(id));
         dispatch(getProjectByGroup(id));
-        dispatch(getUserRoleGroupsByGroup(id));
-        dispatch(getUserRoleGroupByUserAndGroup(user_id, id));
+        dispatch(getFullUserRoleGroups(id, user_id));
     }, []);
 
     const [groupData, setGroupData] = useState();
@@ -53,9 +54,6 @@ const GroupContent = () => {
     const [projectData, setProjectData] = useState([]);
     const project = useSelector(state => state.projectReducer);
 
-    const [usersInGroup, setUsersInGroup] = useState([]);
-    const usersInGroupAsync = useSelector(state => state.userRoleGroupReducer);
-
 
     const [userRoleGroupData, setUserRoleGroupData] = useState();
     const userRoleGroup = useSelector(state => state.userRoleGroupReducer);
@@ -63,14 +61,11 @@ const GroupContent = () => {
     const loadProjectData = async () => {
         let dbGroup = await group;
         let dbProject = await project;
-        let dbUsersInGroup = await usersInGroupAsync;
         let dbUserRoleGroup = await userRoleGroup;
 
         setGroupData(dbGroup);
         setProjectData(dbProject);
-        setUsersInGroup(dbUsersInGroup);
         setUserRoleGroupData(dbUserRoleGroup);
-        console.log(usersInGroup)
     }
     loadProjectData().then();
 
@@ -78,14 +73,15 @@ const GroupContent = () => {
         data.user_id = user_id;
         data.group_id = groupData.id;
         dispatch(addUserRoleGroup(data));
+        alert("You join this group");
         window.location.reload();
     };
 
     const leaveClick = (data) => {
         console.log(data);
         dispatch(deleteUserRoleGroup(data.userRoleGroupId));
-        //window.location.reload();
         alert("you leave this group !");
+        window.location.reload();
     };
 
     return (
@@ -106,7 +102,8 @@ const GroupContent = () => {
 
             {
                 !isEmpty(groupData) &&
-                isEmpty(userRoleGroupData) && groupData.owner.id.toString() !== user_id.toString()
+                !isEmpty(userRoleGroupData) &&
+                isEmpty(userRoleGroupData.isInGroup) && groupData.owner.id.toString() !== user_id.toString()
                 &&
                 <form onSubmit={join.handleSubmit(joinClick)}>
                     <button type={"submit"}>Join</button>
@@ -114,18 +111,26 @@ const GroupContent = () => {
             }
             {
                 !isEmpty(groupData) &&
-                !isEmpty(userRoleGroupData)
-                && groupData.owner.id.toString() !== user_id.toString()
-                &&
+                !isEmpty(userRoleGroupData) &&
+                !isEmpty(userRoleGroupData.isInGroup) &&
+                groupData.owner.id.toString() !== user_id.toString() &&
                 <form onSubmit={leave.handleSubmit(leaveClick)}>
-                    <input type={"hidden"} {...leave.register("userRoleGroupId")} value={userRoleGroupData.id} name="userRoleGroupId"/>
+                    <input type={"hidden"} {...leave.register("userRoleGroupId")} value={userRoleGroupData.isInGroup.id} name="userRoleGroupId"/>
                     <button type={"submit"}>Leave</button>
                 </form>
             }
             {
                 !isEmpty(groupData) && !isEmpty(groupData.owner) &&
-                groupData.owner.id.toString() === user_id.toString() &&
+                (
+                    groupData.owner.id.toString() === user_id.toString() ||
+                    !isEmpty(userRoleGroupData) && !isEmpty(userRoleGroupData.isInGroup) && userRoleGroupData.isInGroup.role.titlePermission === "ADMIN"
+                ) &&
                 <button onClick={() => handleOpenModalProject()}>Create Project in this group</button>
+            }
+            <br/>
+            {
+                !isEmpty(userRoleGroupData) &&
+                <button onClick={() => handleOpenModalMembers()}>Group members</button>
             }
 
             <div className="view--project">
@@ -134,7 +139,7 @@ const GroupContent = () => {
                         !isEmpty(projectData) &&
                         projectData.map((item, index) => (
                             <div key={index} className="post-code">
-                                <ProjectView name={item.name} description={item.description} projectId={item.id} userId={item.user.id} userPseudo={item.user.id}></ProjectView>
+                                <ProjectView name={item.name} description={item.description} projectId={item.id} userId={item.user.id} userPseudo={item.user.pseudo}></ProjectView>
                             </div>
                         ))
                     }
@@ -143,23 +148,8 @@ const GroupContent = () => {
                 </div>
             </div>
 
-            <div>
-                {
-                    !isEmpty(groupData) && <a href={"/profil/" + groupData.owner.id}>{"Group's owner : " + groupData.owner.pseudo} </a>
-                }
-                <ul>
-                    {//todo ca me gave comprends pas le probleme
-                        !isEmpty(usersInGroup) &&
-                        !isEmpty(groupData) &&
-                        user_id.toString() === groupData.owner.id.toString() &&
-                        usersInGroup.map( (item, index) => (
-                            <li key={index}><a href={"/profil/" + item.user.id}>{item.user.pseudo}</a></li>
-                        ))
-                    }
-                </ul>
-            </div>
-
             <NewProject style={style} openModalProject={openModalProject} handleCloseModalProject={handleCloseModalProject} group_id={id}></NewProject>
+            <MembersOfGroup style={style} groupData={groupData} handleCloseModal={handleCloseModalMembers} openModal={openModalMembers} fullUserRoleGroupData={userRoleGroupData}></MembersOfGroup>
         </div>
     );
 

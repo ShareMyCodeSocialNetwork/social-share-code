@@ -11,7 +11,8 @@ import {
     UPDATE_USER_FIRST_NAME,
     ADD_USER,
     UPDATE_USER,
-    DELETE_USER
+    DELETE_USER,
+    SEARCH_USERS
 } from "../../actions/API/user.action";
 
 const initialState = {};
@@ -27,6 +28,8 @@ export default function userReducer(state = initialState, action) {
         case GET_USER_BY_PSEUDO:
             return action.payload;
         case GET_USER_BY_EMAIL:
+            return action.payload;
+        case SEARCH_USERS:
             return action.payload;
         case ADD_USER:
             return [action.payload, ...state];

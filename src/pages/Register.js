@@ -35,7 +35,7 @@ const Register = () => {
                     <input {...register("pseudo")} type="text" placeholder="pseudo" className="form-input"/>
                     <input {...register("password")} type="password" placeholder="password" className="form-input"/>
                     <input {...register("email")} type="text" placeholder="email" className="form-input"/>
-                    <input {...register("tel")} type="text" placeholder="tel" className="form-input"/>
+                    {/*<input {...register("tel")} type="text" placeholder="tel" className="form-input"/>*/}
                 </form>
                 <div onClick={handleSubmit(onSubmit)} className="button-send">register</div>
             </div>

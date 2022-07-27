@@ -1,9 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import CodeMirror from "@uiw/react-codemirror";
-import {Box, Modal, TextareaAutosize} from "@mui/material";
+import {Box, Modal} from "@mui/material";
 import {useForm} from "react-hook-form";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {isEmpty} from "../components/utils/Utils";
+import {addComment} from "../actions/API/comment.action";
+import {addLike, deleteLike} from "../actions/API/like.action";
+import {API_URL} from "../actions/global";
+import AuthService from "../components/Auth/AuthService";
 
 const PostView = ({postData}) => {
     const style = {
@@ -20,35 +24,39 @@ const PostView = ({postData}) => {
     };
     const dispatch = useDispatch();
     const commentForm = useForm();
-
+    const user_id = localStorage.getItem("user_id");
     const [openModalComments, setOpenModalComments] = useState(false);
-    const handleOpenModalComments = () => setOpenModalComments(true);
-    const handleCloseModalComments = () => setOpenModalComments(false);
-    const [tabComment, setTabComment] = useState([]);
-
-    /*useEffect(() => {
-        //get all comments by post id
-        // get all likes by post Id
-    }, []);
-
-    const user = useSelector(state => state.userReducer);
-    const [userData, setUserData] = useState()
-
-    const loadData = async () => {
-        let userData = await user;
-        setUserData(userData);
+    const removeComment = useForm();
+    const handleOpenModalComments = () => {
+        setOpenModalComments(true);
     }
-    loadData().then()
-*/
+
+    const handleCloseModalComments = () => setOpenModalComments(false);
+
+    const [tabComment, setTabComment] = useState([]);
+    const [tabLikes , setTabLikes] = useState([]);
+    const loadComment = async ()=>{
+        let dbComments = await postData.comments
+        setTabComment(dbComments);
+        let dbLikes = await postData.likes
+        setTabLikes(dbLikes);
+    }
+    loadComment().then();
     const onSubmit = (data) => {
-        console.log(data);
-        const array = [...tabComment]
-        array.push({content: data.content});
+        data.user_id = user_id;
+        data.post_id = postData.post.id;
+        //console.log(data);
+        dispatch(addComment(data));
+        /*
+        //ne fonctionne pas car on recois avec le commentaire, le user complet via lapi et non juste son id
+        const array = [...tabComment];
+        array.push(data);
         setTabComment(array)
+        */
     }
 
     const handleCopyLink = () => {
-
+        console.log(window.location.toString())
     }
     const handleClickEditor = () => {
 
@@ -56,6 +64,57 @@ const PostView = ({postData}) => {
 
     const handleAddLike = () => {
 
+        let data = {};
+        data.user_id = user_id;
+        data.post_id = postData.post.id;
+        /*console.log(data);
+        fetch(`${API_URL}/like/create`,
+            {
+                method:'POST',
+                headers:{
+                    Authorization: "Bearer " + AuthService.getCurrentUser(),
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify(data),
+                mode:'cors'
+            }
+        )
+            .then(res=>res.json())
+            .then((res)=> {
+                fetch(`${API_URL}/like/post/${res.post.id}`,
+                    {
+                        method:'GET',
+                        headers:{
+                            Authorization: "Bearer " + AuthService.getCurrentUser(),
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        mode:'cors'
+                    }
+                )
+                    .then(res=>res.json())
+                    .then(res=>setTabLikes(res))
+                    .catch(e=>console.log(e));
+            })
+            .catch(e=>console.log(e));*/
+        dispatch(addLike(data))
+    }
+    const handleDislike = () => {
+        let data = {};
+        data.user_id = user_id;
+        data.post_id = postData.post.id
+        let likeId = "";
+        postData.likes.forEach(like => {
+            if(like.user.id.toString() === user_id.toString() && like.post.id.toString()){
+                likeId = like.id;
+            }
+        });
+        dispatch(deleteLike(likeId))
+    }
+
+    const submitRemove = (data) =>{
+        console.log(data);
     }
 
     return (
@@ -70,8 +129,8 @@ const PostView = ({postData}) => {
                     <div className="composant-modal-comments">
                         <div className="header-modal-comments">
                             <div className="left-part-header-comments">
-                                <div className="title-code-modal">Title will be remove</div>
-                                <div className="name-creator">{postData.user.id}</div>
+                                <div className="title-code-modal"></div>
+                                <div className="name-creator">{postData.post.user.id}</div>
                             </div>
                             <div className="right-part-header-comments">
                                 <div className="logo">
@@ -85,8 +144,8 @@ const PostView = ({postData}) => {
                         <div className="body-modal-comments">
                             <div className="left-part-body-comments">
                                 <form onSubmit={commentForm.handleSubmit(onSubmit)} className="comment-form">
-                                    <textarea {...commentForm.register("content")}  cols="30" rows="10"/>{/*todo change it to content */}
-                                    <button  className="button-comments">Comment</button>
+                                    <textarea {...commentForm.register("content")}  cols="30" rows="10"/>
+                                    <button  className="button-comments">Send</button>
                                 </form>
                                 <div className="response-comments">
                                     <div className="title-comment">
@@ -98,8 +157,15 @@ const PostView = ({postData}) => {
                                             !isEmpty(tabComment) &&
                                             tabComment.map((value,index) => (
                                                 <div key={index} className="card-response-comments">
-                                                    {<div className="title-creator-comment">{value.user.pseudo}</div>}
+                                                    <div className="title-creator-comment"><a href={"/profil/" + value.user.id}> {value.user.pseudo}</a></div>
                                                     <div className="title-comment">{value.content}</div>
+                                                    {/*
+                                                        value.user.id.toString() === user_id.toString() &&
+                                                        <form onSubmit={removeComment.handleSubmit(submitRemove)}>
+                                                            <input {...removeComment.register("commentId")} type={"hidden"} value={value.id}/>
+                                                            <button type={"submit"}>Remove</button>
+                                                        </form>
+                                                    */}
                                                 </div>
                                             ))
                                         }
@@ -118,7 +184,7 @@ const PostView = ({postData}) => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="title-date">
+                                {/*<div className="title-date">
                                     <div className="title-date-code">Created On</div>
                                     <div className="subtitle-date-code">22/05/1996</div>
                                 </div>
@@ -135,7 +201,7 @@ const PostView = ({postData}) => {
                                     <img src="/assets/logo/view.svg" alt="view"/>
                                     <div className="number-logo">1000000</div>
                                     <div className="subtitle-information">Comments</div>
-                                </div>
+                                </div>*/}
 
                             </div>
                         </div>
@@ -149,32 +215,55 @@ const PostView = ({postData}) => {
                     <div className="codemirror">
                         <CodeMirror
                             options={{theme : "default", readOnly: true, className: "readOnly" }}
-                            value={postData.content}
+                            value={postData.post.content}
                             height="100%"/>
                     </div>
                 </div>
                 <div className="social-code-search">
                     <div className="profile-editor">
-                        <div className="title-name-editor">Code name will be remove</div>
+                        <div className="title-name-editor">{!isEmpty(postData.post) && !isEmpty(postData.post.code) && postData.post.code.nameCode}</div>
                     </div>
                     <div className="profile-editor">
                         <img className="profile-img" src="/assets/logo/profil.svg" alt="profile" />
-                        <div className="title-name-editor">Code creator, will be remove</div>
+                        <div className="title-name-editor">{!isEmpty(postData.post) && <a href={"/profil/" + postData.post.user.id}>{postData.post.user.pseudo}</a>}</div>
                     </div>
 
                     <div className="container-social-code">
                         <div className="social-code">
-                            <img className="social-code-img" src="/assets/logo/like.svg" alt="like"/>
-                            <div onClick={() => handleAddLike()} className="title-social-code">Like </div>
+                            {
+                                !isEmpty(tabLikes) &&
+                                tabLikes.some(like => like.user.id.toString() === user_id.toString() && like.post.id.toString()) &&
+                                <div  onClick={() => handleDislike()}>
+                                    <img className="social-code-img" src="/assets/logo/liked.png" alt="like"/>
+                                    <div className="title-social-code">Like {!isEmpty(tabLikes) && tabLikes.length}{isEmpty(tabLikes) && "0"}</div>
+                                </div>
+                            }
+                            {
+                                isEmpty(tabLikes) &&
+                                <div onClick={() => handleAddLike()}>
+                                    <img className="social-code-img" src="/assets/logo/like.svg" alt="like"/>
+                                    <div className="title-social-code">Like {!isEmpty(tabLikes) && tabLikes.length}{isEmpty(tabLikes) && "0"}</div>
+                                </div>
+                            }
+                            {
+                                !isEmpty(tabLikes) &&
+                                !tabLikes.some(like => like.user.id.toString() === user_id.toString() && like.post.id.toString()) &&
+                                <div onClick={() => handleAddLike()}>
+                                    <img className="social-code-img" src="/assets/logo/like.svg" alt="like"/>
+                                    <div className="title-social-code">Like {!isEmpty(tabLikes) && tabLikes.length}{isEmpty(tabLikes) && "0"}</div>
+                                </div>
+                            }
+
+
                         </div>
                         <div className="social-code" onClick={() => handleOpenModalComments()}>
                             <img className="social-code-img" src="/assets/logo/comments.svg" alt="comments"/>
-                            <div  className="title-social-code">{"comments.length"}</div>
+                            <div  className="title-social-code">Comments {!isEmpty(postData.comments) && postData.comments.length}{isEmpty(postData.comments) && "0"}</div>
                         </div>
-                        <div className="social-code">
+                        {/*<div className="social-code">
                             <img className="social-code-img" src="/assets/logo/view.svg" alt="like"/>
-                            <div className="title-social-code">{"view will be remove or add in api"}</div>
-                        </div>
+                            <div className="title-social-code">view </div>
+                        </div>*/}
                     </div>
                 </div>
             </div>

@@ -14,15 +14,14 @@ import ProjectContent from "./pages/ProjectContent";
 import MyGroups from "./pages/MyGroups";
 import GroupContent from "./pages/GroupContent";
 import myWorks from "./pages/MyWorks";
+import MyFeed from "./pages/MyFeed";
 
 
 const App =  () => {
     const history = useHistory();
     const logOut = () => {
         AuthService.logout();
-        return(
-            <Redirect to="/" />
-        )
+        window.location.replace("/");
     }
     const RedirectToHome = () => {
         return(
@@ -38,6 +37,7 @@ const App =  () => {
               <Route path="/register" exact component={Register} />
               <Route path="/project-all/:filters" exact component={SearchView} />
               <Route path="/my-projects" exact component={MyProjects} />
+              <Route path="/my-feed" exact component={MyFeed} />
               <Route path="/my-groups" exact component={MyGroups} />
               <Route path="/my-works" exact component={myWorks} />
               <Route path="/project/:id" exact component={ProjectContent} />

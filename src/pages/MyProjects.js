@@ -4,6 +4,7 @@ import { getProjectByOwner} from "../actions/API/project.action";
 import {isEmpty} from "../components/utils/Utils";
 import ProjectView from "../components/pages/ProjectView";
 import AuthService from "../components/Auth/AuthService";
+import ReloadUntilData from "../components/utils/ReloadUntilData";
 
 const MyProjects = () => {
     AuthService.isAuth();
@@ -22,7 +23,7 @@ const MyProjects = () => {
         setDataProjects(projectsData);
         console.log(dataProjects);
     }
-    loadProjectData().then();
+    loadProjectData().then(r => ReloadUntilData(projects));
 
 
     return (

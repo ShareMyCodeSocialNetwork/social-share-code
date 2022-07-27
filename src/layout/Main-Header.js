@@ -14,10 +14,9 @@ import NewProject from "./Modals/NewProject";
 
 import NewPost from "./Modals/NewPost";
 import NewSnippets from "./Modals/NewSnippets";
+import SearchPeople from "./Modals/SearchPeople";
 
 const MainHeader = () => {
-
-    //TODO : faire les modals et les liens
 
     const style = {
         position: 'absolute',
@@ -55,7 +54,9 @@ const MainHeader = () => {
     const handleOpenModalSnippet = () => setOpenModalSnippet(true);
     const handleCloseModalSnippet = () => setOpenModalSnippet(false);
 
-
+    const [openModalSearchUsers, setOpenModalSearchUsers] = useState(false);
+    const handleOpenModalSearchUsers = () => setOpenModalSearchUsers(true);
+    const handleCloseModalSearchUsers = () => setOpenModalSearchUsers(false);
 
 
     const _handleKeyDown = (e) => {
@@ -70,6 +71,9 @@ const MainHeader = () => {
     }, [location.key])
 
 
+    const profileClick = ()=>{
+        window.location.replace("/profil/" + localStorage.getItem("user_id"));
+    }
 
     const onSubmitSearch = (data) => {
         console.log(data);
@@ -78,9 +82,7 @@ const MainHeader = () => {
                 pathname:`/project-all/all`
             })
         }else{
-            history.push({
-                pathname:`/project-all/${data.search}`
-            })
+            window.location.replace(`/project-all/${data.search}`)
         }
     }
 
@@ -101,7 +103,7 @@ const MainHeader = () => {
             <NewProject handleCloseModalProject={handleCloseModalProject} style={style} openModalProject={openModalProject} group_id={0}/>
             <NewPost handleCloseModalPost={handleCloseModalPost} style={style} openModalPost={openModalPost} group_id={0}/>
             <NewSnippets handleCloseModalSnippet={handleCloseModalSnippet} style={style} openModalSnippet={openModalSnippet} group_id={0}/>
-
+            <SearchPeople style={style} openModal={openModalSearchUsers} handleCloseModal={handleCloseModalSearchUsers}></SearchPeople>
 
             <div className="main-header">
                 <Link to="/" style={{textDecoration:'none',color:'#fff'}}>
@@ -182,6 +184,12 @@ const MainHeader = () => {
                             >
                                 <MenuItem>
                                     <div>
+                                        <Link to="/my-feed"  style={{textDecoration:'none', color:'#fff'}}>
+                                            Your Feed
+                                        </Link>
+                                    </div>
+                                </MenuItem><MenuItem>
+                                    <div>
                                         <Link to="/my-works"  style={{textDecoration:'none', color:'#fff'}}>
                                             Your Work
                                         </Link>
@@ -203,10 +211,13 @@ const MainHeader = () => {
                                 </MenuItem>
                                 <MenuItem>
                                     <div>
-                                        <Link to={"/profil/" + localStorage.getItem("user_id")}  style={{textDecoration:'none', color:'#fff'}}>
+                                        <span onClick={profileClick}  style={{textDecoration:'none', color:'#fff'}}>
                                             Profile
-                                        </Link>
+                                        </span>
                                     </div>
+                                </MenuItem>
+                                <MenuItem onClick={() => handleOpenModalSearchUsers()}>
+                                    Search Users
                                 </MenuItem>
                                 <Divider sx={{bgcolor:'#C4C4C4'}}/>
                                 <MenuItem>

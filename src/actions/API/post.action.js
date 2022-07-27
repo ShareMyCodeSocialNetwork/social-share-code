@@ -6,6 +6,11 @@ import {API_URL} from "../global";
 export const GET_POST = "GET_POST";
 export const GET_POST_BY_ID = "GET_POST_BY_ID";
 export const GET_POST_BY_USER_ID = "GET_POST_BY_USER_ID";
+export const GET_FULL_POST = "GET_FULL_POST";
+export const GET_FULL_POST_BY_ID = "GET_FULL_POST_BY_ID";
+export const GET_FULL_POST_BY_USER_ID = "GET_FULL_POST_BY_USER_ID";
+export const GET_FULL_USER_POST_FOLLOWED_BY_USER_FOLLOWER = "GET_FULL_USER_POST_FOLLOWED_BY_USER_FOLLOWER";
+export const SEARCH_POST = "SEARCH_POST";
 export const ADD_POST = "ADD_POST";
 export const UPDATE_POST = "UPDATE_POST";
 export const DELETE_POST = "DELETE_POST";
@@ -33,6 +38,62 @@ export const getOnePostById = (postId) => {
     };
 };
 
+export const searchPostL = (value) => {
+    return (dispatch) => {
+        return axios
+            .get(`${API_URL}/post/search/levenshtein/${value}`,{ headers:  AuthService.authHeader() })
+            .then((res) => {
+                dispatch({ type: SEARCH_POST, payload: res.data });
+            })
+            .catch((err) => console.log(err));
+    };
+};
+
+export const getFullPostFollowedUserByFollowerUser = (userId) => {
+    return (dispatch) => {
+        return axios
+            .get(`${API_URL}/post/full/follower/${userId}`,{ headers:  AuthService.authHeader() })
+            .then((res) => {
+                dispatch({ type: GET_FULL_USER_POST_FOLLOWED_BY_USER_FOLLOWER, payload: res.data });
+            })
+            .catch((err) => console.log(err));
+    };
+};
+
+
+
+export const getFullPostById = (postId) => {
+    return (dispatch) => {
+        return axios
+            .get(`${API_URL}/post/full/${postId}`,{ headers:  AuthService.authHeader() })
+            .then((res) => {
+                dispatch({ type: GET_FULL_POST_BY_ID, payload: res.data });
+            })
+            .catch((err) => console.log(err));
+    };
+};
+
+export const getFullPostByUser = (userId) => {
+    return (dispatch) => {
+        return axios
+            .get(`${API_URL}/post/user/${userId}/full/`,{ headers:  AuthService.authHeader() })
+            .then((res) => {
+                dispatch({ type: GET_FULL_POST_BY_USER_ID, payload: res.data });
+            })
+            .catch((err) => console.log(err));
+    };
+};
+
+export const getFullPosts = () => {
+    return (dispatch) => {
+        return axios
+            .get(`${API_URL}/post/full/`,{ headers:  AuthService.authHeader() })
+            .then((res) => {
+                dispatch({ type: GET_FULL_POST, payload: res.data });
+            })
+            .catch((err) => console.log(err));
+    };
+};
 
 export const getPostByUserId = (userId) => {
     return (dispatch) => {

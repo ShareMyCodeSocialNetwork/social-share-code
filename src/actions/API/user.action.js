@@ -11,6 +11,7 @@ export const GET_USER_BY_USER_ID = "GET_USER_BY_USER_ID";
 export const GET_USER_BY_PSEUDO = "GET_USER_BY_PSEUDO";
 export const GET_USER_BY_EMAIL = "GET_USER_BY_EMAIL";
 export const ADD_USER = "ADD_USER";
+export const SEARCH_USERS = "SEARCH_USERS";
 export const UPDATE_USER_EMAIL = "UPDATE_USER_EMAIL";
 export const UPDATE_USER_PSEUDO = "UPDATE_USER_PSEUDO";
 export const UPDATE_USER_PASSWORD = "UPDATE_USER_PASSWORD";
@@ -37,6 +38,17 @@ export const getOneUserById = (userId) => {
             .get(`${API_URL}/user/${userId}`,{ headers:  AuthService.authHeader() })
             .then((res) => {
                 dispatch({ type: GET_USER_BY_ID, payload: res.data });
+            })
+            .catch((err) => console.log(err));
+    };
+};
+
+export const searchUser = (value) => {
+    return (dispatch) => {
+        return axios
+            .get(`${API_URL}/user/search/${value}`,{ headers:  AuthService.authHeader() })
+            .then((res) => {
+                dispatch({ type: SEARCH_USERS, payload: res.data });
             })
             .catch((err) => console.log(err));
     };
