@@ -74,6 +74,7 @@
             outline: none;
           }
         }
+
       }
       .title-input-modal{
         font-size: 20px;
@@ -120,6 +121,119 @@
         background:transparent;
         border:1px solid #248C45;
         color: #fff;
+      }
+    }
+
+    .title-first-form{
+      display: flex;
+      align-items: center;
+      .title-form-user{
+        font-size:20px;
+        line-height: 22px;
+        font-weight: bold;
+        color:#fff;
+        margin-right: 10px;
+      }
+      .title-compte{
+        display: flex;
+        align-items: center;
+        background-color: #5a5f72;
+        padding: 10px;
+        border-radius:3px;
+        margin-right: 40px;
+        text-decoration: none;
+        img{
+          width:20px;
+          height:20px;
+          margin-right: 10px;
+        }
+        .title-user{
+          font-size:14px;
+          line-height:16px;
+          color: #fff;
+        }
+      }
+    }
+
+    .form-container-table{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 10px;
+      .form-table{
+        display: flex;
+        flex-direction: column;
+
+        .container-table{
+          display: flex;
+          align-items: center;
+          margin-bottom: 30px;
+          .title-table{
+            font-size:20px;
+            line-height:22px;
+            color: #fff;
+            margin-right: 90px;
+          }
+        }
+        .container-content{
+          display: flex;
+          flex-direction: column;
+          align-items:flex-start;
+          .container-data{
+            display: flex;
+            align-items: center;
+            .title-data{
+              font-size:14px;
+              line-height:16px;
+              color: #fff;
+              margin-right: 40px;
+            }
+            .user{
+              display: flex;
+              align-items: center;
+              background-color: #5a5f72;
+              padding: 10px;
+              border-radius:3px;
+              margin-right: 40px;
+              img{
+                width:20px;
+                height:20px;
+                margin-right: 10px;
+              }
+              .title-user{
+                font-size:14px;
+                line-height:16px;
+                color: #fff;
+              }
+            }
+            .form-data{
+              display: flex;
+              align-items: center;
+              input{
+                background: #5a5f72;
+                padding: 10px;
+                font-size:14px;
+                line-height:16px;
+                border-radius:3px;
+                color: #fff;
+                margin-right: 40px;
+                &:focus{
+                  outline: none;
+                  background-color: #5a5f72;
+                }
+              }
+              button{
+                padding: 5px 10px;
+                background: red;
+                font-size:14px;
+                line-height:16px;
+                cursor: pointer;
+                color: #fff;
+                border-radius:5px;
+              }
+            }
+          }
+        }
       }
     }
   }

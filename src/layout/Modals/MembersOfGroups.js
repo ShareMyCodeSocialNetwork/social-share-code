@@ -12,6 +12,55 @@ const MembersOfGroup = ({handleCloseModal, openModal, style, groupData, fullUser
         handleCloseModal();
     }
     console.log(fullUserRoleGroupData);
+
+    /*
+    * <form onSubmit={remove.handleSubmit(RemoveUserFromGroup)}>
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Members</th><th>Role</th><th></th>
+
+</tr>
+</thead>
+<tbody>
+
+{
+    !isEmpty(fullUserRoleGroupData) &&
+    !isEmpty(fullUserRoleGroupData.userInGroupWithRole) &&
+    !isEmpty(groupData) &&
+    //user_id.toString() === groupData.owner.id.toString() &&
+    fullUserRoleGroupData.userInGroupWithRole.map( (item, index) => (
+        <tr key={index}>
+            <td><a href={"/profil/" + item.user.id}>{item.user.pseudo}</a></td>
+            <td>{item.role.titlePermission}</td>
+
+            <td>
+                {
+                    !isEmpty(fullUserRoleGroupData) &&
+                    !isEmpty(groupData) &&
+                    (
+                        groupData.owner.id.toString() === user_id.toString() ||
+                        (
+                            !isEmpty(fullUserRoleGroupData.isInGroup) &&
+                            fullUserRoleGroupData.isInGroup.role.titlePermission === "ADMIN"
+                        )
+                    ) &&
+                    <div id={index}>
+                        <input {...remove.register("removeId")} type="text" name="removeId" value={item.id} readOnly/>
+                        <button type={"submit"}>remove</button>
+                    </div>
+                }
+            </td>
+        </tr>
+    ))
+}
+
+</tbody>
+</table>
+</form>
+    * */
+
+
     return (
         <Modal
             open={openModal}
@@ -32,61 +81,58 @@ const MembersOfGroup = ({handleCloseModal, openModal, style, groupData, fullUser
                     <div className="form-container-modal" name="groupForm" >
                         <div className="container-form-modal">
                             {
-                                !isEmpty(groupData) && <span>Group's owner : <a href={"/profil/" + groupData.owner.id}>{groupData.owner.pseudo} </a></span>
+                                !isEmpty(groupData) &&
+                                <div className="title-first-form">
+                                    <div className="title-form-user">Group's owner : </div>
+                                    <a className="title-compte" href={"/profil/" + groupData.owner.id}>
+                                        <img src="/assets/logo/profil.svg" alt=""/>
+                                        <div className="title-user">{groupData.owner.pseudo}</div>
+                                    </a>
+                                </div>
                             }
                             <br/>
                             <br/>
-                            <form onSubmit={remove.handleSubmit(RemoveUserFromGroup)}>
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th>Members</th><th>Role</th><th></th>
-                                    {/*<th></th>*/}
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                {
-                                    !isEmpty(fullUserRoleGroupData) &&
-                                    !isEmpty(fullUserRoleGroupData.userInGroupWithRole) &&
-                                    !isEmpty(groupData) &&
-                                    //user_id.toString() === groupData.owner.id.toString() &&
-                                    fullUserRoleGroupData.userInGroupWithRole.map( (item, index) => (
-                                        <tr key={index}>
-                                            <td><a href={"/profil/" + item.user.id}>{item.user.pseudo}</a></td>
-                                            <td>{item.role.titlePermission}</td>
-                                            {/*<td> //todo change role to implement later
-                                                <form onSubmit={RemoveUserFromGroup}>
-                                                    <input type={"hidden"} name={"userRoleGroupId"} value={item.id}/>
-                                                    <button type={"submit"}>Change</button>
-                                                </form>
-                                            </td>*/}
-                                            <td>
-                                                {
-                                                    !isEmpty(fullUserRoleGroupData) &&
-                                                    !isEmpty(groupData) &&
-                                                    (
-                                                        groupData.owner.id.toString() === user_id.toString() ||
+                            <div className="form-container-table">
+                                <form className="form-table" onSubmit={remove.handleSubmit(RemoveUserFromGroup)}>
+                                    <div className="container-table">
+                                        <div className="title-table">User</div>
+                                        <div className="title-table">Role</div>
+                                    </div>
+                                    <div className="container-content">
+                                        {
+                                            !isEmpty(fullUserRoleGroupData) &&
+                                            !isEmpty(fullUserRoleGroupData.userInGroupWithRole) &&
+                                            !isEmpty(groupData) &&
+                                            fullUserRoleGroupData.userInGroupWithRole.map( (item, index) =>
+                                                <div key={index} className="container-data">
+                                                    <a href={"/profil/" + item.user.id} className="user">
+                                                        <img src="/assets/logo/profil.svg" alt=""/>
+                                                        <div className="title-user">{item.user.pseudo}</div>
+                                                    </a>
+                                                    <div className="title-data">{item.role.titlePermission}</div>
+                                                    {
+                                                        !isEmpty(fullUserRoleGroupData) &&
+                                                        !isEmpty(groupData) &&
                                                         (
-                                                            !isEmpty(fullUserRoleGroupData.isInGroup) &&
-                                                            fullUserRoleGroupData.isInGroup.role.titlePermission === "ADMIN"
-                                                        )
-                                                    ) &&
-                                                    <div id={index}>
-                                                        <input {...remove.register("removeId")} type="text" name="removeId" value={item.id} readOnly/>
-                                                        <button type={"submit"}>remove</button>
-                                                    </div>
-                                                }
-                                            </td>
-                                        </tr>
-                                    ))
-                                }
+                                                            groupData.owner.id.toString() === user_id.toString() ||
+                                                            (
+                                                                !isEmpty(fullUserRoleGroupData.isInGroup) &&
+                                                                fullUserRoleGroupData.isInGroup.role.titlePermission === "ADMIN"
+                                                            )
+                                                        ) &&
+                                                        <div className="form-data">
+                                                            <input {...remove.register("removeId")} type="text" name="removeId" value={item.id} readOnly/>
+                                                            <button type={"submit"}>remove</button>
+                                                        </div>
+                                                    }
 
-                                </tbody>
-                            </table>
-                            </form>
+                                                </div>
+                                            )
+                                        }
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-
                     </div>
                 </div>
             </Box>

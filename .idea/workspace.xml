@@ -2,12 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a9c3448e-8f9f-42f2-98a0-ec5b274f2900" name="Changes" comment=":rocket: my works">
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/b/6b70fd87d4ba5ad5f02598f6e9ca4a2c38eb0fb1" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sass/pages/group-content.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/1/e/1e43fa63aecd2127be034b3fb9d4caa172275714" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/pages/ProjectView.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/ProjectView.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/GroupCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/GroupCard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sass/components/pages/cardsearchcode.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/sass/components/pages/cardsearchcode.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/layout/Modals/MembersOfGroups.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/layout/Modals/MembersOfGroups.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/GroupContent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/GroupContent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sass/App.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/sass/App.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sass/pages/profil.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/sass/pages/profil.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

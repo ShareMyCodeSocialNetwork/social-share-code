@@ -27,9 +27,6 @@ K
 src/index.js,f/9/f900edc44cb929c2267a16100a32851f6d5b477d
 L
 src/actions/tools..action.js,1/3/13eb4295d34696af6e5bcb7ecbcd565dbb3e07da
-:
-
-src/App.js,1/e/1e43fa63aecd2127be034b3fb9d4caa172275714
 A
 src/pages/Home.js,f/8/f88e17193d91c101c7e0bd70b2fc4123066b1147
 P
@@ -78,8 +75,6 @@ V
 &src/components/pages/CardSearchCode.js,7/3/7358b16b25b3bed451b416e6a72c464ce8e4417a
 R
 "src/components/Auth/AuthService.js,1/5/1589c7bf4e0ef868c6f51967a162313596955639
-C
-src/pages/Profil.js,5/c/5cb845e6aec83e0b9b88880fde98bc3aa7d6b614
 P
  src/sass/layout/main-header.scss,6/0/60c1361b552acdc778c0aff8957a73d7bb2f83e5
 H

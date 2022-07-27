@@ -12,6 +12,8 @@ import {
 import {useForm} from "react-hook-form";
 import AuthService from "../components/Auth/AuthService";
 import MembersOfGroup from "../layout/Modals/MembersOfGroups";
+import NewPen from "../layout/Modals/NewPen";
+import MyCodeView from "../components/pages/MyCodeView";
 
 const GroupContent = () => {
     AuthService.isAuth();
@@ -84,73 +86,79 @@ const GroupContent = () => {
         window.location.reload();
     };
 
+
     return (
-
-        <div>
-            {
-                isEmpty(groupData) && "group not found"
-            }
-            {!isEmpty(groupData) && "group name : " + groupData.name}
-            <br/>
-            <br/>
-            {
-                !isEmpty(groupData) &&
-                "project description : " + groupData.description
-            }
-            <br/>
-            <br/>
-
-            {
-                !isEmpty(groupData) &&
-                !isEmpty(userRoleGroupData) &&
-                isEmpty(userRoleGroupData.isInGroup) && groupData.owner.id.toString() !== user_id.toString()
-                &&
-                <form onSubmit={join.handleSubmit(joinClick)}>
-                    <button type={"submit"}>Join</button>
-                </form>
-            }
-            {
-                !isEmpty(groupData) &&
-                !isEmpty(userRoleGroupData) &&
-                !isEmpty(userRoleGroupData.isInGroup) &&
-                groupData.owner.id.toString() !== user_id.toString() &&
-                <form onSubmit={leave.handleSubmit(leaveClick)}>
-                    <input type={"hidden"} {...leave.register("userRoleGroupId")} value={userRoleGroupData.isInGroup.id} name="userRoleGroupId"/>
-                    <button type={"submit"}>Leave</button>
-                </form>
-            }
-            {
-                !isEmpty(groupData) && !isEmpty(groupData.owner) &&
-                (
-                    groupData.owner.id.toString() === user_id.toString() ||
-                    !isEmpty(userRoleGroupData) && !isEmpty(userRoleGroupData.isInGroup) && userRoleGroupData.isInGroup.role.titlePermission === "ADMIN"
-                ) &&
-                <button onClick={() => handleOpenModalProject()}>Create Project in this group</button>
-            }
-            <br/>
-            {
-                !isEmpty(userRoleGroupData) &&
-                <button onClick={() => handleOpenModalMembers()}>Group members</button>
-            }
-
-            <div className="view--project">
-                <div className="container-project">
+        <>
+            <NewProject style={style} openModalProject={openModalProject} handleCloseModalProject={handleCloseModalProject} group_id={id}/>
+            <MembersOfGroup style={style} groupData={groupData} handleCloseModal={handleCloseModalMembers} openModal={openModalMembers} fullUserRoleGroupData={userRoleGroupData}/>
+            <div className="view--group-content">
+                <div className="left-part">
                     {
-                        !isEmpty(projectData) &&
-                        projectData.map((item, index) => (
-                            <div key={index} className="post-code">
-                                <ProjectView name={item.name} description={item.description} projectId={item.id} userId={item.user.id} userPseudo={item.user.pseudo}></ProjectView>
-                            </div>
-                        ))
+                        isEmpty(groupData) && <div className="information-title">group not found</div>
                     }
-                    {isEmpty(projectData) && "No Projects in this group"}
+                    {
+                        !isEmpty(groupData) &&
+                        <div className="information-title">group name : {groupData.name}</div>
+                    }
 
+                    {!isEmpty(groupData) &&
+                        <div className="information-title"> project description : {groupData.description}</div>
+                    }
+                    <br/>
+                    <br/>
+                    {
+                        !isEmpty(groupData) &&
+                        !isEmpty(userRoleGroupData) &&
+                        isEmpty(userRoleGroupData.isInGroup) && groupData.owner.id.toString() !== user_id.toString() &&
+                        <div className="link-information" onClick={() => join.handleSubmit(joinClick)}>Join</div>
+                    }
+                    {
+                        !isEmpty(groupData) &&
+                        !isEmpty(userRoleGroupData) &&
+                        !isEmpty(userRoleGroupData.isInGroup) &&
+                        groupData.owner.id.toString() !== user_id.toString() &&
+                        <form className="form-group" onSubmit={leave.handleSubmit(leaveClick)}>
+                            <input type={"hidden"} {...leave.register("userRoleGroupId")} value={userRoleGroupData.isInGroup.id} name="userRoleGroupId"/>
+                            <button type={"submit"}>Leave</button>
+                        </form>
+                    }
+                    <br/>
+                    <br/>
+                    {
+                        !isEmpty(groupData) && !isEmpty(groupData.owner) &&
+                        (
+                            groupData.owner.id.toString() === user_id.toString() ||
+                            !isEmpty(userRoleGroupData) && !isEmpty(userRoleGroupData.isInGroup) && userRoleGroupData.isInGroup.role.titlePermission === "ADMIN"
+                        ) &&
+                        <div className="link-information" onClick={() => handleOpenModalProject()}>Create Project in this group</div>
+                    }
+                    <br/>
+                    {
+                        !isEmpty(userRoleGroupData) &&
+                        <div className="link-information" onClick={() => handleOpenModalMembers()}>Group members</div>
+                    }
                 </div>
+                <div className="right-part">
+                    <div className="view--project">
+                        <div className="container-project">
+                            {
+                                !isEmpty(projectData) &&
+                                projectData.map((item, index) => (
+                                    <div key={index} className="post-code">
+                                        <ProjectView name={item.name} description={item.description} projectId={item.id} userId={item.user.id} userPseudo={item.user.pseudo}/>
+                                    </div>))
+                            }
+                            {
+                                isEmpty(projectData) && <div className="information-title">No Projects in this group</div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
-            <NewProject style={style} openModalProject={openModalProject} handleCloseModalProject={handleCloseModalProject} group_id={id}></NewProject>
-            <MembersOfGroup style={style} groupData={groupData} handleCloseModal={handleCloseModalMembers} openModal={openModalMembers} fullUserRoleGroupData={userRoleGroupData}></MembersOfGroup>
-        </div>
+        </>
+
     );
 
 
