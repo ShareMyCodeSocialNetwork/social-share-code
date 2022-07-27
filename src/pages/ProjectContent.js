@@ -56,46 +56,64 @@ const ProjectContent = () => {
     }
     loadProjectData().then();*/
 
-    return (
-
-        <div>
-            {
-                isEmpty(dataProject) && "project not found"
-            }
-            {!isEmpty(dataProject) && !isEmpty(dataProject.project) &&
-                "project name : " + dataProject.project.name}
+    /*
+    *
+            {!isEmpty(dataProject) && "project name : " + dataProject.name}
             <br/>
             <br/>
             {!isEmpty(dataProject) && !isEmpty(dataProject.project) && "project description : " + dataProject.project.description}
             <br/>
             <br/>
-            {!isEmpty(dataProject) && !isEmpty(dataProject.project) && !isEmpty(dataProject.project.group) && <a href={"/group/" + dataProject.project.group.id}>project group : { dataProject.project.group.name}</a>}
-            {!isEmpty(dataProject) && !isEmpty(dataProject.project) && isEmpty(dataProject.project.group) && "No group for this project"}
+
+            {!isEmpty(dataProject) && isEmpty(dataProject.group) && "No group for this project"}
             <br/>
             <br/>
-            {
-                !isEmpty(dataProject) && !isEmpty(dataProject.project) && !isEmpty(dataProject.project.user) &&
-                dataProject.project.user.id.toString() === user_id.toString() &&
-                <button onClick={() => handleOpenModalPen()}>create code in project</button>
-            }
+    *
+    * */
 
-            <div className="view--project">
-                <div className="container-project">
-                {
-                    !isEmpty(dataProject) && !isEmpty(dataProject.codesInProject) &&
-                    !isEmpty(dataProject.codesInProject) &&
-                    dataProject.codesInProject.map((item, index) => (
-                       <div key={index} className="post-code">
-                           <MyCodeView language={item.language.name} code={item.nameCode} userPseudo={item.user.pseudo} codeId={item.id} userId={item.user.id}></MyCodeView>
-                       </div>
-                    ))
-                }
-                {!isEmpty(dataProject) && isEmpty(dataProject.codesInProject) && "No codes for this project"}
-
-        </div>
-        </div>
-            <NewPen style={style} handleCloseModalPen={handleCloseModalPen} openModalPen={openModalPen} project_id={!isEmpty(dataProject) && !isEmpty(dataProject.project) && dataProject.project.id}></NewPen>
-        </div>
+    return (
+        <>
+            <NewPen style={style} handleCloseModalPen={handleCloseModalPen} openModalPen={openModalPen} project_id={!isEmpty(dataProject) && dataProject.id}/>
+            <div className="view--project-content">
+                <div className="left-part">
+                    {
+                        isEmpty(dataProject) &&
+                        <div className="information-title">project not found</div>
+                    }
+                    {
+                        !isEmpty(dataProject) &&
+                        <>
+                            <div className="information-title">project not found</div>
+                            <div className="information-title">project not found</div>
+                        </>
+                    }
+                    {
+                        !isEmpty(dataProject) && !isEmpty(dataProject.group) &&
+                        <a className="link-information" href={"/group/" + dataProject.group.id}>project group : { dataProject.group.name}</a>
+                    }
+                    {
+                        !isEmpty(dataProject) && !isEmpty(dataProject.user) && dataProject.user.id.toString() === user_id.toString() &&
+                        <a className="link-information" href={"/code/new" + dataProject.group.id}>create code in project</a>
+                    }
+                </div>
+                <div className="right-part">
+                    <div className="container-project">
+                        {
+                            !isEmpty(dataCode) &&
+                            dataCode.map((item, index) => (
+                                <div key={index} className="post-code">
+                                    <MyCodeView language={item.language.name} code={item.nameCode} userPseudo={item.user.pseudo} codeId={item.id} userId={item.user.id}></MyCodeView>
+                                </div>
+                            ))
+                        }
+                        {
+                            isEmpty(dataCode) &&
+                            <div className="information-title">"No codes for this project"</div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </>
 
     );
 

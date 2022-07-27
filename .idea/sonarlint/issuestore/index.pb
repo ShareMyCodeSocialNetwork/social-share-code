@@ -11,20 +11,14 @@ R
 "src/sass/pages/error/notfound.scss,4/5/45233e7af93b39942480f1e5ba13cc750eb25020
 P
  src/components/error/NotFound.js,6/1/616f36efc17ca98f8dd1a85989ceb0d1786f5626
-X
-(src/sass/components/pages/card-home.scss,b/5/b598b8a96893a6071dce9d0026ca66686ff94c73
 M
 src/sass/utils/_settings.scss,e/d/ede314402a11606ed02f8d9f915d97148b3e6b44
-]
--src/sass/components/pages/cardsearchcode.scss,3/9/394dbba44f7ea44b3d6bb04da45cfc8efe085042
 H
 src/sass/pages/auth.scss,7/a/7acd5e313c40e8c05b40a776303083e8a708cec1
 A
 public/index.html,f/4/f43ecdf8d666ee908aacce037b4cd72159e4741b
 \
 ,src/sass/components/layout/modal-header.scss,e/b/eb729cee071e17a6f80b3ce88d7686a8aff42b13
-A
-src/sass/App.scss,6/0/604945b3cff347060e33059d1c80d0011222fcb6
 J
 src/sass/pages/profil.scss,a/a/aa726e28dd04802f4506d317130cd95cf14ac592
 H
@@ -44,8 +38,6 @@ A
 src/pages/Home.js,f/8/f88e17193d91c101c7e0bd70b2fc4123066b1147
 P
  src/reducers/API/auth.reducer.js,2/8/288631c19caf6823c043aec50725b83e5be6f9d0
-Q
-!src/actions/API/comment.action.js,2/0/200680b5c4cd1faa598d77ccacb361494f3db5ab
 Q
 !src/reducers/API/group.reducer.js,7/8/7885d204b8c9794afd17273fac7b1ce2ed2fb8c5
 T

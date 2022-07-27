@@ -48,17 +48,17 @@ const MyCodeView = ({language= "Python",code= "", userPseudo="" , codeId = "", u
                 </div>
             </div>
             <div className="social-code-search">
-                <a href={"/profil/" + userId}>
-                <div className="profile-editor">
-                    <img className="profile-img" src="/assets/logo/profil.svg" alt="profile" />
-                    <div className="title-name-editor">{userPseudo}</div>
-                </div>
-                    </a>
-                <div>
+                <a style={{textDecoration:"none"}} href={"/profil/" + userId}>
+                    <div className="profile-editor">
+                        <img className="profile-img" src="/assets/logo/profil.svg" alt="profile" />
+                        <div className="title-name-editor">{userPseudo}</div>
+                    </div>
+                </a>
+                <div className="button-user-code">
                     {
                         userId.toString() === localStorage.getItem("user_id").toString() ?
                             <form>
-                                <button onClick={remove.handleSubmit(submitRemove)} className="button-profile" type="submit">Remove</button>
+                                <div onClick={remove.handleSubmit(submitRemove)} className="button-profile" type="submit">Remove</div>
                             </form>
                             :
                             <span></span>

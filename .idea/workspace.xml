@@ -2,8 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a9c3448e-8f9f-42f2-98a0-ec5b274f2900" name="Changes" comment=":rocket: my works">
+      <change afterPath="$PROJECT_DIR$/src/sass/pages/project-content.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/0/200680b5c4cd1faa598d77ccacb361494f3db5ab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/3/9/394dbba44f7ea44b3d6bb04da45cfc8efe085042" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/0/604945b3cff347060e33059d1c80d0011222fcb6" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/b/5/b598b8a96893a6071dce9d0026ca66686ff94c73" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/API/execode.action.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/API/execode.action.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/pages/MyCodeView.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/MyCodeView.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/pages/ProjectView.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/ProjectView.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Code.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Code.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/MyProjects.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MyProjects.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/ProjectContent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/ProjectContent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sass/App.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/sass/App.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sass/components/pages/cardsearchcode.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/sass/components/pages/cardsearchcode.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,7 +205,7 @@
       <workItem from="1658788256076" duration="654000" />
       <workItem from="1658850976904" duration="3100000" />
       <workItem from="1658915385932" duration="1277000" />
-      <workItem from="1658921647339" duration="905000" />
+      <workItem from="1658921647339" duration="6888000" />
     </task>
     <task id="LOCAL-00001" summary=":rocket: add message when expired token">
       <created>1657751740962</created>

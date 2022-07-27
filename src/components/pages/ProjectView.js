@@ -31,21 +31,23 @@ const ProjectView = ({name= "",description= "", userPseudo="", projectId = "" , 
             </div>
             </a>
             <div className="social-code-search">
-                <a href={"/profil/" + userId}>
+                <a style={{textDecoration:"none"}} href={"/profil/" + userId}>
                 <div className="profile-editor">
                     <img className="profile-img" src="/assets/logo/profil.svg" alt="profile" />
                     <div className="title-name-editor">{userPseudo}</div>
                 </div>
                 </a>
-                {
-                    !isEmpty(userId) &&
-                    userId.toString() === localStorage.getItem("user_id").toString() ?
-                        <form>
-                            <button  onClick={remove.handleSubmit(submitRemove)}  className="button-profile" type="submit">Remove</button>
-                        </form>
-                        :
-                        <div></div>
-                }
+                <div className="button-user-code">
+                    {
+                        !isEmpty(userId) &&
+                        userId.toString() === localStorage.getItem("user_id").toString() ?
+                            <form>
+                                <div  onClick={remove.handleSubmit(submitRemove)}  className="button-profile" type="submit">Remove</div>
+                            </form>
+                            :
+                            <div></div>
+                    }
+                </div>
 
             </div>
 

@@ -5,8 +5,9 @@ import {useForm} from "react-hook-form";
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {
+    API_URL,
     execute_code_java,
-    execute_code_js,
+    execute_code_js, EXECUTE_CODE_PYTHON,
     execute_code_python,
     execute_code_ruby
 } from "../actions/API/execode.action";
@@ -20,6 +21,7 @@ import {Box, Modal} from "@mui/material";
 import {getProjectByOwner} from "../actions/API/project.action";
 import ReloadUntilData from "../components/utils/ReloadUntilData";
 import {isEmpty} from "../components/utils/Utils";
+import axios from "axios";
 
 
 const Code = () => {
@@ -33,9 +35,9 @@ const Code = () => {
     const [responseCode, setResponseCode] = useState([""])
     const [language,setLanguage] = useState({id:1,name:"python"})
     const languagelist = [{id:1,name:"python"},{id:2,name:"js"},{id:4,name:"ruby"}]
-    const excutePython = useSelector((state) => state.execodeReducer)
-    const excuteRuby = useSelector((state) => state.execodeReducer)
-    const excuteJs = useSelector((state) => state.execodeReducer)
+    const [excutePython,setExcutePython] = useState([])
+    const [excuteRuby,setExcuteRuby] = useState([])
+    const [excuteJs,setExcuteJs] = useState([])
     const user_id = AuthService.getUserId()
     const [anchorElSnippets, setAnchorElSnippets] = useState(null);
     const openSnippets = Boolean(anchorElSnippets);
@@ -98,18 +100,46 @@ const Code = () => {
         p: 4,
     };
 
+    const callExecPythons = (data) => {
+        axios
+            .post(`http://46.101.91.145:3001/excution/python`, data)
+            .then((res) => {
+                setExcutePython(res.data)
 
+            })
+            .catch((err) => console.log(err));
+    }
+
+    const callExecJs = (data) => {
+        axios
+            .post(`http://46.101.91.145:3001/excution/js`, data)
+            .then((res) => {
+                setExcuteJs(res.data)
+
+            })
+            .catch((err) => console.log(err));
+    }
+
+    const callExecRuby = (data) => {
+        axios
+            .post(`http://46.101.91.145:3001/excution/ruby`, data)
+            .then((res) => {
+                setExcuteRuby(res.data)
+
+            })
+            .catch((err) => console.log(err));
+    }
 
     const getCodeTest = (codetitle) => {
         const article = { code: codetitle };
         if(language.name === "python"){
-            dispatch(execute_code_python(article))
+            callExecPythons(article)
             loadDataPythons()
         }else if(language.name === "js"){
-            dispatch(execute_code_js(article))
+            callExecJs(article)
             loadDataJs()
         }else if(language.name === "ruby"){
-            dispatch(execute_code_ruby(article))
+            callExecRuby(article)
             loadDataRuby()
         }else{
             console.error("language is not recognized")
