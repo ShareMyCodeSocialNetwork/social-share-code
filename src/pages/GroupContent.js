@@ -110,7 +110,10 @@ const GroupContent = () => {
                         !isEmpty(groupData) &&
                         !isEmpty(userRoleGroupData) &&
                         isEmpty(userRoleGroupData.isInGroup) && groupData.owner.id.toString() !== user_id.toString() &&
-                        <div className="link-information" onClick={() => join.handleSubmit(joinClick)}>Join</div>
+                        <form className="form-group" onSubmit={join.handleSubmit(joinClick)}>
+                            <button className="link-information">Join</button>
+                        </form>
+
                     }
                     {
                         !isEmpty(groupData) &&
